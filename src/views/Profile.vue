@@ -31,7 +31,6 @@ export default {
   data() {
     return {
       selectedPhoto: null,
-      photos: [],
     };
   },
   methods: {
@@ -51,15 +50,16 @@ export default {
     async LoadAllPic() {
       let loadedPhotos = await PhotoService.loadAll();
       this.$store.dispatch("auth/cacheUserPhotos", loadedPhotos);
+      console.log("loadedall");
     },
   },
   created() {
     if (!this.isLogged) {
       this.$router.push("/");
     }
-    //if (this.photos == null) {
-    this.LoadAllPic();
-    //}
+    if (this.userPhotos.length == 0) {
+      this.LoadAllPic();
+    }
   },
   components: {
     // Register

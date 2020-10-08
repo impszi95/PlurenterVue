@@ -12,7 +12,8 @@ const initialState = user ? {
     status: {
         loggedIn: false
     },
-    user: null
+    user: null,
+    userPhotos: []
 };
 
 export const auth = {
@@ -76,6 +77,7 @@ export const auth = {
         logout(state) {
             state.status.loggedIn = false;
             state.user = null;
+            state.userPhotos = [];
         },
         registerSuccess(state) {
             state.status.loggedIn = false;

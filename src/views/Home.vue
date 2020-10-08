@@ -1,18 +1,19 @@
 <template>
   <div class="home">
     <div class="welcome_page" v-show="!isLogged">
-    <img  alt="Vue logo" src="../assets/logo.png" />
-    <div class="activeUsers">Active users: {{ usersCount }}</div>
-    <div>
-      <Login />
+      <img alt="Vue logo" src="../assets/logo.png" />
+      <div class="activeUsers">Active users: {{ usersCount }}</div>
+      <div>
+        <Login />
+      </div>
     </div>
-    </div>   
   </div>
 </template>
 
 <script>
 import Login from "@/components/Login.vue";
 import axios from "axios";
+//import authHeader from "../Services/AuthHeader";
 
 export default {
   data() {
@@ -31,13 +32,20 @@ export default {
     },
   },
   created() {
-    if(!this.isLogged){
-    this.usersCount = axios
-      .get("http://localhost:8081/" + "usersCount")
-      .then((res) => {
-        this.usersCount = res.data;
-      });
+    if (!this.isLogged) {
+      this.usersCount = axios
+        .get("http://localhost:8081/" + "usersCount")
+        .then((res) => {
+          this.usersCount = res.data;
+        });
     }
+    //   else {// akk töltse be a tindert ha bevagy jelentkezve csak pneding megy és nem asyn még
+    //     let nextUser = axios
+    //       .get("http://localhost:8081/" + "nextUser", { headers: authHeader() })
+    //       .then((res) => {
+    //         return res.data;
+    //       });
+    //   }
   },
 };
 </script>

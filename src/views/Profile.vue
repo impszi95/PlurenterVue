@@ -5,7 +5,7 @@
         <div>Username: {{ currentUser.username }}</div>
         <div>Likes: {{ currentUser.like }}</div>
         <div class="images">
-          <div class="image" v-for="photo in photos" :key="photo.id">
+          <div class="image" v-for="photo in this.userPhotos" :key="photo.id">
             <img v-bind:src="'data:image/jpg;base64,' + photo.image.data" />
           </div>
         </div>
@@ -39,26 +39,27 @@ export default {
       this.selectedPhoto = event.target.files[0];
     },
     async onUpload() {
-      let formdata = new FormData();
-      formdata.append("name", "file");
-      formdata.append("userId", this.currentUser.id);
-      formdata.append("file", this.selectedPhoto);
-      await PhotoService.upload(formdata);
-      this.LoadAllPic();
+      if (this.selectedPhoto != null) {
+        let formdata = new FormData();
+        formdata.append("name", "file");
+        formdata.append("userId", this.currentUser.id);
+        formdata.append("file", this.selectedPhoto);
+        await PhotoService.upload(formdata);
+        this.LoadAllPic();
+      }
     },
     async LoadAllPic() {
-      this.photos = await PhotoService.loadAll();
-      console.log("loadAll");
+      let loadedPhotos = await PhotoService.loadAll();
+      this.$store.dispatch("auth/cacheUserPhotos", loadedPhotos);
     },
   },
   created() {
     if (!this.isLogged) {
       this.$router.push("/");
     }
-    if (!this.photos.empty) {
-      console.log("még nemvolt -> loadAll");
-      this.LoadAllPic();
-    }
+    //if (this.photos == null) {
+    this.LoadAllPic();
+    //}
   },
   components: {
     // Register
@@ -70,6 +71,9 @@ export default {
     isLogged() {
       return this.$store.state.auth.status.loggedIn;
     },
+    userPhotos() {
+      return this.$store.state.auth.userPhotos;
+    },
   },
 };
 </script>
@@ -80,11 +84,10 @@ export default {
   padding: 1rem;
   text-align: left;
   font-size: 1.2rem;
-  
 }
-.image {  
+.image {
   padding: 0.2rem;
-  width: 400px; 
+  width: 400px;
   display: inline-block;
 }
 .images {

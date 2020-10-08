@@ -1,11 +1,13 @@
 import AuthService from '../Services/AuthService';
+import PhotoService from '../Services/PhotoService';
 
 const user = JSON.parse(localStorage.getItem('user'));
 const initialState = user ? {
     status: {
         loggedIn: true
     },
-    user
+    user,
+    userPhotos: []
 } : {
     status: {
         loggedIn: false
@@ -50,6 +52,16 @@ export const auth = {
                     return Promise.reject(error);
                 }
             );
+        },
+        cacheUserPhotos({
+            commit
+        }) {
+            return PhotoService.loadAll().then(
+                photos => {
+                    commit('cacheUserPhotos', photos);
+                    return Promise.resolve(photos);
+                }
+            );
         }
     },
     mutations: {
@@ -70,6 +82,9 @@ export const auth = {
         },
         registerFailure(state) {
             state.status.loggedIn = false;
+        },
+        cacheUserPhotos(state, photos) {
+            state.userPhotos = photos
         }
     }
-};
+}

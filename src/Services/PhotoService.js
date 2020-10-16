@@ -5,10 +5,11 @@ const API_URL = 'http://localhost:8081/';
 
 class PhotoService {
     async upload(formdata) {
-        const response = await axios.post(API_URL + 'photos/add', formdata, {
+        return await axios.post(API_URL + 'photos/add', formdata, {
             headers: authHeader()
-        })
-        return response;
+        }).then(res => {
+            return res.data
+        });
     }
 
     async load(imgId) {

@@ -3,7 +3,7 @@
     <div v-show="isLogged">
       <div class="userInfos">
         <div>Username: {{ currentUser.username }}</div>
-        <div>Likes: {{ currentUser.like }}</div>
+        <div>Likes: {{ usersLikes }}</div>
         <div class="images">
           <div class="image" v-for="photo in this.userPhotos" :key="photo.id">
             <img v-bind:src="'data:image/jpg;base64,' + photo.image.data" />
@@ -26,11 +26,13 @@
 <script>
 //import Register from "@/components/Register.vue";
 import PhotoService from "../Services/PhotoService";
+import UserService from "@/Services/UserService";
 
 export default {
   data() {
     return {
       selectedPhoto: null,
+      usersLikes: null,
     };
   },
   methods: {
@@ -43,23 +45,36 @@ export default {
         formdata.append("name", "file");
         formdata.append("userId", this.currentUser.id);
         formdata.append("file", this.selectedPhoto);
-        await PhotoService.upload(formdata);
-        this.LoadAllPic();
+
+        try {
+          await PhotoService.upload(formdata);
+          this.LoadAllPic();
+        } catch (error) {
+          this.ImageUploadError();
+        }
       }
     },
     async LoadAllPic() {
       let loadedPhotos = await PhotoService.loadAll();
       this.$store.dispatch("auth/cacheUserPhotos", loadedPhotos);
-      console.log("loadedall");
+    },
+    ImageUploadError() {
+      this.$buefy.toast.open({
+        message: `Image may be larger than the allowed size </b>`,
+        type: "is-danger",
+      });
     },
   },
-  created() {
+  async created() {
     if (!this.isLogged) {
       this.$router.push("/");
     }
+
+    //Loggedin section
     if (this.userPhotos.length == 0) {
       this.LoadAllPic();
     }
+    this.usersLikes = await UserService.getUsersLikes();
   },
   components: {
     // Register
@@ -80,14 +95,14 @@ export default {
 
 <style scoped>
 .userInfos {
-  margin: 1rem;
-  padding: 1rem;
-  text-align: left;
+  margin: 0.5%;
+  padding: 0.5%;
+  text-align: center;
   font-size: 1.2rem;
 }
 .image {
-  padding: 0.2rem;
-  width: 400px;
+  padding: 0.5%;
+  width: 380px;
   display: inline-block;
 }
 .images {

@@ -1,51 +1,51 @@
 <template>
   <div class="home">
-    <div class="welcome_page" v-show="!isLogged">
+    <div class="welcome_page" v-if="!isLogged">
       <img alt="Vue logo" src="../assets/logo.png" />
       <div class="activeUsers">Active users: {{ usersCount }}</div>
       <div>
-        <Login />
+        <Login />        
       </div>
+    </div>
+    <div v-if="isLogged" class="BrowseUsers">
+      <BrowseUsers />
     </div>
   </div>
 </template>
 
 <script>
 import Login from "@/components/Login.vue";
-import axios from "axios";
+import BrowseUsers from "@/components/BrowseUsers.vue"
+import UserService from "@/Services/UserService";
 //import authHeader from "../Services/AuthHeader";
 
 export default {
   data() {
     return {
-      //usersCount : UserService.getUsersCount(),
-      users: [],
-      usersCount: 0,
+      usersCount:null,
     };
   },
   components: {
     Login,
+    BrowseUsers,
   },
   computed: {
     isLogged() {
       return this.$store.state.auth.status.loggedIn;
     },
   },
-  created() {
+  async created() {
     if (!this.isLogged) {
-      this.usersCount = axios
-        .get("http://localhost:8081/" + "usersCount")
-        .then((res) => {
-          this.usersCount = res.data;
-        });
+      this.usersCount = await UserService.getUsersCount();
+    } else {
+      // akk töltse be a tindert ha bevagy jelentkezve csak pneding megy és nem asyn még
+      //   let nextUser = axios
+      //     .get("http://localhost:8081/" + "nextUser", { headers: authHeader() })
+      //     .then((res) => {
+      //       return res.data;
+      //     });
+      
     }
-    //   else {// akk töltse be a tindert ha bevagy jelentkezve csak pneding megy és nem asyn még
-    //     let nextUser = axios
-    //       .get("http://localhost:8081/" + "nextUser", { headers: authHeader() })
-    //       .then((res) => {
-    //         return res.data;
-    //       });
-    //   }
   },
 };
 </script>

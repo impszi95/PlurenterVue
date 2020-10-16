@@ -4,30 +4,30 @@
       <img alt="Vue logo" src="../assets/logo.png" />
       <div class="activeUsers">Active users: {{ usersCount }}</div>
       <div>
-        <Login />        
+        <Login />
       </div>
     </div>
     <div v-if="isLogged" class="BrowseUsers">
-      <BrowseUsers />
+      <NextMeet />
     </div>
   </div>
 </template>
 
 <script>
 import Login from "@/components/Login.vue";
-import BrowseUsers from "@/components/BrowseUsers.vue"
+import NextMeet from "@/components/NextMeet.vue";
 import UserService from "@/Services/UserService";
 //import authHeader from "../Services/AuthHeader";
 
 export default {
   data() {
     return {
-      usersCount:null,
+      usersCount: "",
     };
   },
   components: {
     Login,
-    BrowseUsers,
+    NextMeet,
   },
   computed: {
     isLogged() {
@@ -35,17 +35,7 @@ export default {
     },
   },
   async created() {
-    if (!this.isLogged) {
-      this.usersCount = await UserService.getUsersCount();
-    } else {
-      // akk töltse be a tindert ha bevagy jelentkezve csak pneding megy és nem asyn még
-      //   let nextUser = axios
-      //     .get("http://localhost:8081/" + "nextUser", { headers: authHeader() })
-      //     .then((res) => {
-      //       return res.data;
-      //     });
-      
-    }
+    this.usersCount = await UserService.getUsersCount();
   },
 };
 </script>

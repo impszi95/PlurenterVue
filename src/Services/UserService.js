@@ -21,11 +21,7 @@ class UserService {
         });
     }
 
-    async like(id){
-        return await axios.post(API_URL + 'likeUser?userId='+id,{}, {
-            headers: authHeader()
-        });  
-    }
+   
 
     async getUsersLikes(){
         return await axios.get(API_URL + 'getUsersLikes',{

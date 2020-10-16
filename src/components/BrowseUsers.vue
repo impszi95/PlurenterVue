@@ -23,6 +23,7 @@
 
 <script>
 import UserService from "@/Services/UserService";
+import TinderService from "@/Services/TinderService";
 
 export default {
   data() {
@@ -30,12 +31,12 @@ export default {
       users: [],
     };
   },
-  async created() {
-    this.users = await UserService.getAllUsers();
+  created() {
+    this.users = UserService.getAllUsers();
   },
   methods: {
     Like(id) {
-      UserService.like(id).then(() => {
+      TinderService.like(id).then(() => {
         let likedUser = this.users.find((x) => x.id === id);
         likedUser.likes++;
       });

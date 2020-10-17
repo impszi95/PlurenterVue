@@ -4,17 +4,16 @@
       <div class="username">
         {{ user.username }}
       </div>
-      <img
-        v-if="user.photo != null"
-        class="img"
-        v-bind:src="'data:image/jpg;base64,' + user.photo.image.data"
-      />
-      <img v-else src="../assets/default.png" />
+      <div class="img">
+        <img
+          v-if="user.photos != null"
+          v-bind:src="'data:image/jpg;base64,' + user.photos[0].image.data"
+        />
+        <img v-else src="../assets/default.png" />
+      </div>
       <div class="likes">
         <br />
-        <b-button @click="Like(user.photo.userId)" type="is-info"
-          >Like</b-button
-        >
+        <b-button @click="Like(user.id)" type="is-info">Like</b-button>
       </div>
     </div>
   </div>
@@ -27,31 +26,30 @@ export default {
   data() {
     return {
       user: {
+        id: "",
         username: "",
-        photo: null,
+        photos: null,
       },
       haveMeets: false,
     };
   },
   methods: {
-   async nextMeet() {
-      let user = await TinderService.nextMeet();
-      console.log(user);
-      if (user.username == "" && user.photo == null) {
+    async actualMeet() {
+      let user = await TinderService.actualMeet();
+      if (user.id == "" && user.username == "" && user.photos == null) {
         this.haveMeets = false;
       } else {
         this.haveMeets = true;
       }
-
       return user;
     },
     async Like(id) {
       await TinderService.like(id);
-      this.user = await this.nextMeet();
+      this.user = await this.actualMeet();
     },
   },
   async created() {
-    this.user = await this.nextMeet();
+    this.user = await this.actualMeet();
   },
 };
 </script>
@@ -67,13 +65,14 @@ export default {
   vertical-align: middle;
   padding: 0.2rem;
   width: 90%;
-  height: 80%;
   max-width: 600px;
   display: inline-block;
   border-style: solid;
 }
 .img {
-  max-width: 90%;
-  max-height: 90%;
+  margin-left: auto;
+  margin-right: auto;
+  width: 80%;
+  max-width: 500px;
 }
 </style>

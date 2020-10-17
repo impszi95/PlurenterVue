@@ -10,8 +10,8 @@ class TinderService{
             headers: authHeader()
         });  
     }
-    async nextMeet(){
-        return await axios.get(API_URL + 'nextMeet',{
+    async actualMeet(){
+        return await axios.get(API_URL + 'actualMeet',{
             headers: authHeader()
         }).then(res => {
             return res.data;

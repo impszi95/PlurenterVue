@@ -8,14 +8,14 @@
       </div>
     </div>
     <div v-if="isLogged" class="BrowseUsers">
-      <NextMeet />
+      <ActualMeet />
     </div>
   </div>
 </template>
 
 <script>
 import Login from "@/components/Login.vue";
-import NextMeet from "@/components/NextMeet.vue";
+import ActualMeet from "@/components/ActualMeet.vue";
 import UserService from "@/Services/UserService";
 //import authHeader from "../Services/AuthHeader";
 
@@ -27,7 +27,7 @@ export default {
   },
   components: {
     Login,
-    NextMeet,
+    ActualMeet,
   },
   computed: {
     isLogged() {

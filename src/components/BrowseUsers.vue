@@ -13,8 +13,6 @@
         <img v-else src="../assets/default.png" />
         <div class="likes">
           Likes: {{ user.likes }}
-          <br />
-          <b-button @click="Like(user.id)" type="is-info">Like</b-button>
         </div>
       </div>
     </div>
@@ -31,8 +29,8 @@ export default {
       users: [],
     };
   },
-  created() {
-    this.users = UserService.getAllUsers();
+  async created() {
+    this.users = await UserService.getAllUsers();
   },
   methods: {
     Like(id) {

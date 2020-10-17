@@ -19,6 +19,7 @@
         />
         <b-button @click="onUpload">Upload</b-button>
       </div>
+      <b-button type="is-success" @click="BrowseAll">Browse all</b-button>
     </div>
   </div>
 </template>
@@ -64,6 +65,11 @@ export default {
         type: "is-danger",
       });
     },
+    BrowseAll(){
+       this.$router.push("/browseAll").catch((err) => {
+        err;
+      });
+    }
   },
   async created() {
     if (!this.isLogged) {

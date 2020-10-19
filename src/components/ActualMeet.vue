@@ -6,8 +6,8 @@
       </div>
       <div class="img">
         <img
-          v-if="user.photos != null"
-          v-bind:src="'data:image/jpg;base64,' + user.photos[0].image.data"
+          v-if="actualPhoto != ''"
+          v-bind:src="'data:image/jpg;base64,' + actualPhoto.image.data"
         />
         <img v-else src="../assets/default.png" />
       </div>
@@ -28,28 +28,40 @@ export default {
       user: {
         id: "",
         username: "",
-        photos: null,
+        photos: [],
       },
+      actualPhoto: "",
       haveMeets: false,
     };
   },
   methods: {
-    async actualMeet() {
+    async loadActualMeet() {
       let user = await TinderService.actualMeet();
-      if (user.id == "" && user.username == "" && user.photos == null) {
+
+      if (user.id == "" && user.username == "" && user.photos.length == 0) {
         this.haveMeets = false;
       } else {
         this.haveMeets = true;
       }
-      return user;
+
+      if (user.photos.length != 0) {
+        this.actualPhoto = user.photos[0];
+        console.log("kiabállj ha nemüres");
+      }
+      else{
+         this.actualPhoto= "";
+      }
+      
+      console.log(user.photos);
+      this.user = user;
     },
     async Like(id) {
       await TinderService.like(id);
-      this.user = await this.actualMeet();
+      await this.loadActualMeet();
     },
   },
   async created() {
-    this.user = await this.actualMeet();
+    await this.loadActualMeet();
   },
 };
 </script>

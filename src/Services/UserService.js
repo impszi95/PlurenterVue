@@ -21,7 +21,13 @@ class UserService {
         });
     }
 
-   
+   async getAllMatches(){
+        return await axios.get(API_URL + 'getAllMatches', {
+            headers: authHeader()
+        }).then(res => {
+            return res.data;
+        });
+   }
 
     async getUsersLikes(){
         return await axios.get(API_URL + 'getUsersLikes',{

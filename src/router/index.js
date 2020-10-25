@@ -25,9 +25,9 @@ const routes = [{
     component: () => import('../views/RegisterPage.vue')
   },
   {
-    path: '/browseAll',
-    name: 'BrowseAll',
-    component: () => import('../components/BrowseUsers.vue')
+    path: '/Matches',
+    name: 'Matches',
+    component: () => import('../components/Matches.vue')
   }
 ]
 

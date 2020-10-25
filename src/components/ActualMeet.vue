@@ -46,13 +46,9 @@ export default {
 
       if (user.photos.length != 0) {
         this.actualPhoto = user.photos[0];
-        console.log("kiabállj ha nemüres");
+      } else {
+        this.actualPhoto = "";
       }
-      else{
-         this.actualPhoto= "";
-      }
-      
-      console.log(user.photos);
       this.user = user;
     },
     async Like(id) {

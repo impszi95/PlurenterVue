@@ -8,12 +8,9 @@
         <img
           v-if="user.photos.length != 0"
           class="img"
-          v-bind:src="'data:image/jpg;base64,' + user.photos[0].data"
+          v-bind:src="'data:image/jpg;base64,' + user.photos[0].image.data"
         />
         <img v-else src="../assets/default.png" />
-        <div class="likes">
-          Likes: {{ user.likes }}
-        </div>
       </div>
     </div>
   </div>
@@ -21,7 +18,6 @@
 
 <script>
 import UserService from "@/Services/UserService";
-import TinderService from "@/Services/TinderService";
 
 export default {
   data() {
@@ -30,16 +26,9 @@ export default {
     };
   },
   async created() {
-    this.users = await UserService.getAllUsers();
+    this.users = await UserService.getAllMatches();
   },
-  methods: {
-    Like(id) {
-      TinderService.like(id).then(() => {
-        let likedUser = this.users.find((x) => x.id === id);
-        likedUser.likes++;
-      });
-    },
-  },
+  methods: {},
 };
 </script>
 

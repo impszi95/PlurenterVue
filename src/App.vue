@@ -8,7 +8,7 @@
       <router-link v-show="isLogged" class="nav_e" to="/profile"
         >Profile</router-link
       >
-      <router-link class="nav_e" to="/about">About</router-link>
+      <router-link class="nav_e" v-show="isLogged" to="/Matches">Matches</router-link>
 
       <div v-show="isLogged" class="Logout">
         <b-button size="is-small" type="is-success" @click="logout()"

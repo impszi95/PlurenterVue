@@ -2,12 +2,12 @@
   <div class="home">
     <div class="welcome_page" v-if="!isLogged">
       <img alt="Vue logo" src="../assets/logo.png" />
-      <div class="activeUsers">Active users: {{ usersCount }}</div>
+      <div class="activeUsers">Active users: {{ usersCount }}</div>     
       <div>
         <Login />
       </div>
     </div>
-    <div v-if="isLogged" class="BrowseUsers">
+    <div v-if="isLogged" class="Tinder">
       <ActualMeet />
     </div>
   </div>

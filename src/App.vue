@@ -1,20 +1,38 @@
 <template>
   <div id="app">
     <div id="nav">
-      <router-link id="logo" to="/"
-        ><img src="./assets/logo.png"
-      /></router-link>
-      <router-link class="nav_e" to="/">Home</router-link>
-      <router-link v-show="isLogged" class="nav_e" to="/profile"
-        >Profile</router-link
-      >
-      <router-link class="nav_e" v-show="isLogged" to="/Matches">Matches</router-link>
-
-      <div v-show="isLogged" class="Logout">
-        <b-button size="is-small" type="is-success" @click="logout()"
-          >Logout</b-button
-        >
-      </div>
+    <b-navbar>
+        <template slot="brand">
+            <b-navbar-item tag="router-link" :to="{ path: '/' }">
+                <img
+                    src="./assets/logo.png"
+                >
+            </b-navbar-item>
+        </template>
+        <template slot="start">
+            <b-navbar-item tag="router-link" :to="{ path: '/' }">
+                Home
+            </b-navbar-item>
+            <b-navbar-item v-show="isLogged" tag="router-link" :to="{ path: '/profile' }">
+                Profile
+            </b-navbar-item>
+            <b-navbar-item v-show="isLogged" tag="router-link" :to="{ path: '/matches' }">
+                Matches
+            </b-navbar-item>
+        </template>
+        <template slot="end">
+            <b-navbar-item tag="div">
+                <div class="buttons">
+                    <a v-show="!isLogged" class="button is-success" @click="goToRegister()">
+                        <strong>Sign up</strong>
+                    </a>
+                    <a v-show="isLogged" class="button is-success" @click="logout()">
+                        <strong>Logout</strong>
+                    </a>
+                </div>
+            </b-navbar-item>
+        </template>
+    </b-navbar>
     </div>
     <router-view />
     <div class="foot">
@@ -36,6 +54,9 @@ export default {
       this.$router.push("/").catch((err) => {
         err;
       });
+    },    
+    goToRegister() {
+      this.$router.push("/register");
     },
   },
 };
@@ -47,7 +68,6 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
 }
 
 #nav {
@@ -58,7 +78,6 @@ export default {
 #nav a {
   font-weight: bold;
   font-size: 1.5rem;
-  color: #2c3e50;
 }
 
 #nav a.router-link-exact-active {

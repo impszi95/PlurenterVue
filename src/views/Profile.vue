@@ -56,8 +56,7 @@ export default {
       }
     },
     async LoadAllPic() {
-      let loadedPhotos = await PhotoService.loadAll();
-      this.$store.dispatch("auth/cacheUserPhotos", loadedPhotos);
+      this.$store.dispatch("auth/cacheUserPhotos");
     },
     ImageUploadError() {
       this.$buefy.toast.open({
@@ -82,9 +81,6 @@ export default {
     }
     this.usersLikes = await UserService.getUsersLikes();
   },
-  components: {
-    // Register
-  },
   computed: {
     currentUser() {
       return this.$store.state.auth.user;
@@ -94,7 +90,7 @@ export default {
     },
     userPhotos() {
       return this.$store.state.auth.userPhotos;
-    },
+    }
   },
 };
 </script>

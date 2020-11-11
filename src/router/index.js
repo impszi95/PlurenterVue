@@ -25,9 +25,9 @@ const routes = [{
     component: () => import('../views/RegisterPage.vue')
   },
   {
-    path: '/Matches',
-    name: 'Matches',
-    component: () => import('../components/Matches.vue')
+    path: '/matches',
+    name: 'matches',
+    component: () => import('../views/Matches.vue')
   }
 ]
 

@@ -11,10 +11,6 @@
       <div class="login_b">
         <b-button @click="login()" type="is-success">Login</b-button>
       </div>
-      <h3>or</h3>
-      <div class="logout_b">
-        <b-button @click="goToRegister()" type="is-info">Register</b-button>
-      </div>
     </div>
   </div>
 </template>
@@ -56,9 +52,6 @@ export default {
           }
         );
       }
-    },
-    goToRegister() {
-      this.$router.push("/register");
     },
     invalidLogin() {
       this.$buefy.toast.open({

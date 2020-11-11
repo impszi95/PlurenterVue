@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="users">
-      <div class="user" v-for="user in this.users" :key="user.id">
+      <div class="user" v-for="user in this.allMatches" :key="user.id">
         <div class="username">
           {{ user.username }}
         </div>
@@ -17,7 +17,6 @@
 </template>
 
 <script>
-import UserService from "@/Services/UserService";
 //import SockJS from 'sockjs-client';
 //import Stomp from 'webstomp-client';
 //import authHeader from '@/Services/AuthHeader';
@@ -25,14 +24,27 @@ import UserService from "@/Services/UserService";
 export default {
   data() {
     return {
-      users: [],
     //  received_messages: [],
     //  connected: false
 
     };
   },
   async created() {
-    this.users = await UserService.getAllMatches();
+    if (this.allMatches.length == 0) {
+      this.LoadAllMatches();
+    }
+  },
+  methods:{
+    LoadAllMatches(){
+       this.$store.dispatch("auth/cacheAllMatches");
+    }
+  },
+  computed:{    
+    allMatches(){
+      return this.$store.state.auth.allMatches;
+    }
+  }
+};
 //    this.connect();
 //  },
 //  methods: {
@@ -51,8 +63,7 @@ export default {
  //       this.connected = false
   //    })
   //  },
-  },
-};
+ // },
 </script>
 
 <style scoped>

@@ -1,5 +1,6 @@
 import AuthService from '../Services/AuthService';
 import PhotoService from '../Services/PhotoService';
+import UserService from '../Services/UserService';
 
 const user = JSON.parse(localStorage.getItem('user'));
 const initialState = user ? {
@@ -7,7 +8,8 @@ const initialState = user ? {
         loggedIn: true
     },
     user,
-    userPhotos: [],
+    userPhotos:[],
+    allMatches:[]
 } : {
     status: {
         loggedIn: false
@@ -52,13 +54,23 @@ export const auth = {
                 }
             );
         },
-        cacheUserPhotos({
+        async cacheUserPhotos({
             commit
         }) {
-            return PhotoService.loadAll().then(
+            return await PhotoService.loadAll().then(
                 photos => {
                     commit('cacheUserPhotos', photos);
                     return Promise.resolve(photos);
+                }
+            );
+        },
+        cacheAllMatches({
+            commit
+        }) {
+            return UserService.getAllMatches().then(
+                allMatches => {
+                    commit('cacheAllMatches', allMatches);
+                    return Promise.resolve(allMatches);
                 }
             );
         }
@@ -76,6 +88,7 @@ export const auth = {
             state.status.loggedIn = false;
             state.user = null;
             state.userPhotos = [];
+            state.allMatches = [];
         },
         registerSuccess(state) {
             state.status.loggedIn = false;
@@ -85,6 +98,9 @@ export const auth = {
         },
         cacheUserPhotos(state, photos) {
             state.userPhotos = photos
+        },
+        cacheAllMatches(state, allMatches){
+            state.allMatches = allMatches;
         }
     }
 }

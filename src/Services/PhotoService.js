@@ -1,7 +1,7 @@
 import * as axios from 'axios';
 import authHeader from './AuthHeader';
 
-const API_URL = 'http://localhost:8081/';
+const API_URL = 'http://192.168.0.136:8081/';
 
 class PhotoService {
     async upload(formdata) {
@@ -22,12 +22,11 @@ class PhotoService {
     }
 
     async loadAll() {
-        const response = await axios.get(API_URL + 'photos', {
+        return await axios.get(API_URL + 'photos', {
             headers: authHeader()
-        }).then(res => {
-            return res.data
-        });
-        return response;
+        }).then(res=>{
+            return res.data;
+        })        
     }
 }
 export default new PhotoService();

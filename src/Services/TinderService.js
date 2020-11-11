@@ -1,7 +1,7 @@
 import axios from 'axios';
 import authHeader from './AuthHeader';
 
-const API_URL = 'http://localhost:8081/';
+const API_URL = 'http://192.168.0.136:8081/';
 
 class TinderService{
 

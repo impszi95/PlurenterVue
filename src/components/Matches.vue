@@ -18,17 +18,40 @@
 
 <script>
 import UserService from "@/Services/UserService";
+//import SockJS from 'sockjs-client';
+//import Stomp from 'webstomp-client';
+//import authHeader from '@/Services/AuthHeader';
 
 export default {
   data() {
     return {
       users: [],
+    //  received_messages: [],
+    //  connected: false
+
     };
   },
   async created() {
     this.users = await UserService.getAllMatches();
+//    this.connect();
+//  },
+//  methods: {
+//       connect () {
+//      this.socket = new SockJS('http://localhost:8081/websocket-endpoint')
+//      this.stompClient = Stomp.over(this.socket)
+//      this.stompClient.connect(authHeader(), (frame) => {
+//        this.connected = true
+//        console.log(frame)
+//        this.stompClient.subscribe('/global-message/tick', (tick) => {
+//          console.log(tick)
+//          this.received_messages.push(tick)
+//        })
+//     }, (error) => {
+ //       console.log(error)
+ //       this.connected = false
+  //    })
+  //  },
   },
-  methods: {},
 };
 </script>
 

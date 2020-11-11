@@ -65,11 +65,11 @@ export default {
         type: "is-danger",
       });
     },
-    BrowseAll(){
-       this.$router.push("/browseAll").catch((err) => {
+    BrowseAll() {
+      this.$router.push("/browseAll").catch((err) => {
         err;
       });
-    }
+    },
   },
   async created() {
     if (!this.isLogged) {

@@ -7,18 +7,16 @@ const initialState = user ? {
         loggedIn: true
     },
     user,
-    userPhotos: []
+    userPhotos: [],
 } : {
     status: {
         loggedIn: false
     },
-    user: null,
-    userPhotos: []
 };
 
 export const auth = {
     namespaced: true,
-    state: initialState,
+    state: initialState,    
     actions: {
         login({
             commit

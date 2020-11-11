@@ -11,9 +11,11 @@
     "axios": "^0.20.0",
     "buefy": "^0.9.3",
     "core-js": "^3.6.5",
+    "sockjs-client": "^1.5.0",
     "vue": "^2.6.11",
     "vue-router": "^3.4.5",
-    "vuex": "^3.5.1"
+    "vuex": "^3.5.1",
+    "webstomp-client": "^1.2.6"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",

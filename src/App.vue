@@ -1,38 +1,56 @@
 <template>
   <div id="app">
     <div id="nav">
-    <b-navbar>
+      <b-navbar>
         <template slot="brand">
-            <b-navbar-item tag="router-link" :to="{ path: '/' }">
-                <img
-                    src="./assets/logo.png"
-                >
-            </b-navbar-item>
+          <b-navbar-item tag="router-link" :to="{ path: '/' }">
+            <img src="./assets/logo.png" />
+          </b-navbar-item>
         </template>
         <template slot="start">
-            <b-navbar-item tag="router-link" :to="{ path: '/' }">
-                Home
-            </b-navbar-item>
-            <b-navbar-item v-show="isLogged" tag="router-link" :to="{ path: '/profile' }">
-                Profile
-            </b-navbar-item>
-            <b-navbar-item v-show="isLogged" tag="router-link" :to="{ path: '/matches' }">
-                Matches
-            </b-navbar-item>
+          <b-navbar-item class="nav-item" tag="router-link" :to="{ path: '/' }">
+            Home
+          </b-navbar-item>
+          <b-navbar-item
+            class="nav-item"
+            v-show="isLogged"
+            tag="router-link"
+            :to="{ path: '/profile' }"
+          >
+            Profile
+          </b-navbar-item>
+          <b-navbar-item
+            class="nav-item"
+            v-show="isLogged"
+            tag="router-link"
+            :to="{ path: '/matches' }"
+          >
+            Matches
+          </b-navbar-item>
         </template>
         <template slot="end">
-            <b-navbar-item tag="div">
-                <div class="buttons">
-                    <a v-show="!isLogged" class="button is-success" @click="goToRegister()">
-                        <strong>Sign up</strong>
-                    </a>
-                    <a v-show="isLogged" class="button is-success" @click="logout()">
-                        <strong>Logout</strong>
-                    </a>
-                </div>
-            </b-navbar-item>
+          <b-navbar-item tag="div">
+            <div class="buttons">
+              <a
+                v-show="!isLogged"
+                id="bt"
+                class="button is-success"
+                @click="goToRegister()"
+              >
+                <strong>Sign up</strong>
+              </a>
+              <a
+                v-show="isLogged"
+                id="bt"
+                class="button is-success"
+                @click="logout()"
+              >
+                <strong>Logout</strong>
+              </a>
+            </div>
+          </b-navbar-item>
         </template>
-    </b-navbar>
+      </b-navbar>
     </div>
     <router-view />
     <div class="foot">
@@ -54,7 +72,7 @@ export default {
       this.$router.push("/").catch((err) => {
         err;
       });
-    },    
+    },
     goToRegister() {
       this.$router.push("/register");
     },
@@ -75,7 +93,7 @@ export default {
   padding-bottom: 0px;
 }
 
-#nav a {
+#nav a :scope {
   font-weight: bold;
   font-size: 1.5rem;
 }
@@ -105,5 +123,16 @@ export default {
   top: 0.6rem;
   left: 1rem;
   width: 3rem;
+}
+.nav-item {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+#bt {
+  font-size: 1.2rem;
+  width: 90px;
+  margin-left: auto;
+  margin-right: auto;
+  height: 45px;
 }
 </style>

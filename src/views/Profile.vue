@@ -97,14 +97,14 @@ export default {
 
 <style scoped>
 .userInfos {
-  margin: 0.5%;
-  padding: 0.5%;
+  margin-left: auto;
+  margin-right: auto;
   text-align: center;
   font-size: 1.2rem;
 }
 .image {
-  padding: 0.5%;
-  width: 380px;
+  padding: 0.1%;
+  width: 370px;
   display: inline-block;
 }
 .images {

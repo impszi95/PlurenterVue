@@ -5,10 +5,18 @@
         {{ user.username }}
       </div>
       <div class="img">
-        <img
+        <b-carousel
+          :icon-pack="mdi"
           v-if="actualPhoto != ''"
-          v-bind:src="'data:image/jpg;base64,' + actualPhoto.image.data"
-        />
+          :indicator-inside="true"
+          :autoplay="false"
+        >
+          <b-carousel-item v-for="photo in user.photos" :key="photo.id">
+            <span class="image">
+              <img :src="'data:image/jpg;base64,' + photo.image.data" />
+            </span>
+          </b-carousel-item>
+        </b-carousel>
         <img v-else src="../assets/default.png" />
       </div>
       <div class="likes">
@@ -80,7 +88,7 @@ export default {
 .img {
   margin-left: auto;
   margin-right: auto;
-  width: 80%;
-  max-width: 500px;
+  width: auto;
+  max-width: 100%;
 }
 </style>

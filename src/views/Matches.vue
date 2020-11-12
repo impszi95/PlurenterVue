@@ -77,12 +77,12 @@ export default {
   vertical-align: middle;
   padding: 0.2rem;
   width: 300px;
-  height: 400px;
+  height: 325px;
   display: inline-block;
   border-style: solid;
 }
 .img {
-  max-width: 90%;
-  max-height: 70%;
+  max-width: 100%;
+  height: auto;
 }
 </style>

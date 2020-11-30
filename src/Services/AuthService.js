@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'http://192.168.0.105:8081/api/auth/';
+const API_URL = 'http://194.156.81.191:8080/tinder-api/api/auth/';
 
 class AuthService {
 

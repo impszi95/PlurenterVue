@@ -1,7 +1,7 @@
 import * as axios from 'axios';
 import authHeader from './AuthHeader';
 
-const API_URL = 'http://192.168.0.105:8081/';
+const API_URL = 'http://194.156.81.191:8080/tinder-api/';
 
 class PhotoService {
     async upload(formdata) {

@@ -8,7 +8,7 @@ import 'buefy/dist/buefy.css'
 Vue.use(Buefy)
 Vue.config.productionTip = false
 
-new Vue({
+new Vue({ 
   router,
   store,
   render: h => h(App)

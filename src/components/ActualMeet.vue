@@ -6,7 +6,6 @@
       </div>
       <div class="img">
         <b-carousel
-          :icon-pack="mdi"
           v-if="actualPhoto != ''"
           :indicator-inside="true"
           :autoplay="false"

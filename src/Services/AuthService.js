@@ -1,12 +1,11 @@
 import axios from 'axios';
-
-const API_URL = 'http://194.156.81.191:8080/tinder-api/api/auth/';
+import API_URL from '../Enviroment'
 
 class AuthService {
 
     login(user) {
         return axios
-            .post(API_URL + 'signin',{
+            .post(API_URL + 'auth/signin',{
                 username: user.username,
                 password: user.password
             })
@@ -24,7 +23,7 @@ class AuthService {
     }
 
     register(user) {
-        return axios.post(API_URL + 'signup', {
+        return axios.post(API_URL + 'auth/signup', {
             username: user.username,
             password: user.password
         });

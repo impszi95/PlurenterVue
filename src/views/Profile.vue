@@ -5,7 +5,7 @@
         <div>Username: {{ currentUser.username }}</div>
         <div>Likes: {{ usersLikes }}</div>
         <div class="images">
-          <div class="image" v-for="photo in this.userPhotos" :key="photo.id">
+          <div class="image" v-for="photo in userPhotos" :key="photo.id">
             <img v-bind:src="'data:image/jpg;base64,' + photo.image.data" />
           </div>
         </div>
@@ -17,8 +17,8 @@
           @change="onPhotoSelected"
           accept="image/*"
         />
-        <b-button @click="onUpload">Upload</b-button>
       </div>
+      <b-button @click="onUpload">Upload</b-button>
       <b-button type="is-success" @click="BrowseAll">Browse all</b-button>
     </div>
   </div>
@@ -75,10 +75,7 @@ export default {
       this.$router.push("/");
     }
 
-    //Loggedin section
-    if (this.userPhotos.length == 0) {
-      this.LoadAllPic();
-    }
+    this.LoadAllPic();
     this.usersLikes = await UserService.getUsersLikes();
   },
   computed: {
@@ -90,7 +87,7 @@ export default {
     },
     userPhotos() {
       return this.$store.state.auth.userPhotos;
-    }
+    },
   },
 };
 </script>

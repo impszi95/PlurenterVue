@@ -30,9 +30,7 @@ export default {
     };
   },
   async created() {
-    if (this.allMatches.length == 0) {
       this.LoadAllMatches();
-    }
   },
   methods:{
     LoadAllMatches(){

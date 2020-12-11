@@ -22,7 +22,7 @@ import UserService from "@/Services/UserService";
 export default {
   data() {
     return {
-      usersCount: "",
+      usersCount: ""
     };
   },
   components: {
@@ -32,7 +32,7 @@ export default {
   computed: {
     isLogged() {
       return this.$store.state.auth.status.loggedIn;
-    },
+    }
   },
   async created() {
     this.usersCount = await UserService.getUsersCount();

@@ -18,7 +18,7 @@ const initialState = user ? {
 
 export const auth = {
     namespaced: true,
-    state: initialState,    
+    state:() => initialState,    
     actions: {
         login({
             commit
@@ -97,7 +97,7 @@ export const auth = {
             state.status.loggedIn = false;
         },
         cacheUserPhotos(state, photos) {
-            state.userPhotos = photos
+            state.userPhotos = photos;
         },
         cacheAllMatches(state, allMatches){
             state.allMatches = allMatches;

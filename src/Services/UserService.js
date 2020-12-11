@@ -9,7 +9,7 @@ class UserService {
             .get(API_URL + "usersCount")
             .then((res) => {
                 return res.data;
-            });
+            })
     }
 
     async getAllUsers() {

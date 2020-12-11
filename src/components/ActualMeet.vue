@@ -4,23 +4,20 @@
       <div class="username">
         {{ user.username }}
       </div>
-      <div class="img">
-        <b-carousel
-          v-if="actualPhoto != ''"
-          :indicator-inside="true"
-          :autoplay="false"
-        >
-          <b-carousel-item v-for="photo in user.photos" :key="photo.id">
-            <span class="image">
-              <img :src="'data:image/jpg;base64,' + photo.image.data" />
-            </span>
-          </b-carousel-item>
-        </b-carousel>
-        <img v-else src="../assets/default.png" />
-      </div>
-      <div class="likes">
-        <br />
-        <b-button @click="Like(user.id)" type="is-info">Like</b-button>
+      <b-carousel
+        v-if="actualPhoto != ''"
+        :indicator-inside="true"
+        :autoplay="false"
+      >
+              <b-carousel-item v-for="photo in user.photos" :key="photo.id">
+          <div class="image_container">
+            <img class="image" :src="'data:image/jpg;base64,' + photo.image.data" />
+          </div>
+        </b-carousel-item>
+      </b-carousel>
+      <img class="image" v-else src="../assets/default.png" />    
+      <div class="buttons">
+        <b-button class="btn_like" @click="Like(user.id)" type="is-info">Like</b-button>
       </div>
     </div>
   </div>
@@ -70,24 +67,38 @@ export default {
 </script>
 
 <style scoped>
+.user {
+  background-color: gainsboro;
+  height: 600px;
+  max-width: 500px;
+  width: 100%;
+  display: inline-block;
+}
 .username {
   font-size: 2rem;
   font: bold;
+  height: 50px;
 }
-.user {
-  background-color: gainsboro;
-  margin-top: 1rem;
-  vertical-align: middle;
-  padding: 0.2rem;
-  width: 90%;
-  max-width: 600px;
-  display: inline-block;
-  border-style: solid;
+.image_container{  
+  height: 500px;
+  width: 500px;
+  background-color: grey
 }
-.img {
-  margin-left: auto;
+.image {
+  object-fit: contain;
+  margin-left: auto;  
   margin-right: auto;
-  width: auto;
-  max-width: 100%;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.buttons{
+  position: relative;
+  height: 50px;
+}
+.btn_like{  
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 </style>

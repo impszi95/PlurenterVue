@@ -73,8 +73,7 @@ export default {
   max-width: 500px;
   width: 100%;
   display: inline-block;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 .username {
   font-size: 2rem;
@@ -83,7 +82,8 @@ export default {
 }
 .image_container{  
   height: 500px;
-  width: 500px;
+  max-width: 500px;
+  width: 100%;
 }
 .image {
   object-fit: contain;

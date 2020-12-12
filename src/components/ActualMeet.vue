@@ -15,7 +15,7 @@
           </div>
         </b-carousel-item>
       </b-carousel>
-      <img class="image" v-else src="../assets/default.png" />    
+      <img class="blank_img" v-else src="../assets/default.png" />  
       <div class="buttons">
         <b-button class="btn_like" @click="Like(user.id)" type="is-info">Like</b-button>
       </div>
@@ -73,6 +73,8 @@ export default {
   max-width: 500px;
   width: 100%;
   display: inline-block;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+
 }
 .username {
   font-size: 2rem;
@@ -82,7 +84,6 @@ export default {
 .image_container{  
   height: 500px;
   width: 500px;
-  background-color: grey
 }
 .image {
   object-fit: contain;
@@ -90,6 +91,10 @@ export default {
   margin-right: auto;
   top: 50%;
   transform: translateY(-50%);
+}
+.blank_img{
+  height: 500px;
+  width: 500px;
 }
 .buttons{
   position: relative;

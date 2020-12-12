@@ -5,12 +5,14 @@
         <div class="username">
           {{ user.username }}
         </div>
+        <div class="container">
         <img
           v-if="user.photos.length != 0"
           class="img"
           v-bind:src="'data:image/jpg;base64,' + user.photos[0].image.data"
-        />
+        />        
         <img v-else src="../assets/default.png" />
+        </div>
       </div>
     </div>
   </div>
@@ -66,21 +68,30 @@ export default {
 
 <style scoped>
 .users {
-  background-color: slategray;
   margin-top: 1rem;
 }
 .user {
   background-color: gainsboro;
-  margin: 0.1rem;
+  margin: 10px;
   vertical-align: middle;
-  padding: 0.2rem;
   width: 300px;
-  height: 325px;
+  height: 330px;
   display: inline-block;
-  border-style: solid;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.username{
+  font-size: 1.2rem;
+  height: 30px;
+}
+.container{
+  width: 300px;
+  height: 300px;
 }
 .img {
-  max-width: 100%;
-  height: auto;
+  object-fit: contain;  
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 </style>

@@ -17,7 +17,7 @@
       </b-carousel>
       <img class="blank_img" v-else src="../assets/default.png" />  
     </div>
-    <div class="buttons">
+    <div v-if="haveMeets" class="buttons">
         <b-button rounded class="btn" @click="Dislike(user.id)" type="is-info" icon="upload">
           <b-icon class="file-icon" size="is-medium" icon="close"></b-icon>
         </b-button>

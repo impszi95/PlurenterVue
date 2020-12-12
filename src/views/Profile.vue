@@ -1,28 +1,31 @@
 <template>
   <div>
-      <div class="userInfos">
-        <div class="datas">
-          <div>Username: {{ currentUser.username }}</div>
-          <div>Likes: {{ usersLikes }}</div>
-        </div>        
-         <div class="upload_img">
-       <div class="upload_container">
+    <div class="userInfos">
+      <div class="datas">
+        <div>Username: {{ currentUser.username }}</div>
+        <div>Likes: {{ usersLikes }}</div>
+      </div>
+      <div class="upload_img">
+        <div class="upload_container">
           <b-field class="file is-success">
             <b-upload @input="onUpload" accept="image/*" class="file-label">
               <span class="file-cta">
                 <b-icon class="file-icon" icon="upload"></b-icon>
                 <span class="file-label">Upload image</span>
-             </span>
+              </span>
             </b-upload>
-         </b-field>          
-       </div>
-      </div>      
-        <div class="images">
-          <div class="image_container" v-for="photo in userPhotos" :key="photo.id">
-            <img class="image" v-bind:src="'data:image/jpg;base64,' + photo.image.data" />
-          </div>
+          </b-field>
         </div>
-      </div>     
+      </div>
+      <div class="images">
+        <div class="image_container" v-for="photo in photos" :key="photo.id">
+          <img
+            class="image"
+            v-bind:src="'data:image/jpg;base64,' + photo.image.data"
+          />
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -35,9 +38,10 @@ export default {
   data() {
     return {
       usersLikes: null,
+      photos: null,
     };
   },
-  methods: {    
+  methods: {
     async onUpload(file) {
       let selectedPhoto = file;
       if (selectedPhoto != null) {
@@ -55,8 +59,10 @@ export default {
         }
       }
     },
-    async LoadAllPic() {
-      this.$store.dispatch("auth/cacheUserPhotos");
+    LoadAllPic() {
+      this.$store.dispatch("auth/cacheUserPhotos").then((res) => {
+        this.photos = res;
+      });
     },
     ImageUploadError() {
       this.$buefy.toast.open({
@@ -64,7 +70,7 @@ export default {
         type: "is-danger",
       });
     },
-     ImageUploaded() {
+    ImageUploaded() {
       this.$buefy.toast.open({
         message: `New image uploaded </b>`,
         type: "is-success",
@@ -81,7 +87,14 @@ export default {
       this.$router.push("/");
     }
 
-    this.LoadAllPic();
+    if (this.userPhotos == null || this.userPhotos.length == 0) {
+      this.LoadAllPic();
+      console.log("load");
+    } else {
+      this.photos = this.userPhotos;
+      console.log("cache");
+    }
+
     this.usersLikes = await UserService.getUsersLikes();
   },
   computed: {
@@ -105,19 +118,19 @@ export default {
   text-align: center;
   font-size: 1.2rem;
 }
-.datas{
+.datas {
   margin-bottom: 20px;
-    background-color: gainsboro;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  background-color: gainsboro;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
-.file.is-success{
-  display:block;
+.file.is-success {
+  display: block;
   margin-left: auto;
   margin-right: auto;
 }
-.image_container{  
+.image_container {
   background-color: gainsboro;
-  display: inline-block;  
+  display: inline-block;
   height: 400px;
   width: 400px;
   margin-top: -0.5rem;
@@ -127,9 +140,10 @@ export default {
 .image {
   object-fit: contain;
   top: 50%;
-  transform: translateY(-50%);  
-  margin-left: auto;  
+  transform: translateY(-50%);
+  margin-left: auto;
   margin-right: auto;
-  width:100%; height:100%;
+  width: 100%;
+  height: 100%;
 }
 </style>

@@ -54,10 +54,10 @@ export const auth = {
                 }
             );
         },
-        async cacheUserPhotos({
+         cacheUserPhotos({
             commit
         }) {
-            return await PhotoService.loadAll().then(
+            return  PhotoService.loadAll().then(
                 photos => {
                     commit('cacheUserPhotos', photos);
                     return Promise.resolve(photos);

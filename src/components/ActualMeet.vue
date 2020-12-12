@@ -16,10 +16,15 @@
         </b-carousel-item>
       </b-carousel>
       <img class="blank_img" v-else src="../assets/default.png" />  
-      <div class="buttons">
-        <b-button class="btn_like" @click="Like(user.id)" type="is-info">Like</b-button>
-      </div>
     </div>
+    <div class="buttons">
+        <b-button rounded class="btn" @click="Dislike(user.id)" type="is-info" icon="upload">
+          <b-icon class="file-icon" size="is-medium" icon="close"></b-icon>
+        </b-button>
+        <b-button rounded class="btn" @click="Like(user.id)" type="is-danger">
+          <b-icon class="file-icon" size="is-medium" icon="heart"></b-icon>
+        </b-button>       
+      </div>
   </div>
 </template>
 
@@ -59,6 +64,10 @@ export default {
       await TinderService.like(id);
       await this.loadActualMeet();
     },
+    async Dislike(id) {
+      await TinderService.dislike(id);
+      await this.loadActualMeet();
+    },
   },
   async created() {
     await this.loadActualMeet();
@@ -69,7 +78,7 @@ export default {
 <style scoped>
 .user {
   background-color: gainsboro;
-  height: 600px;
+  height: 550px;
   max-width: 500px;
   width: 100%;
   display: inline-block;
@@ -91,19 +100,24 @@ export default {
   margin-right: auto;
   top: 50%;
   transform: translateY(-50%);
+  width:100%; height:100%;
+
 }
 .blank_img{
   height: 500px;
   width: 500px;
 }
 .buttons{
-  position: relative;
-  height: 50px;
-}
-.btn_like{  
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  display:block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 6px;
+  }
+.btn{
+  width: 70px;
+  height: 70px;
+  margin-inline: 80px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 5px 15px 0 rgba(0, 0, 0, 0.19);
+
 }
 </style>

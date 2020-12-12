@@ -9,6 +9,11 @@ class TinderService{
             headers: authHeader()
         });  
     }
+    async dislike(id){
+        return await axios.post(API_URL + 'dislikeUser?userId='+id,{}, {
+            headers: authHeader()
+        });  
+    }
     async actualMeet(){
         return await axios.get(API_URL + 'actualMeet',{
             headers: authHeader()

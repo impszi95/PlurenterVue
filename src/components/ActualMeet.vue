@@ -78,11 +78,17 @@ export default {
 <style scoped>
 .user {
   background-color: gainsboro;
+  position: relative;
   height: 550px;
-  max-width: 500px;
-  width: 100%;
+  width: 500px;
   display: inline-block;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+@media only screen and (max-width: 500px) {
+  [class*="user"] {
+    width: 90%;
+    height: auto;
+  }
 }
 .username {
   font-size: 2rem;
@@ -90,9 +96,19 @@ export default {
   height: 50px;
 }
 .image_container{  
+  width: 500px;
   height: 500px;
-  max-width: 500px;
-  width: 100%;
+  position: relative;
+}
+@media only screen and (max-width: 500px) {
+  [class*="image_container"] {
+    width: 100%;
+    height: 0;
+    padding-bottom: 100%;
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+  }
 }
 .image {
   object-fit: contain;
@@ -101,7 +117,9 @@ export default {
   top: 50%;
   transform: translateY(-50%);
   width:100%; height:100%;
-
+    
+  position: absolute;
+  left: 0;
 }
 .blank_img{
   height: 500px;
@@ -116,8 +134,6 @@ export default {
 .btn{
   width: 70px;
   height: 70px;
-  margin-inline: 80px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 5px 15px 0 rgba(0, 0, 0, 0.19);
-
 }
 </style>

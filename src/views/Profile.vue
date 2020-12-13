@@ -144,8 +144,7 @@ export default {
   margin-left: auto;
   margin-right: auto;
   width: 100%;
-  height: 100%;
-    
+  height: 100%;    
   position: absolute;
   left: 0;
 }
@@ -157,10 +156,6 @@ export default {
     position: relative;
     margin-left: auto;
     margin-right: auto;
-  }
-}
-@media only screen and (max-width: 768px) {
-  [class*="image"] {   
   }
 }
 </style>

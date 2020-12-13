@@ -89,7 +89,7 @@ export default {
 }
 
 #nav {
-  padding: 1rem;
+  padding: 0rem;
   padding-bottom: 0px;
 }
 

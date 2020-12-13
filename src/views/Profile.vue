@@ -33,7 +33,6 @@
 //import Register from "@/components/Register.vue";
 import PhotoService from "../Services/PhotoService";
 import UserService from "@/Services/UserService";
-
 export default {
   data() {
     return {
@@ -129,10 +128,11 @@ export default {
   margin-right: auto;
 }
 .image_container {
+  position: relative;
   background-color: gainsboro;
   display: inline-block;
-  height: 400px;
   width: 400px;
+  height: 400px;
   margin-top: -0.5rem;
   margin: 10px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
@@ -145,5 +145,22 @@ export default {
   margin-right: auto;
   width: 100%;
   height: 100%;
+    
+  position: absolute;
+  left: 0;
+}
+@media only screen and (max-width: 768px) {
+  [class*="image_container"] {
+    width: 50%;
+    height: 0;
+    padding-bottom: 50%;
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+@media only screen and (max-width: 768px) {
+  [class*="image"] {   
+  }
 }
 </style>

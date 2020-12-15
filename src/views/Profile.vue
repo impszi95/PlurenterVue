@@ -18,11 +18,14 @@
         </div>
       </div>
       <div class="images">
-        <div class="image_container" v-for="photo in photos" :key="photo.id">
+        <div class="image_container" v-for="photo in photos" :key="photo.id">          
           <img
             class="image"
             v-bind:src="'data:image/jpg;base64,' + photo.image.data"
           />
+          <b-button rounded class="btn_delete" @click="Dislike(user.id)" type="is-danger">
+            <b-icon class="file-icon" size="is-small" icon="close"></b-icon>
+         </b-button>
         </div>
       </div>
     </div>
@@ -88,10 +91,8 @@ export default {
 
     if (this.userPhotos == null || this.userPhotos.length == 0) {
       this.LoadAllPic();
-      console.log("load");
     } else {
-      this.photos = this.userPhotos;
-      console.log("cache");
+      this.photos = this.userPhotos; //cache
     }
 
     this.usersLikes = await UserService.getUsersLikes();
@@ -149,7 +150,7 @@ export default {
   left: 0;
 }
 @media only screen and (max-width: 768px) {
-  [class*="image_container"] {
+  .image_container{
     width: 50%;
     height: 0;
     padding-bottom: 50%;
@@ -157,5 +158,25 @@ export default {
     margin-left: auto;
     margin-right: auto;
   }
+}
+@media only screen and (min-width: 769px) {
+  .image_container:hover{
+  width: 410px;
+  height: 410px;
+  margin:5px; 
+  margin-bottom: 0px;
+}
+  .image_container:hover .btn_delete{
+    visibility: visible;
+}
+}
+.btn_delete {
+  width: 40px;
+  height: 40px;  
+  padding: 0;
+  margin-right:-100%;
+  transform: translateX(-50%);
+  box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.2), 0 1px 10px 0 rgba(0, 0, 0, 0.19);
+  visibility: hidden;
 }
 </style>

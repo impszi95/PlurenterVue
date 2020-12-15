@@ -1,17 +1,17 @@
 <template>
   <div>
     <div class="users">
-      <div class="user" v-for="user in this.allMatches" :key="user.id">
+      <div class="user" v-for="user in this.matches" :key="user.id">
         <div class="username">
           {{ user.username }}
         </div>
         <div class="container">
-        <img
-          v-if="user.photos.length != 0"
-          class="img"
-          v-bind:src="'data:image/jpg;base64,' + user.photos[0].image.data"
-        />        
-        <img v-else src="../assets/default.png" />
+          <img
+            v-if="user.photos.length != 0"
+            class="img"
+            v-bind:src="'data:image/jpg;base64,' + user.photos[0].image.data"
+          />
+          <img v-else src="../assets/default.png" />
         </div>
       </div>
     </div>
@@ -22,28 +22,18 @@
 //import SockJS from 'sockjs-client';
 //import Stomp from 'webstomp-client';
 //import authHeader from '@/Services/AuthHeader';
-
+import UserService from "@/Services/UserService";
 export default {
   data() {
     return {
-    //  received_messages: [],
-    //  connected: false
-
+      matches: [],
     };
   },
   async created() {
-      this.LoadAllMatches();
+    this.matches = await UserService.getAllMatches();
   },
-  methods:{
-    LoadAllMatches(){
-       this.$store.dispatch("auth/cacheAllMatches");
-    }
-  },
-  computed:{    
-    allMatches(){
-      return this.$store.state.auth.allMatches;
-    }
-  }
+  methods: {},
+  computed: {},
 };
 //    this.connect();
 //  },
@@ -59,17 +49,21 @@ export default {
 //          this.received_messages.push(tick)
 //        })
 //     }, (error) => {
- //       console.log(error)
- //       this.connected = false
-  //    })
-  //  },
- // },
+//       console.log(error)
+//       this.connected = false
+//    })
+//  },
+// },
 </script>
 
 <style scoped>
 .users {
   margin-top: 1rem;
 }
+.users :hover{  
+  background-color: rgb(232, 232, 232);
+  }
+
 .user {
   background-color: gainsboro;
   margin: 10px;
@@ -79,20 +73,21 @@ export default {
   display: inline-block;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
-.username{
+.username {
   font-size: 1.2rem;
   height: 30px;
 }
-.container{
+.container {
   width: 300px;
   height: 300px;
 }
 .img {
-  object-fit: contain;  
+  object-fit: contain;
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width:100%; height:100%;
+  width: 100%;
+  height: 100%;
 }
 </style>

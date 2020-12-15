@@ -19,7 +19,6 @@ class UserService {
             return res.data;
         });
     }
-
    async getAllMatches(){
         return await axios.get(API_URL + 'getAllMatches', {
             headers: authHeader()
@@ -27,7 +26,6 @@ class UserService {
             return res.data;
         });
    }
-
     async getUsersLikes(){
         return await axios.get(API_URL + 'getUsersLikes',{
             headers: authHeader()

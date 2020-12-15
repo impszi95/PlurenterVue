@@ -23,7 +23,7 @@ class PhotoService {
     async loadAll() {
         return await axios.get(API_URL + 'photos', {
             headers: authHeader()
-        }).then(res=>{
+        }).then(res=>{            
             return res.data;
         })        
     }

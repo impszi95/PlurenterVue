@@ -72,7 +72,4 @@ h1 {
   width: 50%;
   margin-left: 25%;
 }
-.login_b {
-  padding-top: 1rem;
-}
 </style>

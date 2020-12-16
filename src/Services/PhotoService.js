@@ -11,13 +11,10 @@ class PhotoService {
         });
     }
 
-    async load(imgId) {
-        const response = await axios.get(API_URL + 'photos/' + imgId, {
+    async delete(imgId) {
+        await axios.delete(API_URL + 'deletePhoto/' + imgId, {
             headers: authHeader()
-        }).then(res => {
-            return res.data
         });
-        return response.image;
     }
 
     async loadAll() {

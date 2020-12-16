@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <div class="welcome_page" v-if="!isLogged">
-      <img alt="Vue logo" src="../assets/logo.png" />
+      <img class="logo" alt="Vue logo" src="../assets/logo.png" />
       <div class="activeUsers">Active users: {{ usersCount }}</div>
       <div>
         <Login />
@@ -51,4 +51,10 @@ export default {
   margin-right: auto;
   border-radius: 25px;
 }
+@media only screen and (max-width: 768px) {
+  .logo {
+    height: 160px;
+  }
+}
+
 </style>

@@ -3,10 +3,10 @@
     <h1>Register</h1>
     <div class="Register">
       <b-field label="Username">
-        <b-input type="isSuccess" v-model="user.username"></b-input>
+        <b-input type="isSuccess" required v-model="user.username"></b-input>
       </b-field>
       <b-field label="Password">
-        <b-input type="password" v-model="user.password"></b-input>
+        <b-input type="password" password-reveal required v-model="user.password"></b-input>
       </b-field>
       <div class="logout_b">
         <b-button @click="register()" type="is-info">Register</b-button>

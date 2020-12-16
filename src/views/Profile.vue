@@ -18,17 +18,48 @@
         </div>
       </div>
       <div class="images">
-        <div class="image_container" v-for="photo in photos" :key="photo.id">          
+        <div class="image_container" v-for="photo in photos" :key="photo.id" @click="SelectPhoto(photo)">
           <img
             class="image"
             v-bind:src="'data:image/jpg;base64,' + photo.image.data"
           />
-          <b-button rounded class="btn_delete" @click="Dislike(user.id)" type="is-danger">
-            <b-icon class="file-icon" size="is-small" icon="close"></b-icon>
-         </b-button>
+          <b-button
+            rounded
+            class="btn_delete"
+            @click="DeletePopUp(photo)"
+            type="is-danger"
+          >
+            <b-icon class="file-icon" icon="close"></b-icon>
+          </b-button>
         </div>
       </div>
     </div>
+    <b-modal
+    class="confirmPopUp"
+     scroll="keep"
+      v-model="isDeleteModalActive"
+      has-modal-card
+      trap-focus
+      :destroy-on-hide="false"
+      aria-role="dialog"
+      aria-modal
+      :can-cancel="false"
+    >
+      <ConfirmPopUp @close="CancelDelete()" @delete="DeletePhoto()" />
+    </b-modal>
+    <b-modal 
+      class="fullImagePopUp"
+      scroll="keep"
+      v-model="isFullImageModalActive"
+      has-modal-card
+      trap-focus
+      :destroy-on-hide="false"
+      aria-role="dialog"
+      aria-modal
+      :can-cancel="false"
+    >
+      <FullImage :photo="selectedPhoto" @close="CancelDelete()" @delete="DeletePopUp()" />
+    </b-modal>
   </div>
 </template>
 
@@ -36,11 +67,22 @@
 //import Register from "@/components/Register.vue";
 import PhotoService from "../Services/PhotoService";
 import UserService from "@/Services/UserService";
+import ConfirmPopUp from "../components/ConfirmPopUp.vue";
+import FullImage from "../components/FullImage.vue";
+
 export default {
+  components: {
+    ConfirmPopUp,
+    FullImage,
+  },
   data() {
     return {
       usersLikes: null,
       photos: null,
+      isDeleteModalActive: false,
+      isFullImageModalActive: false,
+      photoToDelete: null,
+      selectedPhoto:null,
     };
   },
   methods: {
@@ -68,7 +110,7 @@ export default {
     },
     ImageUploadError() {
       this.$buefy.toast.open({
-        message: `Image may be larger than the allowed size </b>`,
+        message: `Image may be larger than the allowed size (5MB) </b>`,
         type: "is-danger",
       });
     },
@@ -83,6 +125,36 @@ export default {
         err;
       });
     },
+    DeletePopUp(photo) {
+            this.isFullImageModalActive = false;
+
+      this.isDeleteModalActive = true;
+      this.photoToDelete = photo.id;
+      this.selectedPhoto = photo.image.data;
+    },
+    CancelDelete() {
+      this.isDeleteModalActive = false;
+      this.isFullImageModalActive = false;
+      this.photoToDelete = null;
+      this.selectedPhoto = null;
+    },
+    FullimagePopUp(){
+
+    },
+    DeletePhoto() {
+      PhotoService.delete(this.photoToDelete);
+      this.photos = this.photos.filter(
+        (photo) => photo.id != this.photoToDelete
+      );
+      this.photoToDelete = null;
+      this.isDeleteModalActive = false;
+      this.isFullImageModalActive = false;
+    },
+    SelectPhoto(photo){      
+      this.photoToDelete = photo.id;
+      this.selectedPhoto = photo.image.data;
+      this.isFullImageModalActive=true;
+    }
   },
   async created() {
     if (!this.isLogged) {
@@ -145,36 +217,40 @@ export default {
   margin-left: auto;
   margin-right: auto;
   width: 100%;
-  height: 100%;    
+  height: 100%;
   position: absolute;
   left: 0;
 }
 @media only screen and (max-width: 768px) {
-  .image_container{
+  .image_container {
     width: 50%;
     height: 0;
     padding-bottom: 50%;
     position: relative;
     margin-left: auto;
-    margin-right: auto;
+    margin-right: auto;    
   }
 }
 @media only screen and (min-width: 769px) {
-  .image_container:hover{
-  width: 410px;
-  height: 410px;
-  margin:5px; 
-  margin-bottom: 0px;
-}
-  .image_container:hover .btn_delete{
+  .image_container:hover {
+    width: 410px;
+    height: 410px;
+    margin-bottom: 0px;
+    margin-left: 5px;
+    margin-right: 5px;
+  }
+  .image_container:hover .btn_delete {
     visibility: visible;
-}
+  }
+  .fullImagePopUp{
+    visibility: hidden;
+  }
 }
 .btn_delete {
   width: 40px;
-  height: 40px;  
+  height: 40px;
   padding: 0;
-  margin-right:-100%;
+  margin-right: -100%;
   transform: translateX(-50%);
   box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.2), 0 1px 10px 0 rgba(0, 0, 0, 0.19);
   visibility: hidden;

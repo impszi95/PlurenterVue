@@ -18,19 +18,21 @@
           </div>
         </b-carousel-item>
       </b-carousel>
-      <img class="blank_img" v-else src="../assets/default.png" />
+      <div v-else  class="image_container">
+      <img class="image" src="../assets/default.png" />
+      </div>
     </div>
     <div v-if="haveMeets" class="buttons">
       <b-button
         rounded
         class="btn"
-        @click="Dislike(user.id)"
+        @click="Dislike()"
         type="is-info"
         icon="upload"
       >
         <b-icon class="file-icon" size="is-medium" icon="close"></b-icon>
       </b-button>
-      <b-button rounded class="btn" @click="Like(user.id)" type="is-danger">
+      <b-button rounded class="btn" @click="Like()" type="is-danger">
         <b-icon class="file-icon" size="is-medium" icon="heart"></b-icon>
       </b-button>
     </div>
@@ -70,12 +72,12 @@ export default {
       }
       this.user = user;
     },
-    async Like(id) {
-      await TinderService.like(id);
+    async Like() {
+      await TinderService.like();
       await this.loadActualMeet();
     },
-    async Dislike(id) {
-      await TinderService.dislike(id);
+    async Dislike() {
+      await TinderService.dislike();
       await this.loadActualMeet();
     },
   },
@@ -134,10 +136,6 @@ export default {
 
   position: absolute;
   left: 0;
-}
-.blank_img {
-  height: 500px;
-  width: 500px;
 }
 .buttons {
   display: block;

@@ -4,13 +4,13 @@ import API_URL from '../Enviroment'
 
 class TinderService{
 
-    async like(id){
-        return await axios.post(API_URL + 'likeUser?userId='+id,{}, {
+    async like(){
+        return await axios.post(API_URL + 'likeUser',{}, {
             headers: authHeader()
         });  
     }
-    async dislike(id){
-        return await axios.post(API_URL + 'dislikeUser?userId='+id,{}, {
+    async dislike(){
+        return await axios.post(API_URL + 'dislikeUser',{}, {
             headers: authHeader()
         });  
     }

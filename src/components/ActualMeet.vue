@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="haveMeets" class="user">
+    <div class="user">
       <div class="username">
         {{ user.username }}
       </div>
@@ -22,7 +22,7 @@
       <img class="image" src="../assets/default.png" />
       </div>
     </div>
-    <div v-if="haveMeets" class="buttons">
+    <div class="buttons">
       <b-button
         rounded
         class="btn"
@@ -51,7 +51,6 @@ export default {
         photos: [],
       },
       actualPhoto: "",
-      haveMeets: false,
     };
   },
   components: {},
@@ -60,9 +59,10 @@ export default {
       let user = await TinderService.actualMeet();
 
       if (user.id == "" && user.username == "" && user.photos.length == 0) {
-        this.haveMeets = false;
-      } else {
-        this.haveMeets = true;
+        this.$emit('empty', true); 
+      }
+      else{
+        this.$emit('empty', false);
       }
 
       if (user.photos.length != 0) {

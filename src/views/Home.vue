@@ -8,14 +8,16 @@
       </div>
     </div>
     <div v-if="isLogged" class="Tinder">
-      <ActualMeet />
-    </div>
+      <ActualMeet v-if="!isEmptyMeet" @empty="onEmptyMeet" />
+       <Loading />
+    </div>   
   </div>
 </template>
 
 <script>
 import Login from "@/components/Login.vue";
 import ActualMeet from "@/components/ActualMeet.vue";
+import Loading from "@/components/Loading.vue";
 import UserService from "@/Services/UserService";
 //import authHeader from "../Services/AuthHeader";
 
@@ -23,11 +25,18 @@ export default {
   data() {
     return {
       usersCount: "",
+      isEmptyMeet:false
     };
+  },
+  methods:{
+    onEmptyMeet(isEmptyMeet){
+      this.isEmptyMeet=isEmptyMeet;
+    }
   },
   components: {
     Login,
     ActualMeet,
+    Loading,
   },
   computed: {
     isLogged() {

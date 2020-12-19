@@ -3,7 +3,7 @@
          <form action="">
                 <div class="modal-card">
                     <header @click="$emit('close')" class="modal-card-head">
-                             <img class="image" v-bind:src="'data:image/jpg;base64,' + photo"/>          
+                             <img class="image" v-bind:src="'data:image/jpg;base64,' + photo.image.data"/>          
                     </header>                   
                         <b-button rounded class="button is-danger" @click="$emit('delete')">
                             <b-icon class="file-icon" size="is-medium" icon="delete"></b-icon>

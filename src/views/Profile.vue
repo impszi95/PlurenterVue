@@ -18,7 +18,13 @@
         </div>
       </div>
       <div class="images">
-        <div class="image_container" v-for="photo in photos" :key="photo.id" @click="SelectPhoto(photo)">
+        <div
+          class="image_container"
+          v-for="photo in photos"
+          @
+          :key="photo.id"
+          @click="SelectPhoto(photo)"
+        >
           <img
             class="image"
             v-bind:src="'data:image/jpg;base64,' + photo.image.data"
@@ -26,7 +32,7 @@
           <b-button
             rounded
             class="btn_delete"
-            @click="DeletePopUp(photo)"
+            @click="DeletePopUp()"
             type="is-danger"
           >
             <b-icon class="file-icon" icon="close"></b-icon>
@@ -35,30 +41,35 @@
       </div>
     </div>
     <b-modal
-    class="confirmPopUp"
-     scroll="keep"
+      class="confirmPopUp"
+      scroll="keep"
       v-model="isDeleteModalActive"
       has-modal-card
       trap-focus
-      :destroy-on-hide="false"
+      :destroy-on-hide="true"
       aria-role="dialog"
       aria-modal
       :can-cancel="false"
     >
       <ConfirmPopUp @close="CancelDelete()" @delete="DeletePhoto()" />
     </b-modal>
-    <b-modal 
+    <b-modal
       class="fullImagePopUp"
       scroll="keep"
       v-model="isFullImageModalActive"
       has-modal-card
       trap-focus
-      :destroy-on-hide="false"
+      :destroy-on-hide="true"
       aria-role="dialog"
       aria-modal
       :can-cancel="false"
     >
-      <FullImage :photo="selectedPhoto" @close="CancelDelete()" @delete="DeletePopUp()" />
+      <FullImage
+      v-if="selectedPhoto!=null"
+        :photo="selectedPhoto"
+        @close="CancelDelete()"
+        @delete="DeletePopUp()"
+      />
     </b-modal>
   </div>
 </template>
@@ -81,8 +92,7 @@ export default {
       photos: null,
       isDeleteModalActive: false,
       isFullImageModalActive: false,
-      photoToDelete: null,
-      selectedPhoto:null,
+      selectedPhoto: null,
     };
   },
   methods: {
@@ -125,36 +135,41 @@ export default {
         err;
       });
     },
-    DeletePopUp(photo) {
-            this.isFullImageModalActive = false;
-
+    DeletePopUp() {
+      this.isFullImageModalActive = false;
       this.isDeleteModalActive = true;
-      this.photoToDelete = photo.id;
-      this.selectedPhoto = photo.image.data;
+      console.log("delete pop up");
     },
     CancelDelete() {
       this.isDeleteModalActive = false;
       this.isFullImageModalActive = false;
-      this.photoToDelete = null;
       this.selectedPhoto = null;
-    },
-    FullimagePopUp(){
-
+      console.log("cancel delete");
     },
     DeletePhoto() {
-      PhotoService.delete(this.photoToDelete);
+      console.log("1");
+
+      PhotoService.delete(this.selectedPhoto.id);
+      console.log("2");
       this.photos = this.photos.filter(
-        (photo) => photo.id != this.photoToDelete
+        (photo) => photo.id != this.selectedPhoto.id
       );
-      this.photoToDelete = null;
+      console.log("3");
+      
+      console.log("4");
       this.isDeleteModalActive = false;
+      
+      console.log("5");
       this.isFullImageModalActive = false;
+      
+      this.selectedPhoto = null;
+      console.log("6");
     },
-    SelectPhoto(photo){      
-      this.photoToDelete = photo.id;
-      this.selectedPhoto = photo.image.data;
-      this.isFullImageModalActive=true;
-    }
+    SelectPhoto(photo) {
+      console.log("select");
+      this.selectedPhoto = photo;
+      this.isFullImageModalActive = true;
+    },
   },
   async created() {
     if (!this.isLogged) {
@@ -228,7 +243,7 @@ export default {
     padding-bottom: 50%;
     position: relative;
     margin-left: auto;
-    margin-right: auto;    
+    margin-right: auto;
   }
 }
 @media only screen and (min-width: 769px) {
@@ -242,8 +257,8 @@ export default {
   .image_container:hover .btn_delete {
     visibility: visible;
   }
-  .fullImagePopUp{
-    visibility: hidden;
+  .fullImagePopUp {
+    display: none;
   }
 }
 .btn_delete {

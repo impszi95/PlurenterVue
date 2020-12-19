@@ -138,35 +138,22 @@ export default {
     DeletePopUp() {
       this.isFullImageModalActive = false;
       this.isDeleteModalActive = true;
-      console.log("delete pop up");
     },
     CancelDelete() {
       this.isDeleteModalActive = false;
       this.isFullImageModalActive = false;
       this.selectedPhoto = null;
-      console.log("cancel delete");
     },
     DeletePhoto() {
-      console.log("1");
-
       PhotoService.delete(this.selectedPhoto.id);
-      console.log("2");
       this.photos = this.photos.filter(
         (photo) => photo.id != this.selectedPhoto.id
       );
-      console.log("3");
-      
-      console.log("4");
-      this.isDeleteModalActive = false;
-      
-      console.log("5");
-      this.isFullImageModalActive = false;
-      
+      this.isDeleteModalActive = false;      
+      this.isFullImageModalActive = false;      
       this.selectedPhoto = null;
-      console.log("6");
     },
     SelectPhoto(photo) {
-      console.log("select");
       this.selectedPhoto = photo;
       this.isFullImageModalActive = true;
     },
@@ -236,6 +223,15 @@ export default {
   position: absolute;
   left: 0;
 }
+.btn_delete {
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  margin-right: -100%;
+  transform: translateX(-50%);
+  box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.2), 0 1px 10px 0 rgba(0, 0, 0, 0.19);
+  visibility: hidden;
+}
 @media only screen and (max-width: 768px) {
   .image_container {
     width: 50%;
@@ -260,14 +256,5 @@ export default {
   .fullImagePopUp {
     display: none;
   }
-}
-.btn_delete {
-  width: 40px;
-  height: 40px;
-  padding: 0;
-  margin-right: -100%;
-  transform: translateX(-50%);
-  box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.2), 0 1px 10px 0 rgba(0, 0, 0, 0.19);
-  visibility: hidden;
 }
 </style>

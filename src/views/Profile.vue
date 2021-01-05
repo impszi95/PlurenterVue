@@ -151,7 +151,7 @@ export default {
         (photo) => photo.id != this.selectedPhoto.id
       );
 
-      this.$store.dispatch("auth/deleteUserPhoto",this.selectedPhoto.id);
+      this.$store.dispatch("auth/deleteUserPhoto", this.selectedPhoto.id);
 
       this.isDeleteModalActive = false;
       this.isFullImageModalActive = false;
@@ -167,11 +167,10 @@ export default {
       this.$router.push("/");
     }
 
-    //if modified but gone to anther router page, modification doesnt shown (fix: always loadAllPic)
     if (this.userPhotos == null || this.userPhotos.length == 0) {
       this.LoadAllPic();
     } else {
-      this.photos = this.userPhotos; //cache
+      this.photos = this.userPhotos;
     }
 
     this.usersLikes = await UserService.getUsersLikes();

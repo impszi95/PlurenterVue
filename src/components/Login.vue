@@ -2,10 +2,10 @@
   <div class="LoginPage">
     <h1>Let's start it!</h1>
     <div class="Login">
-      <b-field label="Username">
-        <b-input type="isSuccess" v-model="user.username"></b-input>
+      <b-field type="is-dark" label="Username">
+        <b-input  v-model="user.username"></b-input>
       </b-field>
-      <b-field label="Password">
+      <b-field type="is-dark" label="Password">
         <b-input type="password" v-model="user.password"></b-input>
       </b-field>
       <div class="login_b">
@@ -69,7 +69,8 @@ h1 {
 }
 .Login {
   padding-top: 0.5rem;
-  width: 50%;
-  margin-left: 25%;
+  display: inline-block;
+  margin-left: auto;
+  margin-right: auto;
 }
 </style>

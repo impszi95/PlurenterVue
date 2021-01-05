@@ -65,7 +65,7 @@
       :can-cancel="false"
     >
       <FullImage
-      v-if="selectedPhoto!=null"
+        v-if="selectedPhoto != null"
         :photo="selectedPhoto"
         @close="CancelDelete()"
         @delete="DeletePopUp()"
@@ -149,8 +149,8 @@ export default {
       this.photos = this.photos.filter(
         (photo) => photo.id != this.selectedPhoto.id
       );
-      this.isDeleteModalActive = false;      
-      this.isFullImageModalActive = false;      
+      this.isDeleteModalActive = false;
+      this.isFullImageModalActive = false;
       this.selectedPhoto = null;
     },
     SelectPhoto(photo) {

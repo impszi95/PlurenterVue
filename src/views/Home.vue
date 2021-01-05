@@ -9,7 +9,7 @@
     </div>
     <div v-if="isLogged" class="Tinder">
       <ActualMeet v-if="!isEmptyMeet" @empty="onEmptyMeet" />
-       <Loading />
+       <Loading v-if="isEmptyMeet"/>
     </div>   
   </div>
 </template>

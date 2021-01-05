@@ -146,9 +146,13 @@ export default {
     },
     DeletePhoto() {
       PhotoService.delete(this.selectedPhoto.id);
+
       this.photos = this.photos.filter(
         (photo) => photo.id != this.selectedPhoto.id
       );
+
+      this.$store.dispatch("auth/deleteUserPhoto",this.selectedPhoto.id);
+
       this.isDeleteModalActive = false;
       this.isFullImageModalActive = false;
       this.selectedPhoto = null;
@@ -163,6 +167,7 @@ export default {
       this.$router.push("/");
     }
 
+    //if modified but gone to anther router page, modification doesnt shown (fix: always loadAllPic)
     if (this.userPhotos == null || this.userPhotos.length == 0) {
       this.LoadAllPic();
     } else {

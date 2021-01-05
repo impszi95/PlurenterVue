@@ -61,8 +61,12 @@ export const auth = {
                     return Promise.resolve(photos);
                 }
             );
+        },
+        deleteUserPhoto({commit}, photoId) {
+                commit('deleteUserPhoto', photoId);
         }
     },
+    
     mutations: {
         loginSuccess(state, user) {
             state.status.loggedIn = true;
@@ -89,6 +93,11 @@ export const auth = {
         },
         cacheAllMatches(state, allMatches){
             state.allMatches = allMatches;
+        },
+        deleteUserPhoto(state, photoId){
+            state.userPhotos = state.userPhotos.filter(
+                (photo) => photo.id != photoId
+            );
         }
     }
 }

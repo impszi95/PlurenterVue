@@ -9,8 +9,8 @@
     </div>
     <div v-if="isLogged" class="Tinder">
       <ActualMeet v-if="!isEmptyMeet" @empty="onEmptyMeet" />
-       <Loading v-if="isEmptyMeet"/>
-    </div>   
+      <Loading v-if="isEmptyMeet" />
+    </div>
   </div>
 </template>
 
@@ -25,13 +25,13 @@ export default {
   data() {
     return {
       usersCount: "",
-      isEmptyMeet:false
+      isEmptyMeet: false,
     };
   },
-  methods:{
-    onEmptyMeet(isEmptyMeet){
-      this.isEmptyMeet=isEmptyMeet;
-    }
+  methods: {
+    onEmptyMeet(isEmptyMeet) {
+      this.isEmptyMeet = isEmptyMeet;
+    },
   },
   components: {
     Login,
@@ -65,5 +65,4 @@ export default {
     height: 160px;
   }
 }
-
 </style>

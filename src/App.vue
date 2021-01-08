@@ -52,6 +52,7 @@
         </template>
       </b-navbar>
     </div>
+    <WebSocket v-if="isLogged" />
     <router-view />
     <div class="foot">
       <p>© 2020 MyTinder. All Rights Reserved</p>
@@ -60,7 +61,11 @@
 </template>
 
 <script>
+import WebSocket from "./components/WebSocket.vue";
 export default {
+  components: {
+    WebSocket,
+  },
   computed: {
     isLogged() {
       return this.$store.state.auth.status.loggedIn;

@@ -1,6 +1,5 @@
 <template>
   <div>
-   <div>
       <b-modal
       v-if="haveNotification"
       class="notification"
@@ -15,7 +14,6 @@
     >
       <Notification :match="this.match" @close="Cancel()" @viewMatches="goToMatches()"/>
     </b-modal>
-   </div>
   </div>
 </template>
 <script>
@@ -50,7 +48,8 @@ export default {
     },
     connect() {
       this.socket = new SockJS("http://localhost:8082/gs-guide-websocket");
-      this.stompClient = Stomp.over(this.socket);
+      this.stompClient = Stomp.over(this.socket);      
+      this.stompClient.debug = () => {};
       this.stompClient.connect(
         {},
         () => {
@@ -59,7 +58,7 @@ export default {
           this.stompClient.subscribe(
             "/queue/newMatch/" + this.currentUser.id,
             (tick) => {
-              this.match = tick.body;
+              this.match = JSON.parse(tick.body);
               this.haveNotification = true;
             }
           );

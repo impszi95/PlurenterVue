@@ -5,9 +5,18 @@
         <header class="modal-card-head">
           <p class="modal-card-title">New match</p>
         </header>
-          <body>
-            <div class="matchName"><p>{{ match }}</p></div>
-          </body>
+        <body>
+          <div class="matchName">
+            <p>{{ match.matchName }}</p>
+          </div>
+          <div class="image">
+            <img
+              v-if="match.matchthumbnail != ''"
+              v-bind:src="
+                'data:image/jpg;base64,' + match.matchthumbnail"/>
+            <img v-else src="../assets/default.png" />
+          </div>
+        </body>
         <footer class="modal-card-foot">
           <button class="button" type="button" @click="$emit('close')">
             Back
@@ -25,7 +34,10 @@
 <script>
 export default {
   props: ["match"],
-  methods: {
+
+  data() {
+    return {
+    };
   },
 };
 </script>
@@ -44,11 +56,10 @@ export default {
   display: inline-block;
   width: 100%;
 }
-.modal-card-title{
-    margin-left: auto;
+.modal-card-title {
+  margin-left: auto;
   margin-right: auto;
-    display: inline-block;
-
+  display: inline-block;
 }
 .modal-card {
   width: 280px;
@@ -56,8 +67,8 @@ export default {
   margin-left: auto;
   margin-right: auto;
 }
-.matchName{
-    font-size: 2rem;
-    background-color: white;
+.matchName {
+  font-size: 2rem;
+  background-color: white;
 }
 </style>

@@ -24,5 +24,12 @@ class PhotoService {
             return res.data;
         })        
     }
+    async getThumbnailForMatch(){
+        return await axios.get(API_URL + 'photo/userThumbnail', {
+            headers:authHeader()
+        }).then(res=>{            
+            return res.data;
+        })        
+    }
 }
 export default new PhotoService();

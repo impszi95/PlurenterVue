@@ -1,13 +1,13 @@
 <template>
   <div>
       <b-modal
-      v-if="haveNotification"
       class="notification"
       scroll="keep"
       v-model="haveNotification"
       has-modal-card
       trap-focus
       :destroy-on-hide="true"
+      animation="zoom-out"
       aria-role="dialog"
       aria-modal
       :can-cancel="false"
@@ -98,5 +98,6 @@ export default {
   },
 };
 </script>
-<style scoped="">
+<style scoped>
+  
 </style>

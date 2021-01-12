@@ -1,10 +1,10 @@
 <template>
   <div id="app">
     <div id="nav">
-      <b-navbar>
+      <b-navbar shadow="true">
         <template slot="brand">
           <b-navbar-item tag="router-link" :to="{ path: '/' }">
-            <img src="./assets/logo.png" />
+            <img class="home_logo" src="./assets/logo.png" />
           </b-navbar-item>
         </template>
         <template slot="start">
@@ -32,14 +32,6 @@
           <b-navbar-item tag="div">
             <div class="buttons">
               <a
-                v-show="!isLogged"
-                id="bt"
-                class="button is-success"
-                @click="goToRegister()"
-              >
-                <strong>Sign up</strong>
-              </a>
-              <a
                 v-show="isLogged"
                 id="bt"
                 class="button is-success"
@@ -55,7 +47,7 @@
     <WebSocket v-if="isLogged" />
     <router-view />
     <div class="foot">
-      <p>© 2020 MyTinder. All Rights Reserved</p>
+      <p>© 2020 Plurenter. All Rights Reserved</p>
     </div>
   </div>
 </template>
@@ -77,9 +69,6 @@ export default {
       this.$router.push("/").catch((err) => {
         err;
       });
-    },
-    goToRegister() {
-      this.$router.push("/register");
     },
   },
 };
@@ -106,11 +95,13 @@ export default {
 #nav a.router-link-exact-active {
   color: #42b983;
 }
-
 .Logout {
   position: absolute;
   top: 1.1rem;
   right: 1.2rem;
+}
+.home_logo{
+  height: 25px;
 }
 
 .foot {
@@ -122,12 +113,6 @@ export default {
 }
 .nav_e {
   padding: 1rem;
-}
-#logo {
-  position: absolute;
-  top: 0.6rem;
-  left: 1rem;
-  width: 3rem;
 }
 .nav-item {
   font-size: 1.5rem;

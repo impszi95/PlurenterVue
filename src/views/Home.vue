@@ -1,14 +1,14 @@
 <template>
   <div class="home">
     <div class="welcome_page" v-if="!isLogged">
-      <img class="logo" alt="Vue logo" src="../assets/logo.png" />
+      <img class="logo" src="../assets/logo.png" />
       <div class="activeUsers">Active users: {{ usersCount }}</div>
       <div>
         <Login />
       </div>
     </div>
     <div v-if="isLogged" class="Tinder">
-      <ActualMeet/>
+      <ActualMeet />
     </div>
   </div>
 </template>
@@ -25,8 +25,7 @@ export default {
       usersCount: "",
     };
   },
-  methods: {
-  },
+  methods: {},
   components: {
     Login,
     ActualMeet,
@@ -47,15 +46,32 @@ export default {
   background-color: rgb(72, 199, 116);
   padding: 0.6rem;
   width: max-content;
-  font-size: 1rem;
+  font-size: 1.3rem;
   color: white;
   margin-left: auto;
   margin-right: auto;
-  border-radius: 25px;
+  border-radius: 45px;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
+.logo {
+  width: 400px;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+.welcome {
+  visibility: hidden;
+}
+
 @media only screen and (max-width: 768px) {
   .logo {
-    height: 160px;
+    visibility: hidden;
+    margin-top: 0px;
+    width: 0px;
+  }
+  .welcome {
+    width: 0px;
+    visibility: visible;
   }
 }
 </style>

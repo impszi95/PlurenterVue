@@ -1,6 +1,7 @@
 <template>
   <div>
-    <div class="user">
+    <div class="haveMeet" v-if="!isEmpty">
+      <div class="user">
       <div class="username">
         {{ user.username }}
       </div>
@@ -36,11 +37,16 @@
         <b-icon class="file-icon" size="is-medium" icon="heart"></b-icon>
       </b-button>
     </div>
+    </div>
+    <div v-if="isEmpty" class="loading">
+      <Loading/>
+    </div>
   </div>
 </template>
 
 <script>
 import TinderService from "@/Services/TinderService";
+import Loading from "./Loading.vue";
 
 export default {
   data() {
@@ -50,19 +56,22 @@ export default {
         username: "",
         photos: [],
       },
+      isEmpty:true,
       actualPhoto: "",
     };
   },
-  components: {},
+  components: {
+    Loading,
+    },
   methods: {
     async loadActualMeet() {
       let user = await TinderService.actualMeet();
 
       if (user.id == "" && user.username == "" && user.photos.length == 0) {
-        this.$emit('empty', true); 
+        this.isEmpty = true;
       }
       else{
-        this.$emit('empty', false);
+        this.isEmpty = false;
       }
 
       if (user.photos.length != 0) {

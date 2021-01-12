@@ -81,11 +81,9 @@ export default {
     Cancel(){
       this.haveNotification = false;
     },
-    goToMatches(){
-       this.Cancel();
-       this.$router.push("/matches").catch((err) => {
-        err;
-      });
+    goToMatches(){       
+      this.Cancel();
+      this.$router.push("matches");
     }
   },
   mounted() {

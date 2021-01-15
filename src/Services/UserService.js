@@ -32,6 +32,13 @@ class UserService {
         }).then(res => {
             return res.data;
         });
+    }    
+    async getMatch(matchId) {
+        return await axios.get(API_URL + 'match/'+matchId, {
+            headers: authHeader()
+        }).then(res=>{            
+            return res.data;
+        })        
     }
 }
 

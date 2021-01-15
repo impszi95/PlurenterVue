@@ -77,7 +77,6 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  flex: 1 0 auto;
 }
 #nav {
   padding: 0rem;

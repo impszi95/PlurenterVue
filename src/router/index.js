@@ -28,7 +28,12 @@ const routes = [{
     path: '/matches',
     name: 'matches',
     component: () => import('../views/Matches.vue')
-  }
+  },
+  {
+    path: '/matchView/:matchId',
+    name: 'matchView',
+    component: () => import('../views/MatchView.vue')
+  },
 ]
 
 const router = new VueRouter({

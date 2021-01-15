@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="users">
-      <div class="user" v-for="user in this.matches" :key="user.id">
+      <div class="user" v-for="user in this.matches"  @click="ViewMatch(user.id)" :key="user.id">
         <div class="username">
           {{ user.username }}
         </div>
@@ -32,7 +32,11 @@ export default {
   async created() {
     this.matches = await UserService.getAllMatches();
   },
-  methods: {},
+  methods: {
+    ViewMatch(matchId){
+      this.$router.push({name: 'matchView', params: { matchId: matchId}});
+    }
+  },
   computed: {},
 };
 //    this.connect();

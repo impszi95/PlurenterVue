@@ -151,11 +151,6 @@ export default {
         type: "is-success",
       });
     },
-    BrowseAll() {
-      this.$router.push("/browseAll").catch((err) => {
-        err;
-      });
-    },
     DeletePopUp() {
       this.isFullImageModalActive = false;
       this.isDeleteModalActive = true;
@@ -265,6 +260,9 @@ export default {
   margin-left: auto;
   margin-right: auto;
   width: 160px;
+}
+.images{
+  min-height: 200px;
 }
 .image_container {
   position: relative;

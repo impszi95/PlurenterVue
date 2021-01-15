@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <div id="nav">
-      <b-navbar shadow="true">
+      <b-navbar :shadow="true">
         <template slot="brand">
           <b-navbar-item tag="router-link" :to="{ path: '/' }">
             <img class="home_logo" src="./assets/logo.png" />

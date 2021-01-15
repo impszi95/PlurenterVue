@@ -1,6 +1,6 @@
 <template>
-  <div class="RegisterPage">
-    <img alt="Vue logo" src="../assets/logo.png" />  
+  <div class="RegisterPage">    
+    <img class="logo" src="../assets/logo.png" /> 
     <div v-show="!isLogged">
       <Register />
     </div>      
@@ -26,3 +26,11 @@ export default {
   }
 };
 </script>
+<style scoped>
+
+.logo {
+  width: 400px;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+</style>

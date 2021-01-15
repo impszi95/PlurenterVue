@@ -83,10 +83,10 @@ export default {
     },
     goToMatches(){       
       this.Cancel();
-      this.$router.push("matches");
+      setTimeout(() => this.$router.push("matches"), 300);
     }
   },
-  mounted() {
+  mounted() { 
     this.connect();
   },
   computed: {

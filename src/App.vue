@@ -46,9 +46,6 @@
     </div>
     <WebSocket v-if="isLogged" />
     <router-view />
-    <div class="foot">
-      <p>© 2020 Plurenter. All Rights Reserved</p>
-    </div>
   </div>
 </template>
 
@@ -80,8 +77,8 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
+  flex: 1 0 auto;
 }
-
 #nav {
   padding: 0rem;
   padding-bottom: 0px;
@@ -102,14 +99,6 @@ export default {
 }
 .home_logo{
   height: 25px;
-}
-
-.foot {
-  position: unset;
-  margin-top: 3rem;
-  bottom: 0;
-  height: 40px;
-  font-family: "Open Sans", sans-serif;
 }
 .nav_e {
   padding: 1rem;

@@ -5,14 +5,14 @@
         <div>
           <b-field class="field" label="Username">
             <div> 
-              <p class="username" > {{ match.username }}</p>
+              <p class="username" > {{ currentUser.username }}</p>
             </div>
           </b-field>
         </div>
         <div>
           <b-field class="field" label="Description">
             <div>
-            <p class="desc">{{ match.description }}</p>
+            <p class="desc">{{ this.description }}</p>
             </div>
           </b-field>
         </div>
@@ -21,7 +21,7 @@
     <div class="images">
       <div
         class="image_container"
-        v-for="photo in match.photos"
+        v-for="photo in photos"
         @
         :key="photo.id"
         @click="SelectPhoto(photo)"
@@ -34,7 +34,6 @@
     </div>
     <b-modal
       class="fullImagePopUp"
-      scroll="keep"
       v-model="isFullImageModalActive"
       has-modal-card
       trap-focus
@@ -63,14 +62,17 @@ export default {
   data() {
     return {
       matchId: this.$route.params.matchId,
-      match: null,
+      description:"",
       isFullImageModalActive: false,
       selectedPhoto: null,
+      photos:null
     };
   },
   methods: {
-    async LoadAllPic() {
-      this.match = await UserService.getMatch(this.matchId).then();
+    async LoadUser() {
+      let match = await UserService.getMatch(this.matchId).then();
+      this.description = match.description;
+      this.photos = match.photos;
     },
     Cancel() {
       this.isFullImageModalActive = false;
@@ -85,12 +87,15 @@ export default {
     isLogged() {
       return this.$store.state.auth.status.loggedIn;
     },
+    currentUser() {
+      return this.$store.state.auth.user;
+    },
   },
   created() {
     if (!this.isLogged) {
       this.$router.push("/");
     }
-    this.LoadAllPic();
+    this.LoadUser();
   },
 };
 </script>
@@ -120,6 +125,7 @@ export default {
   min-height: 50px;
   background-color:white;
   width: 100%;
+  padding: 5px;
 }
 .image_container {
   position: relative;

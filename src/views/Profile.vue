@@ -2,19 +2,27 @@
   <div>
     <div class="profile">
       <div class="datas">
-       <div class="user_infos">
+        <div class="user_infos">
           <div>
-          <b-field class="field" label="Username">
-          <b-input class="username_input" v-model="currentUser.username"></b-input>
-        </b-field>
+            <b-field class="field" label="Username">
+              <div
+                class="username_input"
+              >{{ currentUser.username }}</div>
+            </b-field>
+          </div>
+          <div>
+            <b-field class="field" label="Description">
+              <b-input
+                class="desc_input"
+                maxlength="500"
+                type="textarea"
+                v-model="description"
+              ></b-input>
+            </b-field>
+            <b-button class="save_btn" @click="Save()" type="is-success">Save</b-button>
+          </div>
         </div>
-        <div>
-          <b-field class="field" label="Description">
-          <b-input class="desc_input" maxlength="500" type="textarea" v-model="currentUser.username"></b-input>
-        </b-field>
-        </div>
-       </div>
-        <div class="likes_div">          
+        <div class="likes_div">
           <div>
             <strong class="likes_text">Likes</strong>
           </div>
@@ -62,7 +70,6 @@
     </div>
     <b-modal
       class="confirmPopUp"
-      scroll="keep"
       v-model="isDeleteModalActive"
       has-modal-card
       trap-focus
@@ -75,7 +82,6 @@
     </b-modal>
     <b-modal
       class="fullImagePopUp"
-      scroll="keep"
       v-model="isFullImageModalActive"
       has-modal-card
       trap-focus
@@ -100,7 +106,7 @@ import PhotoService from "../Services/PhotoService";
 import UserService from "@/Services/UserService";
 import ConfirmPopUp from "../components/ConfirmPopUp.vue";
 import FullImage from "../components/FullImage.vue";
-import $ from 'jquery'
+import $ from "jquery";
 
 export default {
   components: {
@@ -114,6 +120,7 @@ export default {
       isDeleteModalActive: false,
       isFullImageModalActive: false,
       selectedPhoto: null,
+      description: "",
     };
   },
   methods: {
@@ -175,10 +182,24 @@ export default {
     },
     SelectPhoto(photo) {
       this.selectedPhoto = photo;
-      
-      if($(window).width()<768){
-      this.isFullImageModalActive = true;
+
+      if ($(window).width() < 768) {
+        this.isFullImageModalActive = true;
       }
+    },
+    async Save() {
+      let userInfos = {
+        description: this.description,
+      };
+      try{
+       await UserService.saveUserInfos(userInfos);
+        this.$buefy.toast.open({
+        message: `Saved </b>`,
+        type: "is-success",
+      });
+      }catch (error) {
+          console.log(error);
+        }
     },
   },
   async created() {
@@ -191,7 +212,7 @@ export default {
     } else {
       this.photos = this.userPhotos;
     }
-
+    this.description = await UserService.getDescription();
     this.usersLikes = await UserService.getUsersLikes();
   },
   computed: {
@@ -209,16 +230,17 @@ export default {
 </script>
 
 <style scoped>
-.user_infos{
- width: 50%;
+.user_infos {
+  width: 50%;
+  
 }
-.field { 
+.field {
   text-align: left;
 }
-.username_input{
+.username_input {
   margin-bottom: 10px;
 }
-.likes_div{
+.likes_div {
   width: 150px;
   height: 178px;
   margin-left: auto;
@@ -252,8 +274,11 @@ export default {
   padding: 20px;
   margin: 20px;
   background-color: rgb(243, 243, 243);
-  box-shadow: 0 0px 6px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);  
+  box-shadow: 0 0px 6px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   display: flex;
+}
+.save_btn{
+  width: 80px;
 }
 .file.is-success {
   display: block;
@@ -261,7 +286,7 @@ export default {
   margin-right: auto;
   width: 160px;
 }
-.images{
+.images {
   min-height: 200px;
 }
 .image_container {
@@ -303,12 +328,15 @@ export default {
     margin-left: auto;
     margin-right: auto;
   }
-  .datas{    
+  .datas {
     display: block;
   }
   .user_infos {
-  width: 100%;
+    width: 100%;
   }
+  .save_btn{
+  margin-bottom: 20px;
+}
 }
 @media only screen and (min-width: 769px) {
   .image_container:hover {

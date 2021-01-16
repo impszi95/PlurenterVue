@@ -40,6 +40,20 @@ class UserService {
             return res.data;
         })        
     }
+    async saveUserInfos(infos) {
+        return await axios.post(API_URL + 'user/save', infos,{
+            headers: authHeader()
+        }).then(res => {
+            return res.data
+        });
+    }
+    async getDescription() {
+        return await axios.get(API_URL + 'description', {
+            headers: authHeader()
+        }).then(res=>{            
+            return res.data;
+        })        
+    }
 }
 
 export default new UserService();

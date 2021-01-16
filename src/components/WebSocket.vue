@@ -48,7 +48,7 @@ export default {
       }
     },
     connect() {
-      this.socket = new SockJS(IPs.API_URL + "/gs-guide-websocket");
+      this.socket = new SockJS(IPs.WS_URL + "/gs-guide-websocket");
       this.stompClient = Stomp.over(this.socket);      
       this.stompClient.debug = () => {};
       this.stompClient.connect(

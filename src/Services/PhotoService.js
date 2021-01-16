@@ -3,6 +3,9 @@ import authHeader from './AuthHeader';
 import API_URL from '../Enviroment'
 
 class PhotoService {
+    
+    API_URL = IPs.API_URL;
+
     async upload(formdata) {
         return await axios.post(API_URL + 'photos/add', formdata, {
             headers: authHeader()

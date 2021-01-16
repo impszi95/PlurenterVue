@@ -1,9 +1,11 @@
 import axios from 'axios';
 import authHeader from './AuthHeader';
-import API_URL from '../Enviroment'
+import IPs from '../Enviroment'
 
 class UserService {
 
+    API_URL = IPs.API_URL;
+    
     async getUsersCount() {
         return await axios
             .get(API_URL + "usersCount")

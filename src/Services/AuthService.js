@@ -3,6 +3,8 @@ import API_URL from '../Enviroment'
 
 class AuthService {
 
+    API_URL = IPs.API_URL;
+
     login(user) {
         return axios
             .post(API_URL + 'auth/signin',{

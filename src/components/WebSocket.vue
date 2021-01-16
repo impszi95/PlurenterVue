@@ -20,6 +20,7 @@
 import SockJS from "sockjs-client";
 import Stomp from "webstomp-client";
 import Notification from './Notification';
+import IPs from '../Enviroment'
 
 export default {
   data() {
@@ -47,7 +48,7 @@ export default {
       }
     },
     connect() {
-      this.socket = new SockJS("http://localhost:8082/gs-guide-websocket");
+      this.socket = new SockJS(IPs.API_URL + "/gs-guide-websocket");
       this.stompClient = Stomp.over(this.socket);      
       this.stompClient.debug = () => {};
       this.stompClient.connect(

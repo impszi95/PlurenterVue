@@ -3,6 +3,8 @@ import authHeader from './AuthHeader';
 import API_URL from '../Enviroment'
 
 class TinderService{
+    
+    API_URL = IPs.API_URL;
 
     async like(){
         return await axios.post(API_URL + 'likeUser',{}, {

@@ -23,10 +23,9 @@ export default {
   props: ["photo"],
 };
 </script>
-
 <style scoped>
 .modal-card {
-  max-width: 400px;
+  max-width: 500px;
   height: auto;
   display: inline-block;
   position: relative;

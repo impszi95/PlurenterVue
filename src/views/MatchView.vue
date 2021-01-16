@@ -126,6 +126,9 @@ export default {
   background-color:white;
   width: 100%;
   padding: 5px;
+  border: gainsboro;
+  border-style:solid;
+  border-width: thin;
 }
 .image_container {
   position: relative;

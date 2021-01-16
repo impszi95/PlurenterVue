@@ -1,13 +1,10 @@
 import axios from 'axios';
-import API_URL from '../Enviroment'
+import IPs from '../Enviroment'
 
 class AuthService {
-
-    API_URL = IPs.API_URL;
-
     login(user) {
         return axios
-            .post(API_URL + 'auth/signin',{
+            .post(IPs.API_URL + 'auth/signin',{
                 username: user.username,
                 password: user.password
             })
@@ -25,7 +22,7 @@ class AuthService {
     }
 
     register(user) {
-        return axios.post(API_URL + 'auth/signup', {
+        return axios.post(IPs.API_URL + 'auth/signup', {
             username: user.username,
             password: user.password
         });

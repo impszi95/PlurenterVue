@@ -2,7 +2,6 @@
   <div>
       <b-modal
       class="notification"
-      scroll="keep"
       v-model="haveNotification"
       has-modal-card
       trap-focus

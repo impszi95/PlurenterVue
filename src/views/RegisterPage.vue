@@ -33,4 +33,11 @@ export default {
   margin-top: 20px;
   margin-bottom: 10px;
 }
+@media only screen and (max-width: 768px) {
+  .logo {
+    visibility: hidden;
+    margin-top: 0px;
+    width: 0px;
+  }
+}
 </style>

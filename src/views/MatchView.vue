@@ -5,7 +5,7 @@
         <div>
           <b-field class="field" label="Username">
             <div> 
-              <p class="username" > {{ currentUser.username }}</p>
+              <p class="username" > {{ username }}</p>
             </div>
           </b-field>
         </div>
@@ -62,6 +62,7 @@ export default {
   data() {
     return {
       matchId: this.$route.params.matchId,
+      username:"",
       description:"",
       isFullImageModalActive: false,
       selectedPhoto: null,
@@ -71,6 +72,7 @@ export default {
   methods: {
     async LoadUser() {
       let match = await UserService.getMatch(this.matchId).then();
+      this.username = match.username;
       this.description = match.description;
       this.photos = match.photos;
     },
@@ -86,9 +88,6 @@ export default {
   computed: {
     isLogged() {
       return this.$store.state.auth.status.loggedIn;
-    },
-    currentUser() {
-      return this.$store.state.auth.user;
     },
   },
   created() {

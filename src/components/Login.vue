@@ -2,10 +2,10 @@
   <div class="LoginPage">
     <h1>Let's start it!</h1>
     <div class="Login">
-      <b-field type="is-dark" label="Username">
-        <b-input  v-model="user.username"></b-input>
+      <b-field label="Username">
+        <b-input v-model="user.username"></b-input>
       </b-field>
-      <b-field type="is-dark" label="Password">
+      <b-field label="Password">
         <b-input type="password" v-model="user.password"></b-input>
       </b-field>
       <div class="login_b">
@@ -57,7 +57,7 @@ export default {
         );
       }
     },
-    register(){
+    register() {
       this.$router.push("register");
     },
     invalidLogin() {
@@ -75,9 +75,23 @@ h1 {
   font-size: 2rem;
 }
 .Login {
-  padding-top: 0.5rem;
-  display: inline-block;
+  margin-top: 12px;
   margin-left: auto;
   margin-right: auto;
+}
+.LoginPage {
+  background-color: rgb(243, 243, 243);
+  padding-top: 0px;
+  padding: 20px;
+  width: 50%;
+  max-width: 400px;
+  box-shadow: 0 0px 6px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  margin-left: auto;
+  margin-right: auto;
+}
+@media only screen and (max-width: 768px) {
+  .LoginPage {
+    width: 90%;
+  }
 }
 </style>

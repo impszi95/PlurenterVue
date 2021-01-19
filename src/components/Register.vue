@@ -2,26 +2,50 @@
   <div class="RegisterPage">
     <h1>Register</h1>
     <div class="Register">
-      <b-field label="Username">
-        <b-input type="isSuccess" required v-model="user.username"></b-input>
-      </b-field>
-      <b-field label="Password">
-        <b-input type="password" password-reveal required v-model="user.password"></b-input>
-      </b-field>
-      <div class="logout_b">
-        <b-button @click="register()" type="is-info">Register</b-button>
-      </div>
+      <ValidationObserver ref="observer" v-slot="{ handleSubmit }">
+        <b-field label="Username">
+          <b-input type="isSuccess" required v-model="user.username"></b-input>
+        </b-field>
+        <ValidationInput
+          class="mainpass"
+          rules="required"
+          type="password"
+          label="Password"
+          vid="password"
+          v-model="user.password"
+        />
+        <ValidationInput
+          rules="required|confirmed:password"
+          name="Password"
+          type="password"
+          label="Confirm Password"
+          v-model="confirmation"
+        />
+        <div class="reg_b">
+          <b-button @click="handleSubmit(register)" type="is-info"
+            >Register</b-button
+          >
+        </div>
+      </ValidationObserver>
     </div>
   </div>
 </template>
 
 <script>
 import User from "../Model/User";
+import { ValidationObserver } from "vee-validate";
+import ValidationInput from "../Inputs/ValidationInput";
 
 export default {
+  components: {
+    ValidationObserver,
+    ValidationInput,
+  },
+
   data() {
     return {
       user: new User("", ""),
+      confirmation: "",
     };
   },
   computed: {
@@ -77,9 +101,26 @@ export default {
 h1 {
   font-size: 2rem;
 }
+.Register{
+  margin-top: 12px;
+}
 .RegisterPage {
-  padding-top: 1rem;
+  margin-top: 1rem;
+  padding: 20px;
   width: 50%;
-  margin-left: 25%;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 400px;
+  padding-top: 0px;
+  box-shadow: 0 0px 6px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  background-color: rgb(243, 243, 243);
+}
+.reg_b{
+  margin-top: 20px;
+}
+@media only screen and (max-width: 768px) {
+  .RegisterPage {
+    width: 90%;
+  }
 }
 </style>

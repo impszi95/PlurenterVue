@@ -80,9 +80,10 @@ h1 {
   margin-right: auto;
 }
 .LoginPage {
+  margin-top: 25px;
   background-color: rgb(243, 243, 243);
-  padding-top: 0px;
   padding: 20px;
+  padding-top: 0px;
   width: 50%;
   max-width: 400px;
   box-shadow: 0 0px 6px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);

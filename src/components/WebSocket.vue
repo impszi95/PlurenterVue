@@ -1,6 +1,6 @@
 <template>
   <div>
-      <b-modal
+    <b-modal
       class="notification"
       v-model="haveNotification"
       has-modal-card
@@ -11,26 +11,30 @@
       aria-modal
       :can-cancel="false"
     >
-      <Notification :match="this.match" @close="Cancel()" @viewMatches="goToMatches()"/>
+      <Notification
+        :match="this.match"
+        @close="Cancel()"
+        @viewMatches="goToMatches()"
+      />
     </b-modal>
   </div>
 </template>
 <script>
 import SockJS from "sockjs-client";
 import Stomp from "webstomp-client";
-import Notification from './Notification';
-import IPs from '../Enviroment'
+import Notification from "./Notification";
+import IPs from "../Enviroment";
 
 export default {
   data() {
     return {
       match: null,
-      haveNotification:false,
+      haveNotification: false,
       send_message: null,
       connected: false,
     };
   },
-  components:{
+  components: {
     Notification,
   },
   methods: {
@@ -43,12 +47,12 @@ export default {
         };
 
         //console.log(JSON.stringify(msg));
-        this.stompClient.send("/app/notification", JSON.stringify(msg), {});
+        this.stompClient.send("app/notification", JSON.stringify(msg), {});
       }
     },
     connect() {
-      this.socket = new SockJS(IPs.WS_URL + "/gs-guide-websocket");
-      this.stompClient = Stomp.over(this.socket);      
+      this.socket = new SockJS(IPs.WS_URL + "gs-guide-websocket");
+      this.stompClient = Stomp.over(this.socket);
       this.stompClient.debug = () => {};
       this.stompClient.connect(
         {},
@@ -56,7 +60,7 @@ export default {
           this.connected = true;
           //console.log(frame);
           this.stompClient.subscribe(
-            "/queue/newMatch/" + this.currentUser.id,
+            "queue/newMatch/" + this.currentUser.id,
             (tick) => {
               this.match = JSON.parse(tick.body);
               this.haveNotification = true;
@@ -78,15 +82,15 @@ export default {
     tickleConnection() {
       this.connected ? this.disconnect() : this.connect();
     },
-    Cancel(){
+    Cancel() {
       this.haveNotification = false;
     },
-    goToMatches(){       
+    goToMatches() {
       this.Cancel();
       setTimeout(() => this.$router.push("matches"), 300);
-    }
+    },
   },
-  mounted() { 
+  mounted() {
     this.connect();
   },
   computed: {
@@ -97,5 +101,4 @@ export default {
 };
 </script>
 <style scoped>
-  
 </style>

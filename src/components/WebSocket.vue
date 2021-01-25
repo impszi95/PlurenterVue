@@ -60,7 +60,7 @@ export default {
           this.connected = true;
           //console.log(frame);
           this.stompClient.subscribe(
-            "queue/newMatch/" + this.currentUser.id,
+            "/queue/newMatch/" + this.currentUser.id,
             (tick) => {
               this.match = JSON.parse(tick.body);
               this.haveNotification = true;

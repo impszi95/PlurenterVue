@@ -1,4 +1,4 @@
-//const url = window.location.origin;
+const url = window.location.origin;
 
 const IPs = {
   API_URL:url+"/tinder-api/",

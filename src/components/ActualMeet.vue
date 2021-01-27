@@ -45,7 +45,7 @@
 </template>
 
 <script>
-import TinderService from "@/Services/TinderService";
+import PlurenterService from "@/Services/PlurenterService";
 import Loading from "./Loading.vue";
 
 export default {
@@ -65,7 +65,7 @@ export default {
     },
   methods: {
     async loadActualMeet() {
-      let user = await TinderService.actualMeet();
+      let user = await PlurenterService.actualMeet();
 
       if (user.id == "" && user.username == "" && user.photos.length == 0) {
         this.isEmpty = true;
@@ -82,11 +82,11 @@ export default {
       this.user = user;
     },
     async Like() {
-      await TinderService.like();
+      await PlurenterService.like();
       await this.loadActualMeet();
     },
     async Dislike() {
-      await TinderService.dislike();
+      await PlurenterService.dislike();
       await this.loadActualMeet();
     },
   },

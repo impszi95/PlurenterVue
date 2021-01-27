@@ -1,4 +1,4 @@
-# tinder
+# Plurenter
 
 ## Project setup
 ```

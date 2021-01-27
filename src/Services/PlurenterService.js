@@ -2,7 +2,7 @@ import axios from 'axios';
 import authHeader from './AuthHeader';
 import IPs from '../Enviroment'
 
-class TinderService{
+class PlurenterService{
     async like(){
         return await axios.post(IPs.API_URL + 'likeUser',{}, {
             headers: authHeader()
@@ -21,4 +21,4 @@ class TinderService{
         }); 
     }
 }
-export default new TinderService();
+export default new PlurenterService();

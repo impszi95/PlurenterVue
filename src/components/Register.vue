@@ -21,6 +21,19 @@
           label="Confirm Password"
           v-model="confirmation"
         />
+       <div class="type">
+           <b-radio v-model="user.type"
+                name="name"
+                native-value="tenant">
+                Tenant
+            </b-radio>  
+            <div class="divider"></div>  
+             <b-radio v-model="user.type"
+                name="name"
+                native-value="landlord">
+                Landlord
+            </b-radio>
+       </div>
         <div class="reg_b">
           <b-button @click="handleSubmit(register)" type="is-info"
             >Register</b-button
@@ -44,7 +57,7 @@ export default {
 
   data() {
     return {
-      user: new User("", ""),
+      user: new User("", "", ""),
       confirmation: "",
     };
   },
@@ -56,7 +69,7 @@ export default {
 
   methods: {
     register() {
-      if (this.user.username && this.user.password) {
+      if (this.user.username && this.user.password && this.user.type) {
         this.$store.dispatch("auth/register", this.user).then(
           () => {
             this.login(); //Egyből login reg után
@@ -102,7 +115,7 @@ h1 {
   font-size: 2rem;
 }
 .Register{
-  margin-top: 12px;
+  margin-top: 12px; 
 }
 .RegisterPage {
   margin-top: 1rem;
@@ -116,7 +129,14 @@ h1 {
   background-color: rgb(243, 243, 243);
 }
 .reg_b{
+  margin-top: 10px;
+}
+.type{
   margin-top: 20px;
+  display: inline-flex;
+}
+.divider{
+  width: 20px;
 }
 @media only screen and (max-width: 768px) {
   .RegisterPage {

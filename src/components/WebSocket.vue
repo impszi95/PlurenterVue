@@ -87,7 +87,7 @@ export default {
     },
     goToMatches() {
       this.Cancel();
-      setTimeout(() => this.$router.push("matches"), 300);
+      this.$router.push("matches");
     },
   },
   mounted() {

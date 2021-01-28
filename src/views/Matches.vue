@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="users">
+    <div v-if="this.matches.length!=0" class="users">
       <div class="user" v-for="user in this.matches"  @click="ViewMatch(user.id)" :key="user.id">
         <div class="username">
           {{ user.username }}
@@ -14,6 +14,9 @@
           <img v-else src="../assets/default.png" />
         </div>
       </div>
+    </div>
+    <div v-else>
+      <h1>No matches yet.</h1>
     </div>
   </div>
 </template>
@@ -61,6 +64,10 @@ export default {
 </script>
 
 <style scoped>
+h1{
+  margin-top: 20px;
+  font-size: 1.5rem;
+}
 .users {
   margin-top: 1rem;
 }

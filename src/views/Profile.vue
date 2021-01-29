@@ -1,38 +1,8 @@
 <template>
   <div>
     <div class="profile">
-      <div class="datas">
-        <div class="user_infos">
-          <div>
-            <b-field class="field" label="Username">
-              <div
-                class="username_input"
-              >{{ currentUser.username }}</div>
-            </b-field>
-          </div>
-          <div>
-            <b-field class="field" label="Description">
-              <b-input
-                class="desc_input"
-                maxlength="500"
-                type="textarea"
-                v-model="description"
-              ></b-input>
-            </b-field>
-            <b-button class="save_btn" @click="Save()" type="is-success">Save</b-button>
-          </div>
-        </div>
-        <div class="likes_div">
-          <div>
-            <strong class="likes_text">Likes</strong>
-          </div>
-          <div class="likes">
-            <div class="likes_val_div">
-              <strong class="likes_val">{{ usersLikes }}</strong>
-            </div>
-          </div>
-        </div>
-      </div>
+      <ProfileTenant v-if="this.currentUser.tenant" />
+      <ProfileLandlord v-else/>
       <div class="upload_img">
         <div class="upload_container">
           <b-field class="file is-success">
@@ -103,24 +73,25 @@
 <script>
 //import Register from "@/components/Register.vue";
 import PhotoService from "../Services/PhotoService";
-import UserService from "@/Services/UserService";
 import ConfirmPopUp from "../components/ConfirmPopUp.vue";
 import FullImage from "../components/FullImage.vue";
+import ProfileTenant from "../components/ProfileTenant.vue";
+import ProfileLandlord from "../components/ProfileLandlord.vue";
 import $ from "jquery";
 
 export default {
   components: {
     ConfirmPopUp,
     FullImage,
+    ProfileTenant,
+    ProfileLandlord
   },
   data() {
     return {
-      usersLikes: null,
       photos: null,
       isDeleteModalActive: false,
       isFullImageModalActive: false,
       selectedPhoto: null,
-      description: "",
     };
   },
   methods: {
@@ -186,21 +157,7 @@ export default {
       if ($(window).width() < 768) {
         this.isFullImageModalActive = true;
       }
-    },
-    async Save() {
-      let userInfos = {
-        description: this.description,
-      };
-      try{
-       await UserService.saveUserInfos(userInfos);
-        this.$buefy.toast.open({
-        message: `Saved </b>`,
-        type: "is-success",
-      });
-      }catch (error) {
-          console.log(error);
-        }
-    },
+    },    
   },
   async created() {
     if (!this.isLogged) {
@@ -212,8 +169,6 @@ export default {
     } else {
       this.photos = this.userPhotos;
     }
-    this.description = await UserService.getDescription();
-    this.usersLikes = await UserService.getUsersLikes();
   },
   computed: {
     currentUser() {
@@ -230,55 +185,12 @@ export default {
 </script>
 
 <style scoped>
-.user_infos {
-  width: 50%;
-  
-}
-.field {
-  text-align: left;
-}
-.username_input {
-  margin-bottom: 10px;
-}
-.likes_div {
-  width: 150px;
-  height: 178px;
-  margin-left: auto;
-  margin-right: auto;
-}
-.likes {
-  border-radius: 90px;
-  background-color: cornflowerblue;
-  width: 150px;
-  height: 150px;
-  box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.2), 0 1px 10px 0 rgba(0, 0, 0, 0.19);
-}
-.likes_text {
-  font-size: 18px;
-}
-.likes_val_div {
-  font-size: 50px;
-  padding-top: 35px;
-}
-.likes_val {
-  color: white;
-}
 .profile {
   margin-top: 20px;
   margin-left: auto;
   margin-right: auto;
   text-align: center;
   font-size: 1.2rem;
-}
-.datas {
-  padding: 20px;
-  margin: 20px;
-  background-color: rgb(243, 243, 243);
-  box-shadow: 0 0px 6px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  display: flex;
-}
-.save_btn{
-  width: 80px;
 }
 .file.is-success {
   display: block;
@@ -327,16 +239,7 @@ export default {
     position: relative;
     margin-left: auto;
     margin-right: auto;
-  }
-  .datas {
-    display: block;
-  }
-  .user_infos {
-    width: 100%;
-  }
-  .save_btn{
-  margin-bottom: 20px;
-}
+  }  
 }
 @media only screen and (min-width: 769px) {
   .image_container:hover {

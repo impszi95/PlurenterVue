@@ -24,14 +24,7 @@ class UserService {
         }).then(res => {
             return res.data;
         });
-   }
-    async getUsersLikes(){
-        return await axios.get(IPs.API_URL + 'getUsersLikes',{
-            headers: authHeader()
-        }).then(res => {
-            return res.data;
-        });
-    }    
+   } 
     async getMatch(matchId) {
         return await axios.get(IPs.API_URL + 'match/'+matchId, {
             headers: authHeader()
@@ -39,19 +32,33 @@ class UserService {
             return res.data;
         })        
     }
-    async saveUserInfos(infos) {
-        return await axios.post(IPs.API_URL + 'user/save', infos,{
+    async saveTenantInfos(infos) {
+        return await axios.post(IPs.API_URL + 'tenant/save', infos,{
             headers: authHeader()
         }).then(res => {
             return res.data
         });
     }
-    async getDescription() {
-        return await axios.get(IPs.API_URL + 'description', {
+    async saveLandlordInfos(infos) {
+        return await axios.post(IPs.API_URL + 'landlord/save', infos,{
+            headers: authHeader()
+        }).then(res => {
+            return res.data
+        });
+    }
+    async getTenantInfos(){
+        return await axios.get(IPs.API_URL + 'getTenantInfo', {
             headers: authHeader()
         }).then(res=>{            
             return res.data;
-        })        
+        })
+    }
+    async getLandlordInfos(){
+        return await axios.get(IPs.API_URL + 'getLandlordInfo', {
+            headers: authHeader()
+        }).then(res=>{            
+            return res.data;
+        })
     }
 }
 

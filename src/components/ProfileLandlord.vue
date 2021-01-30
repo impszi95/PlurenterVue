@@ -10,7 +10,7 @@
         <div>
           <div class="field_c">
             <b-field label="Minimum renting time" />
-            <b-tooltip            
+            <b-tooltip
               type="is-info"
               label="Minimum time which the apartment can be rented."
               position="is-bottom"
@@ -87,7 +87,7 @@
 </template>
 
 <script>
-import User from '../Model/User';
+import User from "../Model/User";
 import UserService from "../Services/UserService";
 
 export default {
@@ -114,11 +114,11 @@ export default {
       let landlordInfos = {
         description: this.description,
         likes: this.likes,
-        minRentTime: {            
-            year: this.year,
-            month: this.month,
-            day: this.day,
-        }
+        minRentTime: {
+          year: this.year,
+          month: this.month,
+          day: this.day,
+        },
       };
       try {
         await UserService.saveLandlordInfos(landlordInfos);

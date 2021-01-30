@@ -6,7 +6,7 @@
         {{ user.username }}
       </div>
       <b-carousel
-        v-if="actualPhoto != ''"
+        v-if="actualPhoto != null"
         :indicator-inside="true"
         :autoplay="false"
       >
@@ -37,6 +37,9 @@
         <b-icon class="file-icon" size="is-medium" icon="heart"></b-icon>
       </b-button>
     </div>
+    <div class="details_label">Details</div>
+    <DatasTenant v-if="user.tenant" :user="user" />
+    <DatasLandlord v-else :user="user"/>
     </div>
     <div v-if="isEmpty" class="loading">
       <Loading/>
@@ -47,37 +50,37 @@
 <script>
 import PlurenterService from "@/Services/PlurenterService";
 import Loading from "./Loading.vue";
+import DatasLandlord from "./Landlord/DatasLandlord";
+import DatasTenant from "./Tenant/DatasTenant";
 
 export default {
   data() {
     return {
-      user: {
-        id: "",
-        username: "",
-        photos: [],
-      },
+      user: null,
       isEmpty:true,
-      actualPhoto: "",
+      actualPhoto: null,
     };
   },
   components: {
     Loading,
+    DatasLandlord,
+    DatasTenant
     },
   methods: {
     async loadActualMeet() {
       let user = await PlurenterService.actualMeet();
 
-      if (user.id == "" && user.username == "" && user.photos.length == 0) {
+      if (user.id == null && user.username == null && user.photos == null) {
         this.isEmpty = true;
       }
       else{
         this.isEmpty = false;
       }
 
-      if (user.photos.length != 0) {
+      if (user.photos != null) {
         this.actualPhoto = user.photos[0];
       } else {
-        this.actualPhoto = "";
+        this.actualPhoto = null
       }
       this.user = user;
     },
@@ -155,5 +158,9 @@ export default {
   width: 70px;
   height: 70px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 5px 15px 0 rgba(0, 0, 0, 0.19);
+}
+.details_label{
+  font-size: 1.4rem;
+  margin-bottom: -20px;
 }
 </style>

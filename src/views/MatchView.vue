@@ -10,8 +10,8 @@
 
 <script>
 import UserService from "../Services/UserService";
-import MatchTenant from "../components/MatchTenant";
-import MatchLandlord from "../components/MatchLandlord";
+import MatchTenant from "../components/Tenant/MatchTenant";
+import MatchLandlord from "../components/Landlord/MatchLandlord";
 
 export default {
   components: {

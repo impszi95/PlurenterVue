@@ -1,23 +1,7 @@
 <template>
   <div>
-    <div class="datas">
-      <div class="user_infos">
-        <div>
-          <b-field class="field" label="Username">
-            <div>
-              <p class="username">{{ match.username }}</p>
-            </div>
-          </b-field>
-        </div>
-        <div>
-          <b-field class="field" label="Description">
-            <div>
-              <p class="desc">{{ match.description }}</p>
-            </div>
-          </b-field>
-        </div>
-      </div>
-    </div>
+    <div class="username">{{ match.username }}</div>
+    <DatasTenant :user="match" />
     <div class="images">
       <div
         class="image_container"
@@ -52,21 +36,21 @@
 </template>
 
 <script>
-import FullImageOnlyView from "../components/FulImageOnlyView";
-
+import FullImageOnlyView from "../FulImageOnlyView";
+import DatasTenant from "../Tenant/DatasTenant";
 export default {
-    props: ["match"],
-
-    components: {
+  props: ["match"],
+  components: {
     FullImageOnlyView,
-    },
+    DatasTenant,
+  },
   data() {
     return {
       isFullImageModalActive: false,
       selectedPhoto: null,
     };
   },
-  methods: {      
+  methods: {
     Cancel() {
       this.isFullImageModalActive = false;
       this.selectedPhoto = null;
@@ -75,40 +59,11 @@ export default {
       this.selectedPhoto = photo;
       this.isFullImageModalActive = true;
     },
-  }
+  },
 };
 </script>
 
 <style scoped>
-.datas {
-  padding: 20px;
-  margin: 20px;
-  background-color: rgb(243, 243, 243);
-  box-shadow: 0 0px 6px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  display: flex;
-  width: 50%;
-  margin-left: auto;
-  margin-right: auto;
-}
-.user_infos {
-  width: 100%;
-}
-.field {
-  text-align: left;
-  width: 100%;
-}
-.username {
-  margin-bottom: 10px;
-}
-.desc {
-  min-height: 50px;
-  background-color: white;
-  width: 100%;
-  padding: 5px;
-  border: gainsboro;
-  border-style: solid;
-  border-width: thin;
-}
 .image_container {
   position: relative;
   background-color: gainsboro;
@@ -130,6 +85,10 @@ export default {
   position: absolute;
   left: 0;
 }
+.username {
+  margin-top: 20px;
+  font-size: 2rem;
+}
 @media only screen and (max-width: 768px) {
   .image_container {
     width: 50%;
@@ -138,9 +97,6 @@ export default {
     position: relative;
     margin-left: auto;
     margin-right: auto;
-  }
-  .datas {
-    width: 90%;
   }
 }
 @media only screen and (min-width: 769px) {

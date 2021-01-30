@@ -12,7 +12,7 @@
             <b-field label="Minimum renting time" />
             <b-tooltip
               type="is-info"
-              label="Minimum time which your are willing to rent."
+              label="Minimum time which the apartment can be rented."
               position="is-bottom"
             >
               <div class="help"><span class="q_icon">?</span></div>
@@ -87,7 +87,7 @@
 </template>
 
 <script>
-import UserService from "../Services/UserService";
+import UserService from "@/Services/UserService";
 
 export default {
   data() {
@@ -100,27 +100,27 @@ export default {
     };
   },
   async created() {
-    let tenantInfos = await UserService.getTenantInfos();
-    this.description = tenantInfos.description;
-    this.likes = tenantInfos.likes;    
-    
-    this.year = tenantInfos.minRentTime.year;
-    this.month = tenantInfos.minRentTime.month;
-    this.day = tenantInfos.minRentTime.day;
+    let landlordInfos = await UserService.getLandlordInfos();
+    this.description = landlordInfos.description;
+    this.likes = landlordInfos.likes;
+
+    this.year = landlordInfos.minRentTime.year;
+    this.month = landlordInfos.minRentTime.month;
+    this.day = landlordInfos.minRentTime.day;
   },
   methods: {
     async Save() {
-      let tenantInfos = {
+      let landlordInfos = {
         description: this.description,
         likes: this.likes,
-        minRentTime: {            
-            year: this.year,
-            month: this.month,
-            day: this.day,
-        }
+        minRentTime: {
+          year: this.year,
+          month: this.month,
+          day: this.day,
+        },
       };
       try {
-        await UserService.saveTenantInfos(tenantInfos);
+        await UserService.saveLandlordInfos(landlordInfos);
         this.$buefy.toast.open({
           message: `Saved </b>`,
           type: "is-success",

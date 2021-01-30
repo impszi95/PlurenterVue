@@ -75,8 +75,8 @@
 import PhotoService from "../Services/PhotoService";
 import ConfirmPopUp from "../components/ConfirmPopUp.vue";
 import FullImage from "../components/FullImage.vue";
-import ProfileTenant from "../components/ProfileTenant.vue";
-import ProfileLandlord from "../components/ProfileLandlord.vue";
+import ProfileTenant from "../components/Tenant/ProfileTenant";
+import ProfileLandlord from "../components/Landlord/ProfileLandlord.vue";
 import $ from "jquery";
 
 export default {

@@ -10,13 +10,7 @@
         <div>
           <div class="field_c">
             <b-field label="Minimum renting time" />
-            <b-tooltip
-              type="is-info"
-              label="Minimum time which your are willing to rent."
-              position="is-bottom"
-            >
-              <div class="help"><span class="q_icon">?</span></div>
-            </b-tooltip>
+            <div class="help" @click="snackbar"><span class="q_icon">?</span></div>
           </div>
           <div class="minRentTime">
             <div class="container">
@@ -102,8 +96,8 @@ export default {
   async created() {
     let tenantInfos = await UserService.getTenantInfos();
     this.description = tenantInfos.description;
-    this.likes = tenantInfos.likes;    
-    
+    this.likes = tenantInfos.likes;
+
     this.year = tenantInfos.minRentTime.year;
     this.month = tenantInfos.minRentTime.month;
     this.day = tenantInfos.minRentTime.day;
@@ -113,11 +107,11 @@ export default {
       let tenantInfos = {
         description: this.description,
         likes: this.likes,
-        minRentTime: {            
-            year: this.year,
-            month: this.month,
-            day: this.day,
-        }
+        minRentTime: {
+          year: this.year,
+          month: this.month,
+          day: this.day,
+        },
       };
       try {
         await UserService.saveTenantInfos(tenantInfos);
@@ -128,6 +122,20 @@ export default {
       } catch (error) {
         console.log(error);
       }
+    },
+    snackbar() {
+      this.$buefy.snackbar.open(
+        {
+                    message: "Minimum time which your are willing to rent.",
+                    type: 'is-info',
+                    position: 'is-bottom',
+                    onAction: () => {
+                        this.$buefy.toast.open({
+                            message: 'Action pressed',
+                            queue: false
+                        })
+                    }
+                })
     },
   },
   computed: {
@@ -194,6 +202,9 @@ p {
 }
 .likes_val {
   color: white;
+}
+.help:hover{
+    box-shadow: 0 0px 2px 0 rgba(0, 0, 0, 0.2), 0 2px 5px 0 rgba(0, 0, 0, 0.14);
 }
 .help {
   border-radius: 90px;

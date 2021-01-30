@@ -10,13 +10,7 @@
         <div>
           <div class="field_c">
             <b-field label="Minimum renting time" />
-            <b-tooltip
-              type="is-info"
-              label="Minimum time which the apartment can be rented."
-              position="is-bottom"
-            >
-              <div class="help"><span class="q_icon">?</span></div>
-            </b-tooltip>
+              <div class="help"  @click="snackbar"><span class="q_icon">?</span></div>
           </div>
           <div class="minRentTime">
             <div class="container">
@@ -129,6 +123,20 @@ export default {
         console.log(error);
       }
     },
+    snackbar() {
+      this.$buefy.snackbar.open(
+        {
+                    message: "Minimum time which the apartment can be rented.",
+                    type: 'is-info',
+                    position: 'is-bottom',
+                    onAction: () => {
+                        this.$buefy.toast.open({
+                            message: 'Action pressed',
+                            queue: false
+                        })
+                    }
+                })
+    },
   },
   computed: {
     currentUser() {
@@ -195,7 +203,10 @@ p {
 .likes_val {
   color: white;
 }
-.help {
+.help:hover{
+    box-shadow: 0 0px 2px 0 rgba(0, 0, 0, 0.2), 0 2px 5px 0 rgba(0, 0, 0, 0.14);
+}
+.help { 
   border-radius: 90px;
   background-color: cornflowerblue;
   width: 20px;

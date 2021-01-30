@@ -21,23 +21,20 @@
           label="Confirm Password"
           v-model="confirmation"
         />
-       <div class="type">
-           <b-radio v-model="user.type"
-                name="name"
-                native-value="tenant">
-                Tenant
-            </b-radio>  
-            <div class="divider"></div>  
-             <b-radio v-model="user.type"
-                name="name"
-                native-value="landlord">
-                Landlord
+        <div class="type">
+          <b-field label="Which one is you?">
+            <b-radio v-model="user.type" name="name" native-value="tenant">
+              Tenant
             </b-radio>
-       </div>
+            <div class="divider"></div>
+            <b-radio v-model="user.type" name="name" native-value="landlord">
+              Landlord
+            </b-radio>
+          </b-field>
+        </div>
         <div class="reg_b">
           <b-button @click="handleSubmit(register)" type="is-info"
-            >Register</b-button
-          >
+            >Register</b-button>
         </div>
       </ValidationObserver>
     </div>
@@ -114,8 +111,8 @@ export default {
 h1 {
   font-size: 2rem;
 }
-.Register{
-  margin-top: 12px; 
+.Register {
+  margin-top: 12px;
 }
 .RegisterPage {
   margin-top: 1rem;
@@ -128,14 +125,15 @@ h1 {
   box-shadow: 0 0px 6px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   background-color: rgb(243, 243, 243);
 }
-.reg_b{
+.reg_b {
   margin-top: 10px;
 }
-.type{
-  margin-top: 20px;
+.type {
+  margin-top: 10px;
+  margin-bottom: 10px;
   display: inline-flex;
 }
-.divider{
+.divider {
   width: 20px;
 }
 @media only screen and (max-width: 768px) {

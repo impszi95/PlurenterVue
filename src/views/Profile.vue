@@ -11,6 +11,7 @@
                 <b-icon class="file-icon" icon="upload"></b-icon>
                 <span class="file-label">Upload image</span>
               </span>
+              <LoadingSmall v-if="loadPhoto"/>
             </b-upload>
           </b-field>
         </div>
@@ -77,6 +78,7 @@ import ConfirmPopUp from "../components/ConfirmPopUp.vue";
 import FullImage from "../components/FullImage.vue";
 import ProfileTenant from "../components/Tenant/ProfileTenant";
 import ProfileLandlord from "../components/Landlord/ProfileLandlord.vue";
+import LoadingSmall from "../components/LoadingSmall";
 import $ from "jquery";
 
 export default {
@@ -84,7 +86,8 @@ export default {
     ConfirmPopUp,
     FullImage,
     ProfileTenant,
-    ProfileLandlord
+    ProfileLandlord,
+    LoadingSmall
   },
   data() {
     return {
@@ -92,10 +95,12 @@ export default {
       isDeleteModalActive: false,
       isFullImageModalActive: false,
       selectedPhoto: null,
+      loadPhoto:false  
     };
   },
   methods: {
     async onUpload(file) {
+      this.loadPhoto = true;
       let selectedPhoto = file;
       if (selectedPhoto != null) {
         let formdata = new FormData();
@@ -107,6 +112,7 @@ export default {
           await PhotoService.upload(formdata);
           this.LoadAllPic();
           this.ImageUploaded();
+          this.loadPhoto=false;
         } catch (error) {
           this.ImageUploadError();
         }
@@ -192,11 +198,15 @@ export default {
   text-align: center;
   font-size: 1.2rem;
 }
+.upload_img{
+  height: 40px;
+}
 .file.is-success {
   display: block;
   margin-left: auto;
   margin-right: auto;
-  width: 160px;
+  width: 157px;
+  height: 40px;
 }
 .images {
   min-height: 200px;

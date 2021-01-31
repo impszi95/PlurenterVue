@@ -87,7 +87,7 @@ export default {
     },
     goToMatches() {
       this.Cancel();
-      this.$router.push("matches");
+      this.$router.push('matches');
     },
   },
   mounted() {

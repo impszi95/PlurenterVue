@@ -128,13 +128,7 @@ export default {
         {
                     message: "Minimum time which your are willing to rent.",
                     type: 'is-info',
-                    position: 'is-bottom',
-                    onAction: () => {
-                        this.$buefy.toast.open({
-                            message: 'Action pressed',
-                            queue: false
-                        })
-                    }
+                    position: 'is-bottom',                    
                 })
     },
   },

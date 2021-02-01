@@ -9,6 +9,11 @@
             </div>
           </b-field>
         </div>
+          <b-field class="field" label="Rent">
+            <div>
+              <p>{{ user.rent }}</p>
+            </div>
+        </b-field>
         <div>
           <b-field class="field" label="Description">
             <div>
@@ -23,7 +28,7 @@
 
 <script>
 export default {
-    props: ["user"],
+    props: ["user"],    
 }
 </script>
 
@@ -46,14 +51,17 @@ export default {
   width: 100%;
   margin-bottom: 10px;
 }
-.desc {
-  min-height: 50px;
-  background-color: white;
-  width: 100%;
+p{  
   padding: 5px;
   border: gainsboro;
   border-style: solid;
   border-width: thin;
+  background-color: white;
+}
+.desc {
+  min-height: 50px;
+  background-color: white;
+  width: 100%;
 }
 @media only screen and (max-width: 768px) {
   .datas {

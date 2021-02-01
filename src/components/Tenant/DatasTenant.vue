@@ -9,10 +9,15 @@
             </div>
           </b-field>
         </div>
+        <b-field class="field" label="Job">
+            <div>
+              <p>{{ user.job }}</p>
+            </div>
+        </b-field>
         <div>
           <b-field class="field" label="Description">
             <div>
-              <p class="desc">{{ user.description }}</p>
+              <p class="desc">{{ description }}</p>
             </div>
           </b-field>
         </div>
@@ -24,6 +29,11 @@
 <script>
 export default {
   props: ["user"],
+  data(){
+    return{
+      description:this.user.description.replaceAll(/<br>/g,"\n")
+    };
+  }
 };
 </script>
 
@@ -46,14 +56,18 @@ export default {
   width: 100%;
   margin-bottom: 10px;
 }
-.desc {
-  min-height: 50px;
-  background-color: white;
-  width: 100%;
+p{  
   padding: 5px;
   border: gainsboro;
   border-style: solid;
   border-width: thin;
+  background-color: white;
+}
+.desc {
+  min-height: 50px;
+  width: 100%;
+  white-space: pre-line;
+
 }
 @media only screen and (max-width: 768px) {
   .datas {

@@ -32,10 +32,11 @@
         icon="upload"
       >
         <b-icon class="file-icon" size="is-medium" icon="close"></b-icon>
-      </b-button>
+      </b-button>    
       <b-button rounded class="btn" @click="Like()" type="is-danger">
         <b-icon class="file-icon" size="is-medium" icon="heart"></b-icon>
-      </b-button>
+      </b-button> 
+      
     </div>
     <div class="details_label">Details</div>
     <DatasTenant v-if="user.tenant" :user="user" />
@@ -69,7 +70,6 @@ export default {
   methods: {
     async loadActualMeet() {
       let user = await PlurenterService.actualMeet();
-
       if (user.id == null && user.username == null && user.photos == null) {
         this.isEmpty = true;
       }
@@ -121,6 +121,11 @@ export default {
   font-size: 2rem;
   font: bold;
   height: 50px;
+  width: 100%;
+  border:transparent;
+  border-bottom: rgb(201, 200, 200);
+  border-style: solid;
+  border-width: 1px; 
 }
 .image_container {
   width: 500px;

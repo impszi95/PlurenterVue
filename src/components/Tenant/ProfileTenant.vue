@@ -53,8 +53,12 @@
               ></b-field>
             </div>
           </div>
+          <b-field label="Job">
+            <b-input placeholder="e.g., Assistant, Student" v-model="job"></b-input>
+          </b-field>
           <b-field class="field" label="Description">
             <b-input
+              placeholder="Write something about yourself."
               class="desc_input"
               maxlength="500"
               type="textarea"
@@ -87,36 +91,39 @@ export default {
   data() {
     return {
       likes: null,
-      description: "",
+      description: null,
       year: 0,
       month: 0,
       day: 0,
+      job:null
     };
   },
   async created() {
     let tenantInfos = await UserService.getTenantInfos();
-    this.description = tenantInfos.description;
+    this.description = tenantInfos.description.replaceAll(/<br>/g,"\n");
     this.likes = tenantInfos.likes;
 
     this.year = tenantInfos.minRentTime.year;
     this.month = tenantInfos.minRentTime.month;
     this.day = tenantInfos.minRentTime.day;
+
+    this.job = tenantInfos.job;
   },
   methods: {
     async Save() {
       let tenantInfos = {
-        description: this.description,
-        likes: this.likes,
+        description: this.description.replaceAll("\n", "<br>"),
         minRentTime: {
           year: this.year,
           month: this.month,
           day: this.day,
         },
+        job: this.job
       };
       try {
         await UserService.saveTenantInfos(tenantInfos);
         this.$buefy.toast.open({
-          message: `Saved </b>`,
+          message: `Saved`,
           type: "is-success",
         });
       } catch (error) {

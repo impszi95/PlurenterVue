@@ -10,7 +10,9 @@
         <div>
           <div class="field_c">
             <b-field label="Minimum renting time" />
-              <div class="help"  @click="snackbar"><span class="q_icon">?</span></div>
+            <div class="help" @click="snackbar">
+              <span class="q_icon">?</span>
+            </div>
           </div>
           <div class="minRentTime">
             <div class="container">
@@ -53,8 +55,32 @@
               ></b-field>
             </div>
           </div>
+          <b-field label="Rent">
+            <b-numberinput
+              class="amount_i"
+              :controls="false"
+              placeholder="Amount"
+              v-model="amount"
+            ></b-numberinput>
+            <b-select placeholder="Currency" v-model="currency">
+              <option
+                v-for="currency in currencies"
+                :value="currency"
+                :key="currency"
+              >
+                {{ currency }}
+              </option>
+            </b-select>
+            <b-select class="select" placeholder="Period" v-model="period">
+              <option value="Yearly">Yearly</option>
+              <option value="Monthly">Monthly</option>
+              <option value="Weekly">Weekly</option>
+              <option value="Daily">Daily</option>
+            </b-select>
+          </b-field>
           <b-field class="field" label="Description">
             <b-input
+              placeholder="Write any additional information."
               class="desc_input"
               maxlength="500"
               type="textarea"
@@ -82,54 +108,90 @@
 
 <script>
 import UserService from "@/Services/UserService";
+const currencies = require("@/assets/currencies.json");
 
 export default {
   data() {
     return {
       likes: null,
-      description: "",
+      description: null,
       year: 0,
       month: 0,
       day: 0,
+      amount: null,
+      period: null,
+      currency: null,
+      currencies: currencies,
     };
   },
   async created() {
     let landlordInfos = await UserService.getLandlordInfos();
-    this.description = landlordInfos.description;
+    this.description = landlordInfos.description.replaceAll(/<br>/g,"\n");
     this.likes = landlordInfos.likes;
 
     this.year = landlordInfos.minRentTime.year;
     this.month = landlordInfos.minRentTime.month;
-    this.day = landlordInfos.minRentTime.day;
+    this.day = landlordInfos.minRentTime.day; 
+
+    this.amount =
+      landlordInfos.rent.amount == 0 ? null : landlordInfos.rent.amount;
+    this.currency =
+      landlordInfos.rent.currency == "" ? null : landlordInfos.rent.currency;
+    this.period =
+      landlordInfos.rent.period == "" ? null : landlordInfos.rent.period;
   },
   methods: {
     async Save() {
+      if (this.year === 0 && this.month === 0 && this.day === 0) {
+        this.openToast("Set a minimum renting time!", "is-danger");
+        return;
+      }
+      if (
+        this.amount === null ||
+        this.currency === null ||
+        this.period === null
+      ) {
+        this.openToast("Fill all rent fields!", "is-danger");
+        return;
+      }
+      if (this.amount < 0) {
+        this.openToast("Rent amount can't be negativ!", "is-danger");
+        return;
+      }
+
       let landlordInfos = {
-        description: this.description,
-        likes: this.likes,
+        description: this.description.replaceAll("\n", "<br>"),
         minRentTime: {
           year: this.year,
           month: this.month,
           day: this.day,
         },
+        rent: {
+          amount: this.amount,
+          currency: this.currency,
+          period: this.period,
+        },
       };
       try {
         await UserService.saveLandlordInfos(landlordInfos);
-        this.$buefy.toast.open({
-          message: `Saved </b>`,
-          type: "is-success",
-        });
+        this.openToast("Saved", "is-success");
       } catch (error) {
+        this.openToast("Something went wrong!", "is-danger");
         console.log(error);
       }
     },
+    openToast(message, type) {
+      this.$buefy.toast.open({
+        message: message,
+        type: type,
+      });
+    },
     snackbar() {
-      this.$buefy.snackbar.open(
-        {
-                    message: "Minimum time which the apartment can be rented.",
-                    type: 'is-info',
-                    position: 'is-bottom',                   
-                })
+      this.$buefy.snackbar.open({
+        message: "Minimum time which the apartment can be rented.",
+        type: "is-info",
+        position: "is-bottom",
+      });
     },
   },
   computed: {
@@ -197,10 +259,10 @@ p {
 .likes_val {
   color: white;
 }
-.help:hover{
-    box-shadow: 0 0px 2px 0 rgba(0, 0, 0, 0.2), 0 2px 5px 0 rgba(0, 0, 0, 0.14);
+.help:hover {
+  box-shadow: 0 0px 2px 0 rgba(0, 0, 0, 0.2), 0 2px 5px 0 rgba(0, 0, 0, 0.14);
 }
-.help { 
+.help {
   border-radius: 90px;
   background-color: cornflowerblue;
   width: 20px;

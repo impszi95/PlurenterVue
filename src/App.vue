@@ -51,6 +51,7 @@
 
 <script>
 import WebSocket from "./components/WebSocket.vue";
+
 export default {
   components: {
     WebSocket,

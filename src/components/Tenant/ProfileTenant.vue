@@ -80,6 +80,10 @@
           </div>
         </div>
       </div>
+      <div>
+        <h1 v-if="active"> Active </h1>
+        <h1 v-else>Not active</h1>
+      </div>
     </div>
   </div>
 </template>
@@ -90,6 +94,7 @@ import UserService from "@/Services/UserService";
 export default {
   data() {
     return {
+      active:null,
       likes: null,
       description: null,
       year: 0,
@@ -100,6 +105,7 @@ export default {
   },
   async created() {
     let tenantInfos = await UserService.getTenantInfos();
+    this.active = tenantInfos.active;
     this.description = tenantInfos.description.replaceAll(/<br>/g,"\n");
     this.likes = tenantInfos.likes;
 
@@ -111,6 +117,11 @@ export default {
   },
   methods: {
     async Save() {
+      if (this.year === 0 && this.month === 0 && this.day === 0) {
+        this.openToast("Set a minimum renting time!", "is-danger");
+        return;
+      }
+
       let tenantInfos = {
         description: this.description.replaceAll("\n", "<br>"),
         minRentTime: {
@@ -122,13 +133,17 @@ export default {
       };
       try {
         await UserService.saveTenantInfos(tenantInfos);
-        this.$buefy.toast.open({
-          message: `Saved`,
-          type: "is-success",
-        });
+        this.openToast("Saved", "is-success");
       } catch (error) {
+        this.openToast("Something went wrong!", "is-danger");
         console.log(error);
       }
+    },
+    openToast(message, type) {
+      this.$buefy.toast.open({
+        message: message,
+        type: type,
+      });
     },
     snackbar() {
       this.$buefy.snackbar.open(

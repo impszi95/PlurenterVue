@@ -102,6 +102,10 @@
           </div>
         </div>
       </div>
+        <div>
+          <h1 v-if="active">Active</h1>
+          <h1 v-else>Not active</h1>
+      </div>
     </div>
   </div>
 </template>
@@ -113,6 +117,7 @@ const currencies = require("@/assets/currencies.json");
 export default {
   data() {
     return {
+      active: null,
       likes: null,
       description: null,
       year: 0,
@@ -126,12 +131,13 @@ export default {
   },
   async created() {
     let landlordInfos = await UserService.getLandlordInfos();
-    this.description = landlordInfos.description.replaceAll(/<br>/g,"\n");
+    this.active = landlordInfos.active;
+    this.description = landlordInfos.description.replaceAll(/<br>/g, "\n");
     this.likes = landlordInfos.likes;
 
     this.year = landlordInfos.minRentTime.year;
     this.month = landlordInfos.minRentTime.month;
-    this.day = landlordInfos.minRentTime.day; 
+    this.day = landlordInfos.minRentTime.day;
 
     this.amount =
       landlordInfos.rent.amount == 0 ? null : landlordInfos.rent.amount;

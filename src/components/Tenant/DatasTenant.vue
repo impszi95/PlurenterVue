@@ -11,7 +11,7 @@
         </div>
         <b-field class="field" label="Job">
             <div>
-              <p>{{ user.job }}</p>
+              <p class="job">{{ user.job }}</p>
             </div>
         </b-field>
         <div>
@@ -64,10 +64,12 @@ p{
   background-color: white;
 }
 .desc {
-  min-height: 50px;
+  min-height: 35px;
   width: 100%;
   white-space: pre-line;
-
+}
+.job{
+    min-height: 35px;
 }
 @media only screen and (max-width: 768px) {
   .datas {

@@ -10,7 +10,9 @@
         <div>
           <div class="field_c">
             <b-field label="Minimum renting time" />
-            <div class="help" @click="snackbar"><span class="q_icon">?</span></div>
+            <div class="help" @click="snackbar">
+              <span class="q_icon">?</span>
+            </div>
           </div>
           <div class="minRentTime">
             <div class="container">
@@ -54,7 +56,10 @@
             </div>
           </div>
           <b-field label="Job">
-            <b-input placeholder="e.g., Assistant, Student" v-model="job"></b-input>
+            <b-input
+              placeholder="e.g., Assistant, Student"
+              v-model="job"
+            ></b-input>
           </b-field>
           <b-field class="field" label="Description">
             <b-input
@@ -70,19 +75,56 @@
           >
         </div>
       </div>
-      <div class="likes_div">
-        <div>
-          <strong class="likes_text">Likes</strong>
-        </div>
-        <div class="likes">
-          <div class="likes_val_div">
-            <strong class="likes_val">{{ likes }}</strong>
+      <div class="second_tab">
+        <div class="likes_div">
+          <div>
+            <strong class="likes_text">Likes</strong>
+          </div>
+          <div class="likes">
+            <div class="likes_val_div">
+              <strong class="likes_val">{{ likes }}</strong>
+            </div>
           </div>
         </div>
-      </div>
-      <div>
-        <h1 v-if="active"> Active </h1>
-        <h1 v-else>Not active</h1>
+        <div class="active_c">
+          <div class="active_container">
+            <div v-if="active">
+              <div class="active">
+                <h1>Your profile is active.</h1>
+                <b-icon
+                  class="file-icon"
+                  size="is-medium"
+                  icon="check-circle"
+                  type="is-success"
+                ></b-icon>
+              </div>
+              <b-button
+                class="deactivate_btn"
+                @click="Deactivate()"
+                type="is-danger"
+                >Turn off</b-button
+              >
+            </div>
+            <div v-else>
+              <div class="active">
+                <h1>Your profile is not active.</h1>
+                <b-icon
+                  class="file-icon"
+                  size="is-medium"
+                  icon="close-circle"
+                  type="is-danger"
+                ></b-icon>
+              </div>
+              <b-button
+                :disabled="canActivate != true"
+                class="activate_btn"
+                @click="Activate()"
+                type="is-success"
+                >Activate</b-button
+              >
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -92,21 +134,25 @@
 import UserService from "@/Services/UserService";
 
 export default {
+  components: {
+  },
   data() {
     return {
-      active:null,
+      active: null,
       likes: null,
       description: null,
       year: 0,
       month: 0,
       day: 0,
-      job:null
+      job: null,
+      canActivate: null,
     };
   },
   async created() {
     let tenantInfos = await UserService.getTenantInfos();
     this.active = tenantInfos.active;
-    this.description = tenantInfos.description.replaceAll(/<br>/g,"\n");
+    this.canActivate = tenantInfos.canActivate;
+    this.description = tenantInfos.description.replaceAll(/<br>/g, "\n");
     this.likes = tenantInfos.likes;
 
     this.year = tenantInfos.minRentTime.year;
@@ -118,7 +164,7 @@ export default {
   methods: {
     async Save() {
       if (this.year === 0 && this.month === 0 && this.day === 0) {
-        this.openToast("Set a minimum renting time!", "is-danger");
+        this.openToast("Set a minimum renting time!", "is-danger", 2000);
         return;
       }
 
@@ -129,29 +175,54 @@ export default {
           month: this.month,
           day: this.day,
         },
-        job: this.job
+        job: this.job,
       };
       try {
         await UserService.saveTenantInfos(tenantInfos);
-        this.openToast("Saved", "is-success");
+        this.openToast("Saved", "is-success", 2000);
+        this.canActivate = true;
       } catch (error) {
-        this.openToast("Something went wrong!", "is-danger");
+        this.openToast("Something went wrong!", "is-danger", 2000);
         console.log(error);
       }
     },
-    openToast(message, type) {
+    Activate() {
+      this.active = UserService.activateUser();
+      if (this.active) {
+        this.openToast(
+          "Your profile is activated<br>Landlords are able to see your profile.",
+          "is-success",
+          4000
+        );
+      } else {
+        this.openToast("Can't activate!", "is-danger", 2000);
+      }
+    },
+     Deactivate(){
+      this.active = UserService.deactivateUser();
+      if (this.active) {
+        this.openToast(
+          "Your profile is deactivated<br>Landlords won't see your profile until you activate it back.",
+          "is-danger",
+          4000
+        );
+      } else {
+        this.openToast("Can't deactivate!", "is-danger", 2000);
+      }
+    },
+    openToast(message, type, duration) {
       this.$buefy.toast.open({
+        duration: duration,
         message: message,
         type: type,
       });
     },
     snackbar() {
-      this.$buefy.snackbar.open(
-        {
-                    message: "Minimum time which your are willing to rent.",
-                    type: 'is-info',
-                    position: 'is-bottom',                    
-                })
+      this.$buefy.snackbar.open({
+        message: "Minimum time which your are willing to rent.",
+        type: "is-info",
+        position: "is-bottom",
+      });
     },
   },
   computed: {
@@ -177,6 +248,8 @@ export default {
   height: 178px;
   margin-left: auto;
   margin-right: auto;
+  margin-top: 10px; 
+  margin-bottom: 20px;
 }
 .likes {
   border-radius: 90px;
@@ -219,8 +292,8 @@ p {
 .likes_val {
   color: white;
 }
-.help:hover{
-    box-shadow: 0 0px 2px 0 rgba(0, 0, 0, 0.2), 0 2px 5px 0 rgba(0, 0, 0, 0.14);
+.help:hover {
+  box-shadow: 0 0px 2px 0 rgba(0, 0, 0, 0.2), 0 2px 5px 0 rgba(0, 0, 0, 0.14);
 }
 .help {
   border-radius: 90px;
@@ -242,15 +315,46 @@ p {
 .save_btn {
   width: 80px;
 }
+.second_tab{
+    display: block;
+    width: 50%;
+  }
+.active {
+  margin-top: 10px;
+  margin-bottom: 0px;
+  display: flex;
+}
+.active_container {
+  margin-left: auto;
+  margin-right: auto;
+  width: fit-content;
+}
+.file-icon {
+  transform: translateY(-10%);
+}
 @media only screen and (max-width: 768px) {
   .datas {
     display: block;
   }
   .user_infos {
     width: 100%;
+    border: transparent;
+    border-bottom: rgb(201, 200, 200);
+    border-style: solid;
+    border-width: 1px;
   }
   .save_btn {
     margin-bottom: 20px;
+  }
+  .active_c{
+    border: transparent;
+    border-top: rgb(201, 200, 200);
+    border-style: solid;
+    border-width: 1px;
+    padding-top:10px;
+  }
+  .second_tab{
+    width: 100%;
   }
 }
 </style>

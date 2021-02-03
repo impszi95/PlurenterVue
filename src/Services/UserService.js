@@ -46,6 +46,20 @@ class UserService {
             return res.data
         });
     }
+    async activateUser() {
+        return await axios.post(IPs.API_URL + 'activateUser',{}, {
+            headers: authHeader()
+        }).then(res => {
+            return res.data
+        });
+    }
+    async deactivateUser() {
+        return await axios.post(IPs.API_URL + 'deactivateUser',{}, {
+            headers: authHeader()
+        }).then(res => {
+            return res.data
+        });
+    }
     async getTenantInfos(){
         return await axios.get(IPs.API_URL + 'getTenantInfo', {
             headers: authHeader()

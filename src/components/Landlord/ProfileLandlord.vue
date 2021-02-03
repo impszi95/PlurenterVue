@@ -92,19 +92,56 @@
           >
         </div>
       </div>
-      <div class="likes_div">
-        <div>
-          <strong class="likes_text">Likes</strong>
-        </div>
-        <div class="likes">
-          <div class="likes_val_div">
-            <strong class="likes_val">{{ likes }}</strong>
+      <div class="second_tab">
+        <div class="likes_div">
+          <div>
+            <strong class="likes_text">Likes</strong>
+          </div>
+          <div class="likes">
+            <div class="likes_val_div">
+              <strong class="likes_val">{{ likes }}</strong>
+            </div>
           </div>
         </div>
-      </div>
-        <div>
-          <h1 v-if="active">Active</h1>
-          <h1 v-else>Not active</h1>
+        <div class="active_c">
+          <div class="active_container">
+            <div v-if="active">
+              <div class="active">
+                <h1>Your profile is active.</h1>
+                <b-icon
+                  class="file-icon"
+                  size="is-medium"
+                  icon="check-circle"
+                  type="is-success"
+                ></b-icon>
+              </div>
+              <b-button
+                class="deactivate_btn"
+                @click="Deactivate()"
+                type="is-danger"
+                >Turn off</b-button
+              >
+            </div>
+            <div v-else>
+              <div class="active">
+                <h1>Your profile is not active.</h1>
+                <b-icon
+                  class="file-icon"
+                  size="is-medium"
+                  icon="close-circle"
+                  type="is-danger"
+                ></b-icon>
+              </div>
+              <b-button
+                :disabled="canActivate != true"
+                class="activate_btn"
+                @click="Activate()"
+                type="is-success"
+                >Activate</b-button
+              >
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -127,11 +164,13 @@ export default {
       period: null,
       currency: null,
       currencies: currencies,
+      canActivate: null,
     };
   },
   async created() {
     let landlordInfos = await UserService.getLandlordInfos();
     this.active = landlordInfos.active;
+    this.canActivate = landlordInfos.canActivate;
     this.description = landlordInfos.description.replaceAll(/<br>/g, "\n");
     this.likes = landlordInfos.likes;
 
@@ -149,7 +188,7 @@ export default {
   methods: {
     async Save() {
       if (this.year === 0 && this.month === 0 && this.day === 0) {
-        this.openToast("Set a minimum renting time!", "is-danger");
+        this.openToast("Set a minimum renting time!", "is-danger", 2000);
         return;
       }
       if (
@@ -157,11 +196,11 @@ export default {
         this.currency === null ||
         this.period === null
       ) {
-        this.openToast("Fill all rent fields!", "is-danger");
+        this.openToast("Fill all rent fields!", "is-danger", 2000);
         return;
       }
       if (this.amount < 0) {
-        this.openToast("Rent amount can't be negativ!", "is-danger");
+        this.openToast("Rent amount can't be negativ!", "is-danger", 2000);
         return;
       }
 
@@ -180,14 +219,40 @@ export default {
       };
       try {
         await UserService.saveLandlordInfos(landlordInfos);
-        this.openToast("Saved", "is-success");
+        this.openToast("Saved", "is-success", 2000);
+        this.canActivate = true;
       } catch (error) {
-        this.openToast("Something went wrong!", "is-danger");
+        this.openToast("Something went wrong!", "is-danger", 2000);
         console.log(error);
       }
     },
-    openToast(message, type) {
+    Activate() {
+      this.active = UserService.activateUser();
+      if (this.active) {
+        this.openToast(
+          "Your profile is activated<br>Tenants are able to see your profile.",
+          "is-success",
+          4000
+        );
+      } else {
+        this.openToast("Cant activate!", "is-danger", 2000);
+      }
+    },
+    Deactivate() {
+      this.active = !UserService.deactivateUser();
+      if (!this.active) {
+        this.openToast(
+          "Your profile is deactivated<br>Tenants won't see your profile until you activate it back.",
+          "is-danger",
+          4000
+        );
+      } else {
+        this.openToast("Can't deactivate!", "is-danger", 2000);
+      }
+    },
+    openToast(message, type, duration) {
       this.$buefy.toast.open({
+        duration: duration,
         message: message,
         type: type,
       });
@@ -223,6 +288,8 @@ export default {
   height: 178px;
   margin-left: auto;
   margin-right: auto;
+  margin-top: 10px;
+  margin-bottom: 20px;
 }
 .likes {
   border-radius: 90px;
@@ -288,15 +355,46 @@ p {
 .save_btn {
   width: 80px;
 }
+.second_tab {
+  display: block;
+  width: 50%;
+}
+.active {
+  margin-top: 10px;
+  margin-bottom: 0px;
+  display: flex;
+}
+.active_container {
+  margin-left: auto;
+  margin-right: auto;
+  width: fit-content;
+}
+.file-icon {
+  transform: translateY(-10%);
+}
 @media only screen and (max-width: 768px) {
   .datas {
     display: block;
   }
   .user_infos {
     width: 100%;
+    border: transparent;
+    border-bottom: rgb(201, 200, 200);
+    border-style: solid;
+    border-width: 1px;
   }
   .save_btn {
     margin-bottom: 20px;
+  }
+  .active_c {
+    border: transparent;
+    border-top: rgb(201, 200, 200);
+    border-style: solid;
+    border-width: 1px;
+    padding-top: 10px;
+  }
+  .second_tab {
+    width: 100%;
   }
 }
 </style>

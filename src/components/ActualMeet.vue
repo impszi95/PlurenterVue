@@ -1,63 +1,68 @@
 <template>
   <div>
-    <div class="haveMeet" v-if="!isEmpty">
-      <div class="user">
-        <div class="username">
-          {{ user.username }}
+    <div v-if="isActive">
+      <div class="haveMeet" v-if="!isEmpty">
+        <div class="user">
+          <div class="username">
+            {{ user.username }}
+          </div>
+          <b-button
+            rounded
+            class="btn_info"
+            type="is-info"
+            @click="Info()"
+            inverted
+          >
+            <b-icon
+              class="file-icon"
+              size="is-medium"
+              icon="information"
+            ></b-icon>
+          </b-button>
+          <b-carousel
+            v-if="actualPhoto != null"
+            :indicator-inside="true"
+            :autoplay="false"
+            icon-size="is-medium"
+          >
+            <b-carousel-item v-for="photo in user.photos" :key="photo.id">
+              <div class="image_container">
+                <img
+                  class="image"
+                  :src="'data:image/jpg;base64,' + photo.image.data"
+                />
+              </div>
+            </b-carousel-item>
+          </b-carousel>
+          <div v-else class="image_container">
+            <img class="image" src="../assets/default.png" />
+          </div>
         </div>
-        <b-button
-          rounded
-          class="btn_info"
-          type="is-info"
-          @click="Info()"          
-          inverted
-        >
-          <b-icon
-            class="file-icon"
-            size="is-medium"
-            icon="information"
-          ></b-icon>
-        </b-button>
-        <b-carousel
-          v-if="actualPhoto != null"
-          :indicator-inside="true"
-          :autoplay="false"
-          icon-size="is-medium"
-        >
-          <b-carousel-item v-for="photo in user.photos" :key="photo.id">
-            <div class="image_container">
-              <img
-                class="image"
-                :src="'data:image/jpg;base64,' + photo.image.data"
-              />
-            </div>
-          </b-carousel-item>
-        </b-carousel>
-        <div v-else class="image_container">
-          <img class="image" src="../assets/default.png" />
-        </div>
-      </div>
-      <div class="buttons">
-        <b-button
-          rounded
-          class="btn"
-          @click="Dislike()"
-          type="is-info"
-          icon="upload"
-        >
-          <b-icon class="file-icon" size="is-medium" icon="close"></b-icon>
-        </b-button>
+        <div class="buttons">
+          <b-button
+            rounded
+            class="btn"
+            @click="Dislike()"
+            type="is-info"
+            icon="upload"
+          >
+            <b-icon class="file-icon" size="is-medium" icon="close"></b-icon>
+          </b-button>
 
-        <b-button rounded class="btn" @click="Like()" type="is-danger">
-          <b-icon class="file-icon" size="is-medium" icon="heart"></b-icon>
-        </b-button>
+          <b-button rounded class="btn" @click="Like()" type="is-danger">
+            <b-icon class="file-icon" size="is-medium" icon="heart"></b-icon>
+          </b-button>
+        </div>
+        <div id="datas" class="details_label">Details</div>
+        <DatasTenant v-if="user.tenant" :user="user" />
+        <DatasLandlord v-else :user="user" />
       </div>
-      <div id="datas" class="details_label">Details</div>
-      <DatasTenant v-if="user.tenant" :user="user" />
-      <DatasLandlord v-else :user="user" />
+      <div v-if="isEmpty" class="loading">
+        <Loading />
+      </div>
     </div>
-    <div v-if="isEmpty" class="loading">
-      <Loading />
+    <div class="notActive" v-else>
+      <p>Your profile must be activated.</p>
     </div>
   </div>
 </template>
@@ -68,13 +73,14 @@ import Loading from "./Loading.vue";
 import DatasLandlord from "./Landlord/DatasLandlord";
 import DatasTenant from "./Tenant/DatasTenant";
 import $ from "jquery";
-
+import UserService from "../Services/UserService";
 export default {
   data() {
     return {
       user: null,
       isEmpty: true,
       actualPhoto: null,
+      isActive: false,
     };
   },
   components: {
@@ -117,6 +123,7 @@ export default {
   },
   async created() {
     await this.loadActualMeet();
+    this.isActive = await UserService.getIsActive();
   },
 };
 </script>
@@ -202,5 +209,9 @@ export default {
 .details_label {
   font-size: 1.4rem;
   margin-bottom: -20px;
+}
+.notActive{
+  margin-top: 140px;
+  font-size: 1rem;
 }
 </style>

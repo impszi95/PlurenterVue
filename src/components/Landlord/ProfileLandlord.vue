@@ -226,27 +226,27 @@ export default {
         console.log(error);
       }
     },
-    Activate() {
-      this.active = UserService.activateUser();
-      if (this.active) {
+    async Activate() {
+      try{
+      this.active = await UserService.activateUser();
         this.openToast(
           "Your profile is activated<br>Tenants are able to see your profile.",
           "is-success",
           4000
         );
-      } else {
+      } catch(error) {
         this.openToast("Cant activate!", "is-danger", 2000);
       }
     },
-    Deactivate() {
-      this.active = !UserService.deactivateUser();
-      if (!this.active) {
+    async Deactivate() {
+      try{
+     this.active = await !UserService.deactivateUser();
         this.openToast(
           "Your profile is deactivated<br>Tenants won't see your profile until you activate it back.",
           "is-danger",
           4000
         );
-      } else {
+      } catch(error) {
         this.openToast("Can't deactivate!", "is-danger", 2000);
       }
     },

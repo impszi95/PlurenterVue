@@ -7,7 +7,7 @@
         <Login />
       </div>
     </div>
-    <div v-if="isLogged" class="Tinder">
+    <div v-if="isLogged">
       <ActualMeet />
     </div>
   </div>

@@ -74,6 +74,13 @@ class UserService {
             return res.data;
         })
     }
+    async getIsActive(){
+        return await axios.get(IPs.API_URL + 'getIsActive', {
+            headers: authHeader()
+        }).then(res=>{            
+            return res.data;
+        })
+    }
 }
 
 export default new UserService();

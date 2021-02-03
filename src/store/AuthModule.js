@@ -64,7 +64,7 @@ export const auth = {
         },
         deleteUserPhoto({commit}, photoId) {
                 commit('deleteUserPhoto', photoId);
-        }
+        },
     },
     
     mutations: {
@@ -98,6 +98,6 @@ export const auth = {
             state.userPhotos = state.userPhotos.filter(
                 (photo) => photo.id != photoId
             );
-        }
+        },
     }
 }

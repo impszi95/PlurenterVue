@@ -171,7 +171,7 @@ export default {
     let landlordInfos = await UserService.getLandlordInfos();
     this.active = landlordInfos.active;
     this.canActivate = landlordInfos.canActivate;
-    this.description = landlordInfos.description.replaceAll(/<br>/g, "\n");
+    this.description = landlordInfos.description.replaceAll("<br>", "\n");
     this.likes = landlordInfos.likes;
 
     this.year = landlordInfos.minRentTime.year;

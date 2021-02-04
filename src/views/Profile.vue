@@ -115,6 +115,7 @@ export default {
           this.loadPhoto=false;
         } catch (error) {
           this.ImageUploadError();
+          this.LoadingSmall = false;
         }
       }
     },

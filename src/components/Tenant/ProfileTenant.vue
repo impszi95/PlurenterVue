@@ -152,7 +152,7 @@ export default {
     let tenantInfos = await UserService.getTenantInfos();
     this.active = tenantInfos.active;
     this.canActivate = tenantInfos.canActivate;
-    this.description = tenantInfos.description.replaceAll("<br>", "\n");
+    this.description = tenantInfos.description;
     this.likes = tenantInfos.likes;
 
     this.year = tenantInfos.minRentTime.year;

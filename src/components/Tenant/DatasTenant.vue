@@ -31,7 +31,7 @@ export default {
   props: ["user"],
   data(){
     return{
-      description:this.user.description.replaceAll("<br>","\n")
+      description:this.user.description,
     };
   }
 };

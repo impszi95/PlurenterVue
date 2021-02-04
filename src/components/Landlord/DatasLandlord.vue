@@ -61,6 +61,7 @@ p{
   border: gainsboro;
   border-style: solid;
   border-width: thin;
+  border-radius: 4px;
   background-color: white;
 }
 .desc {

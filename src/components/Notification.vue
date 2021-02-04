@@ -4,7 +4,8 @@
       <div class="modal-card" >
         <div class="modal-card-head">
           <div class="modal-card-title">
-            <p>New match with {{ match.matchName }}</p>
+            <p>New match</p>
+            <p class="matchName">{{ match.matchName }}</p>
           </div>
         </div>     
           <div class="image_container modal-card-foot">
@@ -83,5 +84,9 @@ export default {
   height: 100%;
   position: absolute;
   left: 0;
+}
+.matchName{
+  font-weight: bold;
+  margin-top: 10px;
 }
 </style>

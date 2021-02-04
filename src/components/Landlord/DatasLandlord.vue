@@ -17,7 +17,7 @@
         <div>
           <b-field class="field" label="Description">
             <div>
-              <p class="desc">{{ user.description }}</p>
+              <p class="desc">{{ description }}</p>
             </div>
           </b-field>
         </div>
@@ -29,6 +29,11 @@
 <script>
 export default {
     props: ["user"],    
+     data(){
+    return{
+      description:this.user.description.replaceAll(/<br>/g,"\n")
+    };
+  }
 }
 </script>
 
@@ -59,9 +64,9 @@ p{
   background-color: white;
 }
 .desc {
-  min-height: 50px;
-  background-color: white;
+  min-height: 35px;
   width: 100%;
+  white-space: pre-line;
 }
 @media only screen and (max-width: 768px) {
   .datas {

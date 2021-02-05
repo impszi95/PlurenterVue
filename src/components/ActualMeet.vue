@@ -204,7 +204,7 @@ export default {
   bottom: 8px;
   right: 8px;
   font-size: 18px;
-  z-index: 999;
+  z-index: 10;
 }
 .details_label {
   font-size: 1.4rem;

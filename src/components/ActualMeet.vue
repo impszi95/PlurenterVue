@@ -3,8 +3,8 @@
     <div v-if="isActive">
       <div class="haveMeet" v-if="!isEmpty">
         <div class="user">
-          <div class="username">
-            {{ user.username }}
+          <div class="name">
+            {{ user.name }}
           </div>
           <b-button
             rounded
@@ -91,7 +91,7 @@ export default {
   methods: {
     async loadActualMeet() {
       let user = await PlurenterService.actualMeet();
-      if (user.id == null && user.username == null && user.photos == null) {
+      if (user.id == null && user.name == null && user.photos == null) {
         this.isEmpty = true;
       } else {
         this.isEmpty = false;
@@ -143,7 +143,7 @@ export default {
     height: auto;
   }
 }
-.username {
+.name {
   display: block;
   margin-left: auto;
   margin-right: auto;

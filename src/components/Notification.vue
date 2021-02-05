@@ -20,7 +20,7 @@
             Back
           </button>
           <div class="divider" />
-          <button class="button is-danger" @click="$emit('viewMatches')">
+          <button class="button is-danger" type="button" @click="$emit('viewMatches')">
             View matches
           </button>
       </div>

@@ -1,6 +1,8 @@
 <template>
   <div>
+    <div class="header_container">      
     <h1>About</h1>
+    </div>
     <div class="container">
       <b-button class="terms_b" @click="Terms()" outlined type="is-info is-light">Terms and conditions</b-button>
       </div>
@@ -18,10 +20,14 @@ export default {
 </script>
 
 <style scoped>
+.header_container{
+  background-color:rgb(72, 199, 116);
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
 h1{
   font-size: 2.1rem;
-  margin-top: 20px;
-  margin-bottom: 40px;
+  color:white;
 }
 .terms_b{  
   margin-left: auto;

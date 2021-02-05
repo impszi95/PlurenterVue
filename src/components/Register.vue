@@ -2,13 +2,20 @@
   <div class="RegisterPage">
     <h1>Register</h1>
     <div class="Register">
-      <ValidationObserver ref="observer" v-slot="{ handleSubmit }">
+      <ValidationObserver ref="observer" v-slot="{ handleSubmit }">        
         <ValidationInput
           class="mainpass"
           rules="required"
-          type="username"
-          label="Username"
-          v-model="user.username"
+          type="name"
+          label="Name"
+          v-model="user.name"
+        />
+        <ValidationInputEmail
+          class="mainpass"
+          rules="required|email"
+          type="email"
+          label="Email"
+          v-model="user.email"
         />
         <ValidationInputPassword
           class="mainpass"
@@ -54,9 +61,10 @@
 </template>
 
 <script>
-import User from "../Model/User";
+import UserRegister from "../Model/UserRegister";
 import { ValidationObserver } from "vee-validate";
 import ValidationInput from "../Inputs/ValidationInput";
+import ValidationInputEmail from "../Inputs/ValidationInputEmail";
 import ValidationInputPassword from "../Inputs/ValidationInputPassword";
 import ValidationSwitch from "../Inputs/ValidationSwitch";
 
@@ -64,13 +72,14 @@ export default {
   components: {
     ValidationObserver,
     ValidationInput,
+    ValidationInputEmail,
     ValidationInputPassword,
     ValidationSwitch
   },
 
   data() {
     return {
-      user: new User("", "", "",false),
+      user: new UserRegister("", "", "",false),
       confirmation: "",
     };
   },
@@ -82,10 +91,10 @@ export default {
 
   methods: {
     register() {
-      if (this.user.username && this.user.password && this.user.type && this.user.terms) {
+      if (this.user.name, this.user.email && this.user.password && this.user.type && this.user.terms) {
         this.$store.dispatch("auth/register", this.user).then(
           () => {
-            this.login(); //Egyből login reg után
+            this.login(); 
           },
           () => {
             this.invalidLogin();
@@ -95,7 +104,7 @@ export default {
     },
 
     login() {
-      if (this.user.username && this.user.password) {
+      if (this.user.email && this.user.password) {
         this.$store.dispatch("auth/login", this.user).then(
           () => {
             this.$router.push("/profile").catch((err) => {
@@ -115,7 +124,7 @@ export default {
 
     invalidLogin() {
       this.$buefy.toast.open({
-        message: `Username is already used or invalid</b>`,
+        message: `Email is already used or invalid</b>`,
         type: "is-danger",
       });
     },

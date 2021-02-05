@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="username">{{ match.username }}</div>
+    <div class="name">{{ match.name }}</div>
     <DatasTenant :user="match" />
     <div class="images">
       <div
@@ -85,7 +85,7 @@ export default {
   position: absolute;
   left: 0;
 }
-.username {
+.name {
   margin-top: 20px;
   font-size: 2rem;
 }

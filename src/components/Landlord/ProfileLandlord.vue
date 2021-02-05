@@ -3,11 +3,15 @@
     <div class="datas">
       <div class="user_infos">
         <div>
-          <b-field class="field" label="Username">
-            <div class="username_input">{{ currentUser.username }}</div>
+          <b-field class="field" label="Email">
+            <div class="email_input">{{ currentUser.email }}</div>
+          </b-field>          
+          <b-field label="Name">
+            <b-input
+              placeholder="e.g., John"
+              v-model="name"
+            ></b-input>
           </b-field>
-        </div>
-        <div>
           <div class="field_c">
             <b-field label="Minimum renting time" />
             <div class="help" @click="snackbar">
@@ -156,6 +160,7 @@ export default {
     return {
       active: null,
       likes: null,
+      name:null,
       description: null,
       year: 0,
       month: 0,
@@ -170,6 +175,7 @@ export default {
   async created() {
     let landlordInfos = await UserService.getLandlordInfos();
     this.active = landlordInfos.active;
+    this.name = landlordInfos.name;
     this.canActivate = landlordInfos.canActivate;
     this.description = landlordInfos.description;
     this.likes = landlordInfos.likes;
@@ -191,6 +197,10 @@ export default {
         this.openToast("Set a minimum renting time!", "is-danger", 2000);
         return;
       }
+      if (this.name==""){
+        this.openToast("Name can't be empty!", "is-danger", 2000);
+        return;
+      }
       if (
         this.amount === null ||
         this.currency === null ||
@@ -205,6 +215,7 @@ export default {
       }
 
       let landlordInfos = {
+        name:this.name,
         description: this.description,
         minRentTime: {
           year: this.year,
@@ -215,7 +226,7 @@ export default {
           amount: this.amount,
           currency: this.currency,
           period: this.period,
-        },
+        }
       };
       try {
         await UserService.saveLandlordInfos(landlordInfos);
@@ -280,7 +291,7 @@ export default {
 .field {
   text-align: left;
 }
-.username_input {
+.email_input {
   margin-bottom: 10px;
 }
 .likes_div {

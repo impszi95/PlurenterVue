@@ -2,13 +2,11 @@
   <div>
     <div class="datas">
       <div class="user_infos">
-        <div>
           <b-field class="field" label="Minimum renting time">
             <div>
               <p>{{ user.minRentTime }}</p>
             </div>
           </b-field>
-        </div>
         <b-field class="field" label="Job">
             <div>
               <p class="job">{{ user.job }}</p>

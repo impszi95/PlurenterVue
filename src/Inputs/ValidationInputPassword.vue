@@ -19,7 +19,7 @@
 import { ValidationProvider } from "vee-validate";
 import { extend } from 'vee-validate';
 import { min } from 'vee-validate/dist/rules';
-extend('min', {...min, message: 'Minimum 8 characters required!'});
+extend('min', {...min, message: 'Minimum 8 characters required.'});
 
 export default {
   components: {

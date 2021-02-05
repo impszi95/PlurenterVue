@@ -17,6 +17,10 @@
 
 <script>
 import { ValidationProvider } from "vee-validate";
+import { extend } from 'vee-validate';
+import { email } from 'vee-validate/dist/rules';
+extend('email', {...email, message: 'Give a valid email.'});
+
 export default {
   components: {
     ValidationProvider,

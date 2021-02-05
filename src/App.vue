@@ -26,16 +26,16 @@
             :to="{ path: '/matches' }"
           >
             Matches
-          </b-navbar-item>
-          <b-navbar-item
+          </b-navbar-item>         
+        </template>
+        <template slot="end">
+           <b-navbar-item
             class="nav-item"
             tag="router-link"
             :to="{ path: '/about' }"
           >
             About
           </b-navbar-item>
-        </template>
-        <template slot="end">
           <b-navbar-item tag="div">
             <div class="buttons">
               <a

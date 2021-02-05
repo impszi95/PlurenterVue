@@ -5,7 +5,7 @@ class AuthService {
     login(user) {
         return axios
             .post(IPs.API_URL + 'auth/signin',{
-                username: user.username,
+                email: user.email,
                 password: user.password
             })
             .then(response => {
@@ -23,7 +23,8 @@ class AuthService {
 
     register(user) {
         return axios.post(IPs.API_URL + 'auth/signup', {
-            username: user.username,
+            name: user.name,
+            email: user.email,
             password: user.password,
             type: user.type,
             terms: user.terms

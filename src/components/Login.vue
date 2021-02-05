@@ -2,8 +2,8 @@
   <div class="LoginPage">
     <h1>Let's start it!</h1>
     <div class="Login">
-      <b-field label="Username">
-        <b-input v-model="user.username"></b-input>
+      <b-field label="Email">
+        <b-input v-model="user.email"></b-input>
       </b-field>
       <b-field label="Password">
         <b-input type="password" v-model="user.password"></b-input>
@@ -20,13 +20,13 @@
 </template>
 
 <script>
-import User from "../Model/User";
+import UserLogin from "../Model/UserLogin";
 
 export default {
   name: "Login",
   data() {
     return {
-      user: new User("", ""),
+      user: new UserLogin("",""),
       message: "",
     };
   },
@@ -38,7 +38,7 @@ export default {
 
   methods: {
     login() {
-      if (this.user.username && this.user.password) {
+      if (this.user.email && this.user.password) {
         this.$store.dispatch("auth/login", this.user).then(
           () => {
             this.$router.push("/").catch((err) => {
@@ -62,7 +62,7 @@ export default {
     },
     invalidLogin() {
       this.$buefy.toast.open({
-        message: `Invalid username or password</b>`,
+        message: `Invalid email or password</b>`,
         type: "is-danger",
       });
     },

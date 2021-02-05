@@ -10,7 +10,7 @@
         </header>
       </div>
       <div>
-        <b-button rounded class="button is-danger" @click="$emit('delete')">
+        <b-button rounded class="button is-danger" type="button" @click="$emit('delete')">
           <b-icon class="file-icon" size="is-medium" icon="delete"></b-icon>
         </b-button>
       </div>

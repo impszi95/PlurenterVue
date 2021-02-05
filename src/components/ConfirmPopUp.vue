@@ -8,7 +8,7 @@
                     <footer class="modal-card-foot">
                         <button class="button" type="button" @click="$emit('close')">No</button>
                          <div class="divider"/>
-                        <button class="button is-danger" @click="$emit('delete')">Delete</button>
+                        <button class="button is-danger" type="button" @click="$emit('delete')">Delete</button>
                     </footer>
                 </div>
             </form>

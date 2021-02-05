@@ -34,9 +34,15 @@ const routes = [{
     name: 'matchView',
     component: () => import('../views/MatchView.vue')
   },
+  {
+    path: '/terms',
+    name: 'terms',
+    component: () => import('../views/Terms.vue')
+  },
 ]
 
 const router = new VueRouter({
+  mode: 'history',
   routes
 })
 

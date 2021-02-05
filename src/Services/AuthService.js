@@ -25,7 +25,8 @@ class AuthService {
         return axios.post(IPs.API_URL + 'auth/signup', {
             username: user.username,
             password: user.password,
-            type: user.type
+            type: user.type,
+            terms: user.terms
         });
     }
 }

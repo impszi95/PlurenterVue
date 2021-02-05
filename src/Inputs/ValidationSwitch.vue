@@ -10,7 +10,7 @@
       :type="{ 'is-danger': errors[0], 'is-success': valid }"
       :message="errors"
     >
-      <b-input v-model="innerValue" v-bind="$attrs"></b-input>
+      <b-switch v-model="innerValue"  v-bind="$attrs">I agree</b-switch>
     </b-field>
   </ValidationProvider>
 </template>

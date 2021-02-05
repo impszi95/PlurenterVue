@@ -10,13 +10,16 @@
       :type="{ 'is-danger': errors[0], 'is-success': valid }"
       :message="errors"
     >
-      <b-input v-model="innerValue" v-bind="$attrs"></b-input>
+      <b-input v-model="innerValue" password-reveal v-bind="$attrs"></b-input>
     </b-field>
   </ValidationProvider>
 </template>
 
 <script>
 import { ValidationProvider } from "vee-validate";
+import { extend } from 'vee-validate';
+import { min } from 'vee-validate/dist/rules';
+extend('min', {...min, message: 'Minimum 8 characters required!'});
 
 export default {
   components: {

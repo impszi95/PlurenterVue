@@ -3,26 +3,30 @@
     <h1>Register</h1>
     <div class="Register">
       <ValidationObserver ref="observer" v-slot="{ handleSubmit }">
-        <b-field label="Username">
-          <b-input type="isSuccess" required v-model="user.username"></b-input>
-        </b-field>
         <ValidationInput
           class="mainpass"
           rules="required"
+          type="username"
+          label="Username"
+          v-model="user.username"
+        />
+        <ValidationInputPassword
+          class="mainpass"
+          rules="required|min:8"
           type="password"
           label="Password"
           vid="password"
           v-model="user.password"
         />
-        <ValidationInput
-          rules="required|confirmed:password"
+        <ValidationInputPassword
+          rules="required|confirmed:password|min:8"
           name="Password"
           type="password"
           label="Confirm Password"
           v-model="confirmation"
         />
         <div class="type">
-          <b-field label="Which one is you?">
+          <b-field required label="Which one is you?">
             <b-radio v-model="user.type" name="name" native-value="tenant">
               Tenant
             </b-radio>
@@ -31,6 +35,14 @@
               Landlord
             </b-radio>
           </b-field>
+        </div>
+        <div class="terms">
+          <ValidationSwitch
+          name="terms"
+          rules="required"
+          v-model="user.terms"
+          />
+          <router-link to="/terms">terms and conditions.</router-link>
         </div>
         <div class="reg_b">
           <b-button @click="handleSubmit(register)" type="is-info"
@@ -45,16 +57,20 @@
 import User from "../Model/User";
 import { ValidationObserver } from "vee-validate";
 import ValidationInput from "../Inputs/ValidationInput";
+import ValidationInputPassword from "../Inputs/ValidationInputPassword";
+import ValidationSwitch from "../Inputs/ValidationSwitch";
 
 export default {
   components: {
     ValidationObserver,
     ValidationInput,
+    ValidationInputPassword,
+    ValidationSwitch
   },
 
   data() {
     return {
-      user: new User("", "", ""),
+      user: new User("", "", "",false),
       confirmation: "",
     };
   },
@@ -66,7 +82,7 @@ export default {
 
   methods: {
     register() {
-      if (this.user.username && this.user.password && this.user.type) {
+      if (this.user.username && this.user.password && this.user.type && this.user.terms) {
         this.$store.dispatch("auth/register", this.user).then(
           () => {
             this.login(); //Egyből login reg után
@@ -135,6 +151,18 @@ h1 {
 }
 .divider {
   width: 20px;
+}
+.terms{
+  border: transparent;
+    border-top: rgb(201, 200, 200);
+    border-style: solid;
+    border-width: 1px;
+    padding-top: 20px;
+    margin-top:10px;
+    display: flex;
+  justify-content: center;
+
+    
 }
 @media only screen and (max-width: 768px) {
   .RegisterPage {

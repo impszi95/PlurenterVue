@@ -27,6 +27,13 @@
           >
             Matches
           </b-navbar-item>
+          <b-navbar-item
+            class="nav-item"
+            tag="router-link"
+            :to="{ path: '/about' }"
+          >
+            About
+          </b-navbar-item>
         </template>
         <template slot="end">
           <b-navbar-item tag="div">

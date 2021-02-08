@@ -4,7 +4,7 @@
       <div class="user_infos">
         <div>
           <b-field class="field" label="Email">
-            <div class="email_input">{{ currentUser.email }}</div>
+            <div class="email_input"><p>{{ currentUser.email }}</p></div>
           </b-field>          
           <b-field label="Name">
             <b-input

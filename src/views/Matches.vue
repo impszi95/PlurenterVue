@@ -3,13 +3,13 @@
     <div v-if="this.matches.length!=0" class="users">
       <div class="user" v-for="user in this.matches"  @click="ViewMatch(user.id)" :key="user.id">
         <div class="name">
-          {{ user.name }}
+          {{ user.displayName }}
         </div>
         <div class="container">
           <img
-            v-if="user.photos.length != 0"
+            v-if="user.thumbnail != null"
             class="img"
-            v-bind:src="'data:image/jpg;base64,' + user.photos[0].image.data"
+            v-bind:src="'data:image/jpg;base64,' + user.thumbnail.image.data"
           />
           <img v-else src="../assets/default.png" />
         </div>
@@ -34,7 +34,7 @@ export default {
   },
   methods: {
     ViewMatch(matchId){
-      this.$router.push({name: 'matchView', params: { matchId: matchId}});
+      this.$router.push({name: 'match', params: { matchId: matchId}});
     }
   },
   computed: {},

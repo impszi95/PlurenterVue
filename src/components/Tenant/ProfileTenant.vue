@@ -17,7 +17,7 @@
         </div>
         <div class="matches">
           <div class="stats_val_div">
-            <strong class="stats_val">{{ likes }}</strong>
+            <strong class="stats_val">{{ matches }}</strong>
           </div>
         </div>
       </div>
@@ -35,7 +35,7 @@
                 <p>{{ currentUser.email }}</p>
               </div>
               <b-field class="phone" label="Phone">
-                <b-input placeholder="+36 20 1111111"></b-input>
+                <b-input v-model="phone" placeholder="+36 20 1111111"></b-input>
               </b-field>
             </div>
             <b-field label="Job">
@@ -55,10 +55,9 @@
             </b-field>
           </div>
         </div>
-        <div class="second_tab">
-          <b-field class="location" label="Location">
-            <Location />
-          </b-field>
+        <div class="second_tab">         
+            <LocationSkeleton v-if="locationLoading" />
+            <Location v-else :location.sync="location" />
           <div class="field_c">
             <b-field label="Minimum renting time" />
             <div class="help" @click="snackbar">
@@ -159,21 +158,27 @@
 <script>
 import UserService from "@/Services/UserService";
 import Location from "../Location";
+import LocationSkeleton from "../LocationSkeleton";
 export default {
   components: {
     Location,
+    LocationSkeleton
   },
   data() {
     return {
       active: null,
       likes: null,
+      matches: null,
       name: null,
       description: null,
+      phone:null,
+      location:null,
       year: 0,
       month: 0,
       day: 0,
       job: null,
       canActivate: null,
+      locationLoading:true,
     };
   },
   async created() {
@@ -182,32 +187,40 @@ export default {
     this.name = tenantInfos.name;
     this.canActivate = tenantInfos.canActivate;
     this.description = tenantInfos.description;
+    this.phone = tenantInfos.phone;
+    this.location = tenantInfos.location;
+    this.locationLoading = false;
     this.likes = tenantInfos.likes;
-
+    this.matches = tenantInfos.matches;
     this.year = tenantInfos.minRentTime.year;
     this.month = tenantInfos.minRentTime.month;
     this.day = tenantInfos.minRentTime.day;
-
     this.job = tenantInfos.job;
   },
   methods: {
     async Save() {
       if (this.year === 0 && this.month === 0 && this.day === 0) {
-        this.openToast("Set a minimum renting time!", "is-danger", 2000);
+        this.openToast("Set a minimum renting time.", "is-danger", 2000);
         return;
       }
       if (this.name == "") {
-        this.openToast("Name can't be empty!", "is-danger", 2000);
+        this.openToast("Name can't be empty.", "is-danger", 2000);
+        return;
+      }
+      if (this.location.country == "" || this.location.state=="" || this.location.city == "" || this.location.city_id == ""){
+        this.openToast("Choose location.","is-danger", 2000);
         return;
       }
       let tenantInfos = {
         name: this.name,
         description: this.description,
+        phone: this.phone,
         minRentTime: {
           year: this.year,
           month: this.month,
           day: this.day,
         },
+        location:this.location,
         job: this.job,
       };
       try {
@@ -225,7 +238,7 @@ export default {
         this.openToast(
           "Your profile is activated<br>Landlords are able to see your profile.",
           "is-success",
-          4000
+          3500
         );
       } catch (error) {
         this.openToast("Can't activate!", "is-danger", 2000);
@@ -238,7 +251,7 @@ export default {
         this.openToast(
           "Your profile is deactivated<br>Landlords won't see your profile until you activate it back.",
           "is-danger",
-          4000
+          3500
         );
       } catch (error) {
         this.openToast("Can't deactivate!", "is-danger", 2000);
@@ -269,6 +282,13 @@ export default {
 </script>
 
 <style scoped>
+.datas {
+  padding: 20px;
+  padding-bottom: 20px;
+  margin: 20px;
+  background-color: rgb(243, 243, 243);
+  box-shadow: 0 0px 6px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
 .user_infos {
   display: flex;
 }
@@ -351,20 +371,13 @@ p {
 }
 .help {
   border-radius: 90px;
-  background-color: cornflowerblue;
+  background-color: #167df0;
   width: 20px;
   height: 20px;
   margin-left: 5px;
   color: white;
   margin-top: 2px;
   font-size: 0.9rem;
-}
-.datas {
-  padding: 20px;
-  padding-bottom: 10px;
-  margin: 20px;
-  background-color: rgb(243, 243, 243);
-  box-shadow: 0 0px 6px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 .save_btn {
   width: 80px;
@@ -402,16 +415,16 @@ p {
   width: 50%;
 }
 .save_div {
-  margin-left: auto;
-  margin-right: auto;
+  margin-top: 50px;
+}
+.active_c {
+  padding-top: 10px;
+  
   border: transparent;
-  border-bottom: rgb(201, 200, 200);
+  border-top: rgb(201, 200, 200);
   border-style: solid;
   border-width: 1px;
-  padding-bottom: 10px;
-  margin-top: 60px;
-  width: 60%;
-}
+  }
 @media only screen and (min-width: 768px) {
   .first_tab {
     padding-right: 20px;
@@ -437,14 +450,14 @@ p {
     border-bottom: rgb(201, 200, 200);
     border-style: solid;
     border-width: 1px;
+    margin-bottom: 10px;
   }
-  .save_div {
+  .save_div { 
     border: transparent;
     border-top: rgb(201, 200, 200);
     border-style: solid;
     border-width: 1px;
     margin-bottom: 10px;
-    padding-top: 10px;
     margin-top: 20px;
     width: 100%;
   }

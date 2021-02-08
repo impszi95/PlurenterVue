@@ -30,9 +30,9 @@ const routes = [{
     component: () => import('../views/Matches.vue')
   },
   {
-    path: '/matchView/:matchId',
-    name: 'matchView',
-    component: () => import('../views/MatchView.vue')
+    path: '/match/:matchId',
+    name: 'match',
+    component: () => import('../views/Match.vue')
   },
   {
     path: '/terms',

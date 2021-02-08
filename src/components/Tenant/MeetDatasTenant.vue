@@ -15,7 +15,7 @@
         <div>
           <b-field class="field" label="Description">
             <div>
-              <p class="desc">{{ description }}</p>
+              <p class="desc">{{ user.description }}</p>
             </div>
           </b-field>
         </div>
@@ -29,7 +29,6 @@ export default {
   props: ["user"],
   data(){
     return{
-      description:this.user.description,
     };
   }
 };

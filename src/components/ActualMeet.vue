@@ -4,7 +4,8 @@
       <div class="haveMeet" v-if="!isEmpty">
         <div class="user">
           <div class="name">
-            {{ user.name }}
+            <div v-if="user.tenant">{{ user.name }}</div>
+            <div v-else>{{ user.location.city }}</div>
           </div>
           <b-button
             rounded
@@ -54,8 +55,8 @@
           </b-button>
         </div>
         <div id="datas" class="details_label">Details</div>
-        <DatasTenant v-if="user.tenant" :user="user" />
-        <DatasLandlord v-else :user="user" />
+        <MeetDatasTenant v-if="user.tenant" :user="user" />
+        <MeetDatasLandlord v-else :user="user" />
       </div>
       <div v-if="isEmpty" class="loading">
         <Loading />
@@ -70,8 +71,8 @@
 <script>
 import PlurenterService from "@/Services/PlurenterService";
 import Loading from "./Loading.vue";
-import DatasLandlord from "./Landlord/DatasLandlord";
-import DatasTenant from "./Tenant/DatasTenant";
+import MeetDatasLandlord from "./Landlord/MeetDatasLandlord";
+import MeetDatasTenant from "./Tenant/MeetDatasTenant";
 import $ from "jquery";
 import UserService from "../Services/UserService";
 export default {
@@ -85,8 +86,8 @@ export default {
   },
   components: {
     Loading,
-    DatasLandlord,
-    DatasTenant,
+    MeetDatasLandlord,
+    MeetDatasTenant,
   },
   methods: {
     async loadActualMeet() {

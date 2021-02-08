@@ -1,7 +1,11 @@
 <template>
   <div>
-    <div class="name">{{ match.name }}</div>
-    <DatasLandlord :user="match" />
+    <div v-if="!loading">
+       <div class="name">{{ match.name }}</div>
+
+    <MatchDatasTenant v-if="match.tenant" :user="match" />
+    <MatchDatasLandlord v-else :user="match" />
+
     <div class="images">
       <div
         class="image_container"
@@ -32,26 +36,38 @@
         @close="Cancel()"
       />
     </b-modal>
+    </div>
+    <div v-else>Loading...</div>
   </div>
 </template>
 
 <script>
-import FullImageOnlyView from "../FulImageOnlyView";
-import DatasLandlord from "../Landlord/DatasLandlord";
+import UserService from "../Services/UserService";
+import FullImageOnlyView from "../components/FulImageOnlyView";
+import MatchDatasTenant from "../components/Tenant/MatchDatasTenant";
+import MatchDatasLandlord from "../components/Landlord/MatchDatasLandlord";
+
 export default {
-  props: ["match"],
-  components: {
+  components: {    
     FullImageOnlyView,
-    DatasLandlord,
+    MatchDatasLandlord,
+    MatchDatasTenant
   },
   data() {
     return {
+      matchId: this.$route.params.matchId,
+      match: null,
+      loading: true,
       isFullImageModalActive: false,
       selectedPhoto: null,
     };
   },
   methods: {
-    Cancel() {
+    async LoadUser() {
+      this.match = await UserService.getMatch(this.matchId).then();
+      this.loading=false;
+    },
+     Cancel() {
       this.isFullImageModalActive = false;
       this.selectedPhoto = null;
     },
@@ -59,6 +75,17 @@ export default {
       this.selectedPhoto = photo;
       this.isFullImageModalActive = true;
     },
+  },
+  computed: {
+    isLogged() {
+      return this.$store.state.auth.status.loggedIn;
+    },
+  },
+  created() {
+    if (!this.isLogged) {
+      this.$router.push("/");
+    }
+    this.LoadUser();
   },
 };
 </script>

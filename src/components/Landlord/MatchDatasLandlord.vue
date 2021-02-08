@@ -1,26 +1,38 @@
 <template>
   <div>
-      <div class="datas">
-      <div class="user_infos">
-        <div>
+    <div class="datas">
+      <div class="user_infos">     
+          <b-field class="field" label="Email">
+            <div>
+              <p>{{ user.email }}</p>
+            </div>
+          </b-field>
+           <b-field class="field" label="Phone">
+            <div>
+              <p>{{ user.phone }}</p>
+            </div>
+          </b-field>  
+          <div class="divider"></div>   
+          <b-field class="field" label="Location">
+            <div>
+              <p>{{ user.location.state }}, {{ user.location.city }}</p>
+            </div>
+          </b-field>
           <b-field class="field" label="Minimum renting time">
             <div>
               <p>{{ user.minRentTime }}</p>
             </div>
           </b-field>
-        </div>
-          <b-field class="field" label="Rent">
+        <b-field class="field" label="Rent">
             <div>
               <p>{{ user.rent }}</p>
             </div>
-        </b-field>
-        <div>
+        </b-field>  
           <b-field class="field" label="Description">
             <div>
-              <p class="desc">{{ description }}</p>
+              <p class="desc">{{ user.description }}</p>
             </div>
-          </b-field>
-        </div>
+          </b-field>           
       </div>
     </div>
   </div>
@@ -28,13 +40,12 @@
 
 <script>
 export default {
-    props: ["user"],    
-     data(){
+  props: ["user"],
+  data(){
     return{
-      description:this.user.description,
     };
   }
-}
+};
 </script>
 
 <style scoped>
@@ -54,7 +65,7 @@ export default {
 .field {
   text-align: left;
   width: 100%;
-  margin-bottom: 10px;
+  margin-bottom: 10px;  
 }
 p{  
   padding: 5px;
@@ -63,11 +74,23 @@ p{
   border-width: thin;
   border-radius: 4px;
   background-color: white;
+  min-height: 36px;
 }
 .desc {
   min-height: 35px;
   width: 100%;
   white-space: pre-line;
+}
+.divider{    
+  border: transparent;
+  border-top: rgb(201, 200, 200);
+  border-style: solid;
+  border-width: 1px;
+  margin-bottom: 10px;
+  margin-top: 20px;
+}
+.job{
+    min-height: 35px;
 }
 @media only screen and (max-width: 768px) {
   .datas {

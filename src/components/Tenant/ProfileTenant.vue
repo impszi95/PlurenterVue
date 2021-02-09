@@ -304,7 +304,7 @@ export default {
 .stats {
   display: flex;
   width: 40%;
-  min-width: 390px;
+  min-width: 320px;
   margin-left: auto;
   margin-right: auto;
 }

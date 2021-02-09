@@ -6,7 +6,7 @@
             rounded
             size="is-small"
             outlined
-            :disabled="modifyLocation"
+            :disabled="editCountry"
             :loading="loading == true"
             class="btn_edit"
             type="is-info"
@@ -18,7 +18,7 @@
             ></b-icon>
           </b-button>
       </div>
-    <div v-if="!modifyLocation">     
+    <div v-if="!editCountry">     
       <div class="country_state">
         <input class="cs" disabled v-model="country" placeholder="Country"/>
         <input class="cs" disabled v-model="state" placeholder="State" />
@@ -35,7 +35,7 @@
           :open-on-focus="false"
           :data="filteredCountry"
           field="name"
-          @select="(option) => (country_selected = option.id)"
+          @select="(country) => (SelectCountry(country))"
           :clearable="false"
         >
         </b-autocomplete>
@@ -44,12 +44,13 @@
         <b-autocomplete
         class="state"
           v-model="state"
+          :disabled="!editState"
           placeholder="State"
           :keep-first="true"
           :open-on-focus="false"
           :data="filteredState"
           field="name"
-          @select="(option) => (state_selected = option.id)"
+          @select="(state) => (SelectState(state))"
           :clearable="false"
         >
         </b-autocomplete>
@@ -59,11 +60,12 @@
         <b-autocomplete
           v-model="city"
           placeholder="City"
+          :disabled="!editCity"
           :keep-first="true"
           :open-on-focus="false"
           :data="filteredCity"
           field="name"
-          @select="(option) => (SelectCity(option.name, option.id))"
+          @select="(city) => (SelectCity(city))"
           :clearable="false"
         >
         </b-autocomplete>
@@ -86,15 +88,16 @@ export default {
       state: "",
       country: "",
       country_selected: null,
-      city_selected: null,
       state_selected: null,
-      modifyLocation:false,
+      editCountry:false,
+      editState:false,
+      editCity:false,
       loading : false
     };
   },
   computed: {
     filteredCountry() {
-      if(this.loading){
+      if(!this.editCountry){
         return [];
       }
       return this.countries.filter((option) => {
@@ -107,7 +110,7 @@ export default {
       });
     },
     filteredState() {
-      if(this.loading){
+      if(!this.editState){
         return []
       }
       return this.states.filter((option) => {
@@ -121,7 +124,7 @@ export default {
       });
     },
     filteredCity() {
-      if(this.loading){
+      if(!this.editCity){
         return []
       }
       return this.cities.filter((option) => {
@@ -137,27 +140,61 @@ export default {
   },
   methods:{
    async EditLocation(){
-    await this.LoadLocations();    
-    this.country = this.location.country;
-    this.state = this.location.state;
-    this.city = this.location.city;
-    this.modifyLocation = true;
+    await this.LoadCountries();    
+    if(this.location.country != "" && this.location.state != "" && this.location.city!=""){
+    await this.LoadStates();    
+    await this.LoadCities();    
+    }    
+    this.editCountry = true; 
     },
-    async LoadLocations(){
+    async LoadCountries(){
     this.loading = true;
     this.countries = await LocationService.getCountries();
-    this.states = await LocationService.getStates();
-    this.cities = await LocationService.getCities();
-    this.loading = false;
+    this.loading = false;    
     },
-    SelectCity(city, city_id){
+    async LoadStates(){
+    this.loading = true;
+    this.states = await LocationService.getStates(this.country);
+    this.loading = false;    
+    },
+    async LoadCities(){
+    this.loading = true;
+    this.cities = await LocationService.getCities(this.country, this.state);
+    this.loading = false;    
+    },
+    
+    async SelectCountry(country){
+      if(country!=null){
+      this.country_selected = country.id;
+      this.country = country.name;
+      await this.LoadStates();         
+      this.state_selected = null;
+      this.state = "";   
+      this.city_selected=null;
+      this.city="";
+      this.editState = true; 
+      }
+    },
+    async SelectState(state){
+      if(state!=null){
+      this.state_selected = state.id;
+      this.state = state.name;
+      await this.LoadCities();            
+      this.city_selected=null;
+      this.city="";
+      this.editCity = true; 
+      }
+    },
+    SelectCity(city){
+      if(city != null){
       this.location.country = this.country;
       this.location.country_id = this.country_selected;
       this.location.state = this.state;
       this.location.state_id = this.state_selected;
-      this.location.city = city;
-      this.location.city_id = city_id;
+      this.location.city = city.name;
+      this.location.city_id = city.id;
       this.$emit('update:location', this.location);
+      }
     }
   },
   async created() {
@@ -169,6 +206,8 @@ export default {
     this.country_selected = this.location.country_id;
     this.state_selected = this.location.state_id;
     this.city_selected = this.location.city_id;
+    this.editState = true;
+    this.editCity = true;
     }
   },
 };
@@ -198,9 +237,6 @@ input{
   margin-left: 10px;
   padding-bottom: 5px;  
   margin-top: -3px;
-}
-.country_state{
-  widows: 100%;
 }
 .cs{
   width: 50%;

@@ -41,7 +41,7 @@
             
             <b-field class="field" label="Description">
               <b-input
-                placeholder="Write something about yourself."
+                placeholder="e.g., street name, street number, public transport, etc."
                 class="desc_input"
                 maxlength="500"
                 type="textarea"

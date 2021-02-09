@@ -10,15 +10,15 @@ class LocationService {
             return res.data;
         })        
     }    
-    async getStates(){
-        return await axios.get(IPs.API_URL + 'location/getStates', {
+    async getStates(country){
+        return await axios.get(IPs.API_URL + 'location/getStates/'+country, {
             headers:authHeader()
         }).then(res=>{            
             return res.data;
         })        
     }   
-    async getCities(){
-        return await axios.get(IPs.API_URL + 'location/getCities', {
+    async getCities(country,state){
+        return await axios.get(IPs.API_URL + 'location/getCities/'+country+'/'+state, {
             headers:authHeader()
         }).then(res=>{            
             return res.data;

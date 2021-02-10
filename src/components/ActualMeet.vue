@@ -1,5 +1,6 @@
 <template>
   <div>
+    <div v-if="!loading">
     <div v-if="isActive">
       <div class="haveMeet" v-if="!isEmpty">
         <div class="user">
@@ -60,10 +61,15 @@
       </div>
       <div v-if="isEmpty" class="loading">
         <Loading />
+        <div class="message">That's it for now...</div>
       </div>
     </div>
     <div class="notActive" v-else>
       <p>Your profile must be activated.</p>
+    </div>
+    </div>
+    <div v-else>
+      <Loading/>
     </div>
   </div>
 </template>
@@ -82,6 +88,7 @@ export default {
       isEmpty: true,
       actualPhoto: null,
       isActive: false,
+      loading: true,
     };
   },
   components: {
@@ -125,6 +132,7 @@ export default {
   async created() {
     await this.loadActualMeet();
     this.isActive = await UserService.getIsActive();
+    this.loading = false;
   },
 };
 </script>
@@ -214,5 +222,9 @@ export default {
 .notActive{
   margin-top: 140px;
   font-size: 1rem;
+}
+.message{
+    font-size: 2rem;
+    background-color: transparent;
 }
 </style>

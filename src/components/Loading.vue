@@ -1,7 +1,6 @@
 <template>
   <div>
 <div class="lds-dual-ring"></div>
-<div class="message">That's it for now...</div>
   </div>
 </template>
 
@@ -33,9 +32,5 @@ export default {};
   100% {
     transform: rotate(360deg);
   }
-}
-.message{
-    font-size: 2rem;
-    background-color: transparent;
 }
 </style>

@@ -72,7 +72,7 @@ export default {
     position: relative;
     margin-left: auto;
     margin-right: auto;
-    background-color: whitesmoke;
+    background-color: rgb(204, 204, 204);
 }
 .image{
  object-fit: contain;

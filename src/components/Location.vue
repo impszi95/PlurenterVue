@@ -26,8 +26,8 @@
         <input class="city" disabled v-model="city" placeholder="City"/>
   </div>
   <div v-else>
- <b-field>
-      <b-field>
+ <div class="casa">
+      <b-field class="casa_field">
         <b-autocomplete
           v-model="country"
           placeholder="Country"
@@ -40,9 +40,9 @@
         >
         </b-autocomplete>
       </b-field>
-      <b-field>
+      <b-field class="casa_field"
+>
         <b-autocomplete
-        class="state"
           v-model="state"
           :disabled="!editState"
           placeholder="State"
@@ -55,7 +55,7 @@
         >
         </b-autocomplete>
       </b-field>
-    </b-field>
+    </div>
       <b-field>
         <b-autocomplete
           v-model="city"
@@ -249,5 +249,26 @@ input{
 }
 .field_c {
   display: flex;
+}
+.casa{
+  display:flex;
+  width:100%;
+}
+.casa_field{
+  width:50%;
+}
+@media only screen and (max-width: 768px) {
+  .cs {
+    width: 100%;
+  }
+  .country_state{
+    display: block;
+  }
+  .casa{
+    display: block;
+  }
+  .casa_field{
+    width: 100%;
+  }
 }
 </style>

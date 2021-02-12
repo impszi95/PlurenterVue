@@ -5,7 +5,7 @@
 ## Table of contents
 * [General info](#general-info)
 * [Features](#features)
-* [Technologies](#technologies
+* [Technologies](#technologies)
 * [Contact](#contact)
 
 ## General info
@@ -16,24 +16,23 @@ With Plurenter you can filter tenants and view their profile before get contacte
 with the tenants who already fits for your requirements. The base matching procedure is similar to Tinder's.
 
 ## Features
-![s1](./img/s1.JPG)
-![s2](./img/s2.JPG)
-Users can upload their images and fill their personal and filtering datas depending on whether she is a tenant or a landlord.
-
-![s3](./img/s3.JPG)
-![s4](./img/s4.JPG)
+Users can upload their images and fill their personal and filtering datas depending on whether she is a tenant or a landlord.<br />
+![s1](./img/s1.jpg)
+![s2](./img/s2.jpg)
+<br /><br />
+![s3](./img/s34.jpg)
 ![s4_2](./img/s4_2.JPG)
-The whole app is responsive so everything is also optimized for mobiles and tablets.
+The whole app is responsive so everything is also optimized for mobiles and tablets.<br />
 
 ![s5](./img/s5.JPG)
 Plurenter uses its own Location API. It makes possible to search apartments in any city, in all countries.
 
-![s67](./img/s67.JPG)
-![s67](./img/s67.JPG)
+![s67](./img/s67.jpg)
+![s67](./img/s67.jpg)
 
 
 ## Technologies
-* Backend Services- JAVA, Sprign Boot 2.2.3
+* Backend Services - Java, Spring Boot 2.2.3
 * FrontEnd - VueJS 2.6.11
 * Running on Ubuntu with Docker
 

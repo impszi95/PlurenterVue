@@ -17,17 +17,15 @@ with the tenants who already fits for your requirements. The base matching proce
 
 ## Features
 Users can upload their images and fill their personal and filtering datas depending on whether she is a tenant or a landlord.<br />
-![s1](./img/s1.jpg)
-![s2](./img/s2.jpg)
+![s1](./img/s1_2.jpg)
 <br /><br />
-![s3](./img/s34.jpg)
-![s4_2](./img/s4_2.JPG)
+![s2](./img/s3_4.jpg)
+![s4_2](./img/s4_5.JPG)
 The whole app is responsive so everything is also optimized for mobiles and tablets.<br />
-
 ![s5](./img/s5.JPG)
-Plurenter uses its own Location API. It makes possible to search apartments in any city, in all countries.
 
-![s67](./img/s67.jpg)
+<br /><br />
+Plurenter uses its own Location API. It makes possible to search apartments in any city, in all countries.<br />
 ![s67](./img/s67.jpg)
 
 

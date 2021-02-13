@@ -34,7 +34,7 @@ A landlord and a tenant can see each other if:
 * Tenant's minimum rental time is bigger or equals than landlord's minimum rental time<br />
 
 ![s67](./img/s6_7.jpg)
-<br />
+<br /><br />
 ![s89](./img/s8_9.jpg)
 <br /><br />
 

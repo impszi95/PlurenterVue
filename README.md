@@ -21,9 +21,9 @@ Users can upload their images and fill their personal and filtering datas depend
 <br /><br />
 The whole app is responsive so everything is also optimized for mobiles and tablets.<br />
 ![s2](./img/s3_4.jpg)
+![s4_2](./img/s4_5.jpg)
 <br /><br />
 Plurenter uses its own Location API. It makes possible to search apartments in any city, in all countries.<br />
-![s4_2](./img/s4_5.jpg)
 ![s5](./img/s5.JPG)
 
 <br /><br />
@@ -34,6 +34,7 @@ A landlord and a tenant can see each other if:
 * Tenant's minimum rental time is bigger or equals than landlord's minimum rental time<br />
 
 ![s67](./img/s6_7.jpg)
+<br />
 ![s89](./img/s8_9.jpg)
 <br /><br />
 
@@ -45,6 +46,8 @@ When both parties likes each other and a match occurs, a Websocket API notifies 
 After they matched, users can see each other's contact informations.<br />
 ![s12_3_4](./img/s12_3_4.jpg)
 ![s15_6](./img/s15_6.jpg)
+<br /><br />
+Plurenter was written to be highly scalable.
 
 ## Technologies
 * Backend Services - Java, Spring Boot 2.2.3

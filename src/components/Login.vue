@@ -1,6 +1,6 @@
 <template>
   <div class="LoginPage">
-    <h1>Let's start it!</h1>
+    <h1>Let's start it</h1>
     <div class="Login">
       <b-field label="Email">
         <b-input v-model="user.email"></b-input>

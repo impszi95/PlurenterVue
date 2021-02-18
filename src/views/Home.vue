@@ -1,8 +1,10 @@
 <template>
   <div class="home">
     <div class="welcome_page" v-if="!isLogged">
-      <img class="logo" src="../assets/logo.png" />
-      <ActiveUsers v-if="!isLogged"/>
+        <div>
+        <img class="background_wide" src="../assets/background_wide.jpg" />
+        <img class="background" src="../assets/background.jpg" />
+        </div>  
       <div>
         <Login />
       </div>
@@ -16,7 +18,7 @@
 <script>
 import Login from "@/components/Login.vue";
 import ActualMeet from "@/components/ActualMeet.vue";
-import ActiveUsers from "../components/ActiveUsers";
+//import ActiveUsers from "../components/ActiveUsers";
 
 export default {
   data() {    return {      
@@ -26,7 +28,7 @@ export default {
   components: {
     Login,
     ActualMeet,
-    ActiveUsers,
+    //ActiveUsers,
   },
   computed: {
     isLogged() {
@@ -37,16 +39,16 @@ export default {
 </script>
 
 <style scoped >
-
-.logo {
-  width: 400px;
-  margin-top: 20px;
-  margin-bottom: 10px;
+.background_wide {
+  width: 100%;
+}
+.background {
+  visibility: hidden;
+  width: 0px;
 }
 .welcome {
   visibility: hidden;
 }
-
 @media only screen and (max-width: 768px) {
   .logo {
     visibility: hidden;
@@ -56,6 +58,14 @@ export default {
   .welcome {
     width: 0px;
     visibility: visible;
+  }
+  .background_wide {
+  visibility: hidden;
+  width: 0px;
+  }
+  .background {
+  width: 100%;  
+  visibility:visible;
   }
 }
 </style>
